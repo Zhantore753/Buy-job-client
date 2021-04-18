@@ -831,6 +831,18 @@ body {
   background: #fff;
 }
 
+.reg__error{
+  margin-top: 10px;
+  color: #ff3333;
+  text-align: center;
+}
+
+.reg__success{
+  margin-top: 10px;
+  color: #22bb33;
+  text-align: center;
+}
+
 .popup__or {
   width: 100%;
   font-size: 18px;

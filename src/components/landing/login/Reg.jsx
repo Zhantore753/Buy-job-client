@@ -1,24 +1,47 @@
 import React, { useState } from 'react';
+import {registration} from '../../../actions/user';
 
-const Reg = ({popupCloseHandler}) => {
+const Reg = ({popupClose}) => {
     const [login, setLogin] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
+    const [wrongRepeatPassword, setWrongRepeatPassword] = useState(false);
+    const [response, setResponse] = useState([]);
 
-    const cleanInputsHandler = (e) =>{
-        popupCloseHandler(e);
+    const cleanInputsHandler = () => {
         setLogin('');
         setEmail('');
         setPassword('');
         setRepeatPassword('');
+    }
+    
+    const popupCloseHandler = (e) => {
+        popupClose(e);
+        cleanInputsHandler();
+    }
+
+    const regBtnHandler = async (e) =>{
+        e.preventDefault();
+        e.stopPropagation();
+        if(password !== repeatPassword){
+            setWrongRepeatPassword(true);
+            return;
+        }
+        setWrongRepeatPassword(false);
+        let newRes;
+        await registration(login, email, password).then(res => {
+            newRes = res;
+        });
+        setResponse(newRes);
+        cleanInputsHandler();
     }
 
     return (
         <div className="register popup">
         <div className="popup__body">
             <div className="popup__content">
-                <button onClick={(e) => cleanInputsHandler(e)} className="popup__close"></button>
+                <button onClick={(e) => popupCloseHandler(e)} className="popup__close"></button>
                 <div className="popup__logo">
                     <svg width="153" height="59" viewBox="0 0 153 59" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clipPath="url(#clip0)">
@@ -66,7 +89,10 @@ const Reg = ({popupCloseHandler}) => {
                             <path d="M7.88369 13.0232C7.49834 13.0232 7.18604 13.3355 7.18604 13.7209V15.3487C7.18604 15.7341 7.49838 16.0464 7.88369 16.0464C8.269 16.0464 8.58135 15.7341 8.58135 15.3487V13.7209C8.58139 13.3355 8.26904 13.0232 7.88369 13.0232Z" fill="#ABAAAC"/>
                         </svg>                            
                     </div>
-                    <input className="reg__btn form__btn" type="submit" value="Регистрация"/>
+                    <input onClick={(e) => regBtnHandler(e)} className="reg__btn form__btn" type="submit" value="Регистрация"/>
+                    {wrongRepeatPassword && <p className="reg__error">Пароли не совпадают!</p>}
+                    {response[0] === 400 && <p className="reg__error">{response[1]}</p>}
+                    {response[0] === 200 && <p className="reg__success">{response[1]}</p>}
                 </form>
             </div>
         </div>

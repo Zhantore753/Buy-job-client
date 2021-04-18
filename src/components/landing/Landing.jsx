@@ -74,7 +74,7 @@ const Landing = () => {
             <Guarantee />
             <Footer />
             <Login popupCloseHandler={popupCloseHandler} regPopupHandler={regPopupHandler}/>
-            <Reg popupCloseHandler={popupCloseHandler}/>
+            <Reg popupClose={popupCloseHandler}/>
         </div>
     );
 };
