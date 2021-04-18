@@ -1,4 +1,5 @@
 import React from 'react';
+// import './css/style.css';
 import Header from './header/Header';
 import Advantages from './advantages/Advantages';
 import Stage from './stage/Stage';
@@ -73,7 +74,7 @@ const Landing = () => {
             <Economy />
             <Guarantee />
             <Footer />
-            <Login popupCloseHandler={popupCloseHandler} regPopupHandler={regPopupHandler}/>
+            <Login popupClose={popupCloseHandler} regPopupHandler={regPopupHandler}/>
             <Reg popupClose={popupCloseHandler}/>
         </div>
     );

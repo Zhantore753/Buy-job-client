@@ -35,6 +35,7 @@ const Reg = ({popupClose}) => {
         });
         setResponse(newRes);
         cleanInputsHandler();
+        setTimeout(() => {setResponse([])}, 5000);
     }
 
     return (
@@ -91,7 +92,7 @@ const Reg = ({popupClose}) => {
                     </div>
                     <input onClick={(e) => regBtnHandler(e)} className="reg__btn form__btn" type="submit" value="Регистрация"/>
                     {wrongRepeatPassword && <p className="reg__error">Пароли не совпадают!</p>}
-                    {response[0] === 400 && <p className="reg__error">{response[1]}</p>}
+                    {response[0] >= 400 && response[0] <= 500 && <p className="reg__error">{response[1]}</p>}
                     {response[0] === 200 && <p className="reg__success">{response[1]}</p>}
                 </form>
             </div>
