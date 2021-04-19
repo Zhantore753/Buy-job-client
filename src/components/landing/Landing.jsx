@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.css';
 import Header from './header/Header';
 import Advantages from './advantages/Advantages';
 import Stage from './stage/Stage';
@@ -59,15 +58,9 @@ const Landing = () => {
         registerPopup.classList.add('popup-active');
         setTimeout(()=>popup.classList.remove('popup-active'), 500);
     }
-
-    // regBtn.addEventListener('click', e=>{
-    //     e.preventDefault();
-    //     registerPopup.classList.add('popup-active');
-    //     setTimeout(()=>regBtn.parentElement.parentElement.parentElement.parentElement.classList.remove('popup-active'), 500);
-    // });
     
     return (
-        <div>
+        <>
             <Header burgerHandler={burgerHandler} loginPopupHandler={loginPopupHandler}/>
             <Advantages />
             <Stage />
@@ -76,7 +69,7 @@ const Landing = () => {
             <Footer />
             <Login popupClose={popupCloseHandler} regPopupHandler={regPopupHandler}/>
             <Reg popupClose={popupCloseHandler}/>
-        </div>
+        </>
     );
 };
 

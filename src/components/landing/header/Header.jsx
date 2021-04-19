@@ -2,11 +2,11 @@ import React from 'react';
 
 const Header = ({burgerHandler, loginPopupHandler}) => {
     return (
-        <header className="header">
-            <nav className="nav">
-                <div className="container">
-                    <div className="nav__inner">
-                        <div className="nav__logo">
+        <header className="header-landing">
+            <nav className="nav-landing">
+                <div className="container-landing">
+                    <div className="nav-landing__inner">
+                        <div className="nav-landing__logo">
                             <button>
                                 <svg width="153" height="59" viewBox="0 0 153 59" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clipPath="url(#clip0)">
@@ -26,17 +26,17 @@ const Header = ({burgerHandler, loginPopupHandler}) => {
                                 </svg>
                             </button>
                         </div>
-                        <div onClick={burgerHandler} className="nav__burger">
+                        <div onClick={burgerHandler} className="nav-landing__burger">
                             <span></span>
                         </div>
-                        <ul className="nav__list">
-                            <li className="nav__list-item">
-                                <button className="nav__list-link">
+                        <ul className="nav-landing__list">
+                            <li className="nav-landing__list-item">
+                                <button className="nav-landing__list-link">
                                     О сервисе
                                 </button>
                             </li>
-                            <li className="nav__list-item">
-                                <button className="nav__list-link nav__list-i">
+                            <li className="nav-landing__list-item">
+                                <button className="nav-landing__list-link nav-landing__list-i">
                                     <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M12.9539 25.9999C16.4127 25.9999 19.6704 24.6684 22.1274 22.2502C24.5911 19.8253 25.9661 16.5854 25.9994 13.1274C26.033 9.61668 24.6983 6.31686 22.241 3.83569C19.7911 1.36219 16.5093 0 13 0C9.51577 0 6.23879 1.37125 3.7728 3.86113C1.30843 6.34926 -0.0310594 9.63741 0.000562161 13.1204L0 24.5945C0 25.1515 0.328934 25.6559 0.838603 25.8806C1.02074 25.9609 1.21363 25.9999 1.40519 25.9999C1.74959 25.9999 2.08948 25.8733 2.3537 25.6318C2.3537 25.6318 3.65953 24.2412 5.39646 24.2412C5.98793 24.2412 6.58248 24.3751 7.13431 24.6516C8.91953 25.5463 10.8736 25.9999 12.9411 25.9999H12.9539ZM5.39794 21.4295C4.51331 21.4295 3.63346 21.6047 2.81101 21.9463C2.81101 21.9463 2.81144 13.1048 2.81137 13.1003C2.78516 10.3705 3.83583 7.79176 5.76995 5.8391C7.70399 3.88629 10.2717 2.8108 13 2.8108C15.7534 2.8108 18.326 3.87722 20.2438 5.81366C22.1693 7.75775 23.2151 10.3455 23.1886 13.1004C23.1352 18.6646 18.5347 23.1896 12.9423 23.1891C11.3148 23.1891 9.78427 22.8358 8.39362 22.1388C7.44139 21.6615 6.41636 21.4295 5.39794 21.4295Z" fill="#FFCC80"/>
                                         <path d="M20.2378 13.0701C20.2378 14.0403 19.4512 14.8269 18.481 14.8269C17.5108 14.8269 16.7243 14.0403 16.7243 13.0701C16.7243 12.0999 17.5108 11.3134 18.481 11.3134C19.4513 11.3134 20.2378 12.0999 20.2378 13.0701ZM14.6864 13.0701C14.6864 14.0403 13.8999 14.8269 12.9297 14.8269C11.9595 14.8269 11.1729 14.0403 11.1729 13.0701C11.1729 12.0999 11.9595 11.3134 12.9297 11.3134C13.9 11.3134 14.6864 12.0999 14.6864 13.0701ZM9.13509 13.0701C9.13509 14.0403 8.34855 14.8269 7.37833 14.8269C6.40812 14.8269 5.62158 14.0403 5.62158 13.0701C5.62158 12.0999 6.40812 11.3134 7.37833 11.3134C8.34862 11.3134 9.13509 12.0999 9.13509 13.0701Z" fill="#FFCC80"/>
@@ -46,8 +46,8 @@ const Header = ({burgerHandler, loginPopupHandler}) => {
                                     </p>
                                 </button>
                             </li>
-                            <li className="nav__list-item">
-                                <button className="nav__list-btn nav__list-i" onClick={(e) => loginPopupHandler(e)}>
+                            <li className="nav-landing__list-item">
+                                <button className="nav-landing__list-btn nav-landing__list-i" onClick={(e) => loginPopupHandler(e)}>
                                     <p>
                                         Войти
                                     </p>
@@ -61,16 +61,16 @@ const Header = ({burgerHandler, loginPopupHandler}) => {
                     </div>
                 </div>
             </nav>
-            <div className="menu">
-                <div className="container">
-                    <ul className="menu__list nav__list">
-                        <li className="nav__list-item">
-                            <button className="nav__list-link" >
+            <div className="menu-landing">
+                <div className="container-landing">
+                    <ul className="menu-landing__list nav-landing__list">
+                        <li className="nav-landing__list-item">
+                            <button className="nav-landing__list-link" >
                                 О сервисе
                             </button>
                         </li>
-                        <li className="nav__list-item">
-                            <button className="menu__list-link nav__list-link nav__list-i" >
+                        <li className="nav-landing__list-item">
+                            <button className="menu-landing__list-link nav-landing__list-link nav-landing__list-i" >
                                 <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12.9539 25.9999C16.4127 25.9999 19.6704 24.6684 22.1274 22.2502C24.5911 19.8253 25.9661 16.5854 25.9994 13.1274C26.033 9.61668 24.6983 6.31686 22.241 3.83569C19.7911 1.36219 16.5093 0 13 0C9.51577 0 6.23879 1.37125 3.7728 3.86113C1.30843 6.34926 -0.0310594 9.63741 0.000562161 13.1204L0 24.5945C0 25.1515 0.328934 25.6559 0.838603 25.8806C1.02074 25.9609 1.21363 25.9999 1.40519 25.9999C1.74959 25.9999 2.08948 25.8733 2.3537 25.6318C2.3537 25.6318 3.65953 24.2412 5.39646 24.2412C5.98793 24.2412 6.58248 24.3751 7.13431 24.6516C8.91953 25.5463 10.8736 25.9999 12.9411 25.9999H12.9539ZM5.39794 21.4295C4.51331 21.4295 3.63346 21.6047 2.81101 21.9463C2.81101 21.9463 2.81144 13.1048 2.81137 13.1003C2.78516 10.3705 3.83583 7.79176 5.76995 5.8391C7.70399 3.88629 10.2717 2.8108 13 2.8108C15.7534 2.8108 18.326 3.87722 20.2438 5.81366C22.1693 7.75775 23.2151 10.3455 23.1886 13.1004C23.1352 18.6646 18.5347 23.1896 12.9423 23.1891C11.3148 23.1891 9.78427 22.8358 8.39362 22.1388C7.44139 21.6615 6.41636 21.4295 5.39794 21.4295Z" fill="#FFCC80"/>
                                     <path d="M20.2378 13.0701C20.2378 14.0403 19.4512 14.8269 18.481 14.8269C17.5108 14.8269 16.7243 14.0403 16.7243 13.0701C16.7243 12.0999 17.5108 11.3134 18.481 11.3134C19.4513 11.3134 20.2378 12.0999 20.2378 13.0701ZM14.6864 13.0701C14.6864 14.0403 13.8999 14.8269 12.9297 14.8269C11.9595 14.8269 11.1729 14.0403 11.1729 13.0701C11.1729 12.0999 11.9595 11.3134 12.9297 11.3134C13.9 11.3134 14.6864 12.0999 14.6864 13.0701ZM9.13509 13.0701C9.13509 14.0403 8.34855 14.8269 7.37833 14.8269C6.40812 14.8269 5.62158 14.0403 5.62158 13.0701C5.62158 12.0999 6.40812 11.3134 7.37833 11.3134C8.34862 11.3134 9.13509 12.0999 9.13509 13.0701Z" fill="#FFCC80"/>
@@ -80,8 +80,8 @@ const Header = ({burgerHandler, loginPopupHandler}) => {
                                 </p>
                             </button>
                         </li>
-                        <li className="nav__list-item">
-                            <button className="nav__list-btn nav__list-i">
+                        <li className="nav-landing__list-item">
+                            <button className="nav-landing__list-btn nav-landing__list-i">
                                 <p>
                                     Войти
                                 </p>
@@ -94,10 +94,10 @@ const Header = ({burgerHandler, loginPopupHandler}) => {
                     </ul>
                 </div>
             </div>
-            <div className="container">
-                <article className="header__inner">
-                    <h1 className="header__title">Купи работу</h1>
-                    <div className="header__subtitle">
+            <div className="container-landing">
+                <article className="header-landing__inner">
+                    <h1 className="header-landing__title">Купи работу</h1>
+                    <div className="header-landing__subtitle">
                         <h3>
                             экономим твои деньги и время
                         </h3>
@@ -107,11 +107,11 @@ const Header = ({burgerHandler, loginPopupHandler}) => {
                             <path d="M28.457 17.7968C28.397 17.6618 26.9579 14.4999 23.9999 14.4999C21.0429 14.4999 19.6029 17.6618 19.5429 17.7968C19.451 18.0038 19.511 18.2459 19.688 18.3878C19.8629 18.5299 20.114 18.5348 20.2979 18.4019C20.3099 18.3929 21.56 17.4998 23.9999 17.4998C26.426 17.4998 27.674 18.3809 27.7019 18.4009C27.7899 18.4669 27.896 18.4999 27.9999 18.4999C28.1099 18.4999 28.2209 18.4628 28.3119 18.3908C28.4889 18.2489 28.55 18.0049 28.457 17.7968ZM5.99895 12.4579C5.79094 12.4579 5.57995 12.3929 5.39995 12.2579C4.95795 11.9269 4.86895 11.2999 5.19994 10.8579C8.46195 6.50788 12.816 6.45789 12.9999 6.45789C13.5519 6.45789 13.9999 6.90588 13.9999 7.45788C13.9999 8.00889 13.5549 8.45589 13.0039 8.45788C12.8479 8.45988 9.43495 8.54387 6.79894 12.0579C6.60394 12.3199 6.30295 12.4579 5.99895 12.4579ZM29.0009 14.5829C28.6959 14.5829 28.397 14.4449 28.1999 14.1829C25.6079 10.7259 21.239 11.5559 21.1959 11.5629C20.6489 11.6709 20.1279 11.3199 20.0189 10.7789C19.9109 10.2369 20.2619 9.71088 20.8029 9.60189C21.0339 9.55488 26.4599 8.52988 29.7989 12.9819C30.131 13.4239 30.041 14.0509 29.5989 14.3819C29.42 14.5189 29.21 14.5829 29.0009 14.5829ZM23.2539 23.5769C23.066 23.4668 22.8219 23.4899 22.6569 23.6369C22.6469 23.6449 21.644 24.4999 17.9999 24.4999C14.3589 24.4999 13.3539 23.6459 13.3539 23.6459C13.1949 23.4859 12.9499 23.4559 12.7539 23.5639C12.5589 23.6749 12.4609 23.9029 12.516 24.1208C12.5259 24.1649 13.6599 28.4999 17.9999 28.4999C22.34 28.4999 23.474 24.1649 23.4849 24.1208C23.5379 23.9078 23.441 23.6899 23.2539 23.5769Z" fill="#3C4852"/>
                         </svg>
                     </div>
-                    <div className="header__btns">
-                        <button className="header__btn-1">
+                    <div className="header-landing__btns">
+                        <button className="header-landing__btn-1">
                             <p>Разместить заказ</p>
                         </button>
-                        <button className="header__btn-2">
+                        <button className="header-landing__btn-2">
                             <p>Стать автором</p>
                         </button>
                     </div>

@@ -31,7 +31,7 @@ export const login = (login, password) => {
     }
 }
 
-export const auth =  () => {
+export const auth = () => {
     return async dispatch => {
         try {
             const response = await axios.get(`${API_URL}api/auth/auth`,
