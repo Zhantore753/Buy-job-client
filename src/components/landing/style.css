@@ -93,43 +93,43 @@ h6 {
 
 @font-face {
   font-family: "Panton";
-  src: url("../fonts/Panton.otf");
+  src: url("../../assets/fonts/Panton.otf");
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Panton";
-  src: url("../fonts/Panton Bold.otf");
+  src: url("../../assets/fonts/Panton Bold.otf");
   font-weight: 700;
 }
 
 @font-face {
   font-family: "Panton";
-  src: url("../fonts/Panton SemiBold.otf");
+  src: url("../../assets/fonts/Panton SemiBold.otf");
   font-weight: 500;
 }
 
 @font-face {
   font-family: "Panton";
-  src: url("../fonts/Panton Light.otf");
+  src: url("../../assets/fonts/Panton Light.otf");
   font-weight: 300;
 }
 
 @font-face {
   font-family: "Panton";
-  src: url("../fonts/Panton ExtraLight.otf");
+  src: url("../../assets/fonts/Panton ExtraLight.otf");
   font-weight: 200;
 }
 
 @font-face {
   font-family: "Panton";
-  src: url("../fonts/Panton Black.otf");
+  src: url("../../assets/fonts/Panton Black.otf");
   font-weight: 800;
 }
 
 @font-face {
   font-family: "Panton";
-  src: url("../fonts/Panton Heavy.otf");
+  src: url("../../assets/fonts/Panton Heavy.otf");
   font-weight: 900;
 }
 
@@ -152,7 +152,7 @@ body {
 }
 
 .header {
-  background: url("../img/header__bg.png") 0 0/100% 95% no-repeat;
+  background: url("../../assets/img/header__bg.png") 0 0/100% 95% no-repeat;
   background-color: #fff;
   padding-bottom: 280px;
   overflow: hidden;
@@ -167,7 +167,7 @@ body {
   left: 0;
   right: 56px;
   bottom: 0;
-  background: url("../img/header__main.png") 90% 164px/auto no-repeat;
+  background: url("../../assets/img/header__main.png") 90% 164px/auto no-repeat;
   z-index: -1;
 }
 
@@ -178,7 +178,7 @@ body {
   left: 0;
   right: 56px;
   bottom: 0;
-  background: url("../img/header__spread-3.png") left bottom/auto no-repeat;
+  background: url("../../assets/img/header__spread-3.png") left bottom/auto no-repeat;
   z-index: -1;
 }
 
@@ -253,7 +253,7 @@ body {
   max-height: 158px;
   height: 100%;
   right: 1540px;
-  background: url("../img/header__spread-2.png") center 0/auto no-repeat;
+  background: url("../../assets/img/header__spread-2.png") center 0/auto no-repeat;
   z-index: -1;
 }
 
@@ -264,7 +264,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("../img/header__spread-logo.png") 168px 0/auto no-repeat;
+  background: url("../../assets/img/header__spread-logo.png") 168px 0/auto no-repeat;
   z-index: -2;
 }
 
@@ -525,7 +525,7 @@ body {
 }
 
 .economy {
-  background: url("../img/economy__bg-2.png") center/cover no-repeat;
+  background: url("../../assets/img/economy__bg-2.png") center/cover no-repeat;
   margin-bottom: 110px;
   z-index: 3;
   position: relative;
@@ -538,7 +538,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("../img/economy__spread-1.png") left top/auto no-repeat;
+  background: url("../../assets/img/economy__spread-1.png") left top/auto no-repeat;
   z-index: -1;
 }
 
@@ -549,7 +549,7 @@ body {
   left: 0;
   bottom: -50px;
   right: 0;
-  background: url("../img/economy__spread-2.png") right bottom/auto no-repeat;
+  background: url("../../assets/img/economy__spread-2.png") right bottom/auto no-repeat;
   z-index: -1;
 }
 
@@ -610,7 +610,7 @@ body {
 
 .footer {
   padding: 100px 0 40px 0;
-  background: url("../img/footer__bg.png") center bottom/cover no-repeat;
+  background: url("../../assets/img/footer__bg.png") center bottom/cover no-repeat;
   color: #FFFFFF;
 }
 

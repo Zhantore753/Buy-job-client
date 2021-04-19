@@ -1,5 +1,5 @@
 import React from 'react';
-// import './css/style.css';
+import './style.css';
 import Header from './header/Header';
 import Advantages from './advantages/Advantages';
 import Stage from './stage/Stage';

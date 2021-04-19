@@ -31,13 +31,10 @@ const Login = ({popupClose, regPopupHandler}) => {
             setResponse([400, ['Пароль должен быть больше 3 и меньше 21 символов']])
             return;
         }
-        let newRes;
         await dispatch(login(currentLogin, password)).then(res => {
-            newRes = res;
+            setResponse(res)
         });
-        setResponse(newRes);
         cleanInputsHandler();
-        setTimeout(() => {setResponse([])}, 5000);
     }
 
     return (

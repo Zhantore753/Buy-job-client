@@ -22,7 +22,7 @@ export const login = (login, password) => {
                 login,
                 password
             });
-            dispatch(setUser(response.data.user));
+            setTimeout(() => dispatch(setUser(response.data.user)), 1000);
             localStorage.setItem('token', response.data.token);
             return [response.status, response.data.message];
         } catch (e) {
@@ -40,7 +40,7 @@ export const auth =  () => {
             dispatch(setUser(response.data.user));
             localStorage.setItem('token', response.data.token);
         } catch (e) {
-            localStorage.removeItem('token')
+            localStorage.removeItem('token');
         }
     }
 }
