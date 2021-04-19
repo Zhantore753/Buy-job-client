@@ -11,8 +11,8 @@ import Reg from './login/Reg';
 const Landing = () => {
 
     const burgerHandler = () => {
-        const burger = document.querySelector('.nav__burger');
-        const menu = document.querySelector('.menu');
+        const burger = document.querySelector('.nav-landing__burger');
+        const menu = document.querySelector('.menu-landing');
         window.scrollTo({top: 0, behavior: 'smooth'});
 
         let div = document.createElement('div');
@@ -33,30 +33,30 @@ const Landing = () => {
         }
 
         document.body.classList.toggle('overflow-h');
-        burger.classList.toggle('nav__burger-active');
-        menu.classList.toggle('menu-active');
+        burger.classList.toggle('nav-landing__burger-active');
+        menu.classList.toggle('menu-landing-active');
     };
 
     const loginPopupHandler = (e) =>{
-        const enterPopup = document.querySelector('.enter');
+        const enterPopup = document.querySelector('.enter-landing');
         e.preventDefault();
-        enterPopup.classList.add('popup-active');
+        enterPopup.classList.add('popup-landing-active');
         document.body.style.overflow = 'hidden';
     }
 
     const popupCloseHandler = (e) =>{
         e.preventDefault();
-        const popup = document.querySelector('.popup-active');
-        popup.classList.remove('popup-active');
+        const popup = document.querySelector('.popup-landing-active');
+        popup.classList.remove('popup-landing-active');
         document.body.style.overflow = 'visible';
     }
 
     const regPopupHandler = (e) =>{
         e.preventDefault();
-        const registerPopup = document.querySelector('.register');
-        const popup = document.querySelector('.popup-active');
-        registerPopup.classList.add('popup-active');
-        setTimeout(()=>popup.classList.remove('popup-active'), 500);
+        const registerPopup = document.querySelector('.register-landing');
+        const popup = document.querySelector('.popup-landing-active');
+        registerPopup.classList.add('popup-landing-active');
+        setTimeout(()=>popup.classList.remove('popup-landing-active'), 500);
     }
     
     return (

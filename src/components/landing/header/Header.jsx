@@ -81,7 +81,7 @@ const Header = ({burgerHandler, loginPopupHandler}) => {
                             </button>
                         </li>
                         <li className="nav-landing__list-item">
-                            <button className="nav-landing__list-btn nav-landing__list-i">
+                            <button onClick={(e) => loginPopupHandler(e)} className="nav-landing__list-btn nav-landing__list-i">
                                 <p>
                                     Войти
                                 </p>

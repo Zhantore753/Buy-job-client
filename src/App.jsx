@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import {auth} from './actions/user';
@@ -14,18 +14,19 @@ function App() {
   },[]);
 
   return (
-    <>
-    {!isAuth ?
-      <Landing />
-    :
-      <BrowserRouter className="App">
-          <Switch>
-            <Route path="/main" component={Main}/>
-            <Redirect to="/main" />
-          </Switch>
-      </BrowserRouter>
-    }
-    </>
+    <BrowserRouter className="App">
+      {!isAuth ?
+        <Switch>
+          <Route path="/" component={Landing} isAuth={isAuth}/>
+          <Redirect to="/" />
+        </Switch>
+        :
+        <Switch>
+          <Route path="/main" component={Main}/>
+          <Redirect to="/main" />
+        </Switch>
+      }
+    </BrowserRouter>
   );
 }
 
