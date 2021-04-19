@@ -1487,9 +1487,9 @@ body {
   height: 50px;
 }
 
-.menu__settings a,
-.menu__orders a,
-.menu__support a {
+.menu__settings button,
+.menu__orders button,
+.menu__support button {
   padding: 20px 0;
 }
 

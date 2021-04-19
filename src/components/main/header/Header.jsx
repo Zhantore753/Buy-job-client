@@ -1,6 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {NavLink} from "react-router-dom";
+import {useDispatch, useSelector} from 'react-redux';
+import {logout} from '../../../reducers/userReducer';
 
-const Header = () => {
+const Header = ({burgerHandler}) => {
+    const dispatch = useDispatch();
+
     return (
         <header className="header">
             <div className="container-wide">
@@ -80,10 +85,10 @@ const Header = () => {
                                     <img src="img/header__avatar.png" alt="avatar"/>
                                 </button>
                             </div>
-                            <button className="header__logout-btn">Выйти</button>
+                            <button onClick={()=>dispatch(logout())} className="header__logout-btn">Выйти</button>
                         </li>
                         <li className="header__burger">
-                            <div className="nav__burger">
+                            <div onClick={() => {burgerHandler()}} className="nav__burger">
                                 <span></span>
                             </div>
                         </li>
@@ -145,7 +150,7 @@ const Header = () => {
                                     <img src="img/header__avatar.png" alt="avatar"/>
                                 </button>
                             </div>
-                            <button className="header__logout-btn">Выйти</button>
+                            <button onClick={()=>dispatch(logout())} className="header__logout-btn">Выйти</button>
                         </li>
                     </ul>
                 </nav>
