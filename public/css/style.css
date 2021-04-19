@@ -722,6 +722,7 @@ body {
   max-width: 450px;
   padding: 58px 72px 72px 72px;
   position: relative;
+  transition: all 0.3s;
 }
 
 .popup__close {
@@ -832,13 +833,15 @@ body {
 }
 
 .reg__error{
-  margin-top: 10px;
+  font-size: 14px;
+  margin-top: 5px;
   color: #ff3333;
   text-align: center;
 }
 
 .reg__success{
-  margin-top: 10px;
+  font-size: 14px;
+  margin-top: 5px;
   color: #22bb33;
   text-align: center;
 }

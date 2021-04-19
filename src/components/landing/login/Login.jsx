@@ -21,6 +21,16 @@ const Login = ({popupClose, regPopupHandler}) => {
     const loginBtnHandler = async (e) =>{
         e.preventDefault();
         e.stopPropagation();
+        if(currentLogin.length <= 3 || currentLogin.length >= 21){
+            console.log(currentLogin);
+            setResponse([400, ['Логин должен быть больше 3 и меньше 15 символов']])
+            return;
+        }
+        if(password.length <= 3 || password.length >= 21){
+            console.log(password);
+            setResponse([400, ['Пароль должен быть больше 3 и меньше 21 символов']])
+            return;
+        }
         let newRes;
         await dispatch(login(currentLogin, password)).then(res => {
             newRes = res;

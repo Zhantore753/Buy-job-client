@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {registration} from '../../../actions/user';
 
 const Reg = ({popupClose}) => {
@@ -8,7 +8,10 @@ const Reg = ({popupClose}) => {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [wrongRepeatPassword, setWrongRepeatPassword] = useState(false);
     const [response, setResponse] = useState([]);
-
+    const [validLogin, setValidLogin] = useState();
+    const [validPassword, setValidPassword] = useState();
+    const [validRepeatPassword, setValidRepeatPassword] = useState();
+    
     const cleanInputsHandler = () => {
         setLogin('');
         setEmail('');
@@ -21,9 +24,27 @@ const Reg = ({popupClose}) => {
         cleanInputsHandler();
     }
 
+    const validateHandler = (min, max, inputState, setValid) => {
+        if((inputState.length <= min - 1 || inputState.length >= max + 1) && inputState.length){
+            setValid(`Длина должна быть больше ${min - 1} и меньше ${max + 1}`);
+        }else{
+            setValid('');
+        }
+    }
+
+    useEffect(() => {
+        validateHandler(4, 14, login, setValidLogin);
+        validateHandler(4, 20, password, setValidPassword);
+        validateHandler(4, 20, repeatPassword, setValidRepeatPassword);
+    }, [login, password, repeatPassword])
+
     const regBtnHandler = async (e) =>{
         e.preventDefault();
-        e.stopPropagation();
+        if(validLogin || validPassword || validRepeatPassword){
+            setResponse([400, 'Поля введены не верно!'])
+            return;
+        }
+        setResponse([]);
         if(password !== repeatPassword){
             setWrongRepeatPassword(true);
             return;
@@ -62,8 +83,17 @@ const Reg = ({popupClose}) => {
                     </svg>
                 </div>
                 <form className="form">
+                    {validLogin &&
+                        <p className="reg__error">{validLogin}</p>
+                    }
                     <div className="login__wrapper input__wrap">
-                        <input value={login} autoComplete="username" onChange={(e) => setLogin(e.target.value)} type="text" name="login" placeholder="Логин" />
+                        <input value={login}
+                            autoComplete="username" 
+                            onChange={(e) => setLogin(e.target.value)} 
+                            minLength={4} maxLength={14} 
+                            type="text" 
+                            name="login" 
+                            placeholder="Логин" />
                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M21 21H1L1.02071 20.6621C1.19849 17.7428 3.60962 16.8091 5.54691 16.0589C6.794 15.5757 7.87367 15.158 8.20081 14.3677C8.2528 13.7758 8.24883 13.3234 8.24443 12.802C8.24355 12.702 8.24267 12.6005 8.24223 12.496C7.77476 12.0884 7.25706 11.0309 7.10065 10.1454C6.7658 10.0152 6.31882 9.62983 6.18268 8.51635C6.11395 7.9544 6.31155 7.54557 6.54991 7.31177C6.45981 6.5928 6.25207 3.99908 7.66637 2.35596C8.44049 1.45611 9.56202 1 10.9999 1C12.4378 1 13.5593 1.45611 14.3334 2.35596C15.7477 3.99929 15.54 6.59302 15.4499 7.31177C15.6882 7.54557 15.8856 7.95462 15.8164 8.51656C15.6807 9.62961 15.2335 10.015 14.8985 10.1452C14.7436 11.0329 14.2393 12.0876 13.7842 12.4936C13.7838 12.6025 13.7829 12.7081 13.7818 12.8117C13.7769 13.3301 13.7728 13.7795 13.8247 14.3675C14.1517 15.1576 15.2269 15.5755 16.469 16.0583C18.399 16.8087 20.8006 17.7424 20.9789 20.6617L21 21ZM1.7001 20.3624H20.2997C19.9939 18.1146 18.0826 17.3717 16.2317 16.6519C14.8844 16.1281 13.6117 15.6334 13.2033 14.5522L13.1843 14.47C13.1253 13.8283 13.1297 13.3318 13.1348 12.8063C13.1361 12.6547 13.1376 12.4994 13.1376 12.335V12.1422L13.311 12.0526C13.5315 11.939 14.179 10.8537 14.2869 9.85583L14.3151 9.5934L14.5821 9.57171C14.7936 9.55457 15.0754 9.24833 15.1741 8.44087C15.2395 7.90755 14.9381 7.7193 14.935 7.71734L14.7493 7.60522L14.7848 7.3931C14.7896 7.36382 15.2635 4.4207 13.8382 2.76652C13.1927 2.01784 12.238 1.63786 11.0001 1.63786C9.76139 1.63786 8.80596 2.01806 8.16072 2.76804C6.73342 4.42677 7.21058 7.36339 7.21543 7.39289L7.25134 7.60457L7.06541 7.71691C7.06232 7.71886 6.76096 7.90755 6.82594 8.44044C6.92464 9.24768 7.20617 9.55414 7.41744 9.57127L7.68444 9.59296L7.71264 9.85539C7.81992 10.8455 8.48719 11.9344 8.71564 12.0522L8.88946 12.1416V12.3346C8.88946 12.4953 8.89078 12.6478 8.8921 12.7963C8.89673 13.3249 8.90091 13.8242 8.84187 14.4694L8.82271 14.5518C8.41406 15.6334 7.13656 16.1281 5.78394 16.6517C3.92553 17.372 2.00653 18.115 1.7001 20.3624Z" fill="#ABAAAC" stroke="#ABAAAC" strokeWidth="0.5"/>
                         </svg>
@@ -74,23 +104,47 @@ const Reg = ({popupClose}) => {
                             <path d="M17.4167 0.375H1.58335C0.710088 0.375 0 1.08509 0 1.95835V13.0417C0 13.9149 0.710088 14.625 1.58335 14.625H17.4167C18.2899 14.625 19 13.9149 19 13.0417V1.95835C19 1.08509 18.2899 0.375 17.4167 0.375ZM1.58335 1.16665H17.4167C17.475 1.16665 17.5264 1.18792 17.5812 1.19994C16.2104 2.4545 11.6651 6.61268 10.0745 8.0458C9.94999 8.15791 9.74938 8.29165 9.50004 8.29165C9.2507 8.29165 9.05009 8.15791 8.92521 8.04543C7.33474 6.61253 2.78918 2.45413 1.41862 1.20002C1.47346 1.18799 1.52497 1.16665 1.58335 1.16665ZM0.791654 13.0417V1.95835C0.791654 1.88079 0.815033 1.81043 0.835963 1.73955C1.88512 2.69979 5.05663 5.60115 7.11309 7.4712C5.06331 9.23193 1.89098 12.2396 0.833477 13.248C0.814811 13.1807 0.791654 13.1148 0.791654 13.0417ZM17.4167 13.8333H1.58335C1.52011 13.8333 1.46389 13.8113 1.40485 13.7972C2.49761 12.7555 5.69013 9.73053 7.70387 8.0078C7.96638 8.24593 8.20618 8.46306 8.39522 8.63339C8.72148 8.92797 9.10338 9.08335 9.5 9.08335C9.89662 9.08335 10.2785 8.92793 10.6044 8.63377C10.7935 8.46336 11.0335 8.24605 11.2961 8.0078C13.31 9.73035 16.5021 12.7551 17.5951 13.7972C17.5361 13.8113 17.48 13.8333 17.4167 13.8333ZM18.2083 13.0417C18.2083 13.1148 18.1852 13.1807 18.1666 13.248C17.1086 12.2391 13.9367 9.23175 11.8869 7.47124C13.9435 5.60119 17.1145 2.70009 18.164 1.73947C18.185 1.81035 18.2083 1.88075 18.2083 1.95831V13.0417Z" fill="#ABAAAC"/>
                         </svg>
                     </div>
+                    {validPassword &&
+                        <p className="reg__error">{validPassword}</p>
+                    }
                     <div className="password__wrapper input__wrap">
-                        <input value={password} autoComplete="new-password" onChange={(e) => setPassword(e.target.value)} type="password" name="password" placeholder="Пароль"/>
+                        <input 
+                            value={password} 
+                            autoComplete="new-password" 
+                            onChange={(e) => setPassword(e.target.value)} 
+                            minLength={4} maxLength={20} 
+                            type="password" 
+                            name="password" 
+                            placeholder="Пароль"/>
                         <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.3954 7.67444H1.60467C0.963496 7.67444 0.441895 8.19608 0.441895 8.83721V18.8372C0.441895 19.4784 0.963535 20 1.60467 20H14.3954C15.0365 20 15.5581 19.4783 15.5581 18.8372V8.83721C15.5581 8.19608 15.0365 7.67444 14.3954 7.67444ZM14.1628 18.6047H1.83725V9.06979H14.1628V18.6047H14.1628Z" fill="#ABAAAC"/>
                             <path d="M7.9999 0C4.85826 0 2.30225 2.57699 2.30225 5.74418V8.13953H3.6976V5.74418C3.6976 3.34629 5.6276 1.39535 7.99994 1.39535C10.3723 1.39535 12.3023 3.34629 12.3023 5.74418V8.13953H13.6976V5.74418C13.6976 2.57699 11.1418 0 7.9999 0Z" fill="#ABAAAC"/>
                             <path d="M7.88369 13.0232C7.49834 13.0232 7.18604 13.3355 7.18604 13.7209V15.3487C7.18604 15.7341 7.49838 16.0464 7.88369 16.0464C8.269 16.0464 8.58135 15.7341 8.58135 15.3487V13.7209C8.58139 13.3355 8.26904 13.0232 7.88369 13.0232Z" fill="#ABAAAC"/>
                         </svg>                            
                     </div>
+                    {validRepeatPassword &&
+                        <p className="reg__error">{validRepeatPassword}</p>
+                    }
                     <div className="password__wrapper input__wrap">
-                        <input value={repeatPassword} autoComplete="new-password" onChange={(e) => setRepeatPassword(e.target.value)} type="password" name="password-repeat" placeholder="Повторить пароль"/>
+                        <input 
+                        value={repeatPassword} 
+                        autoComplete="new-password" 
+                        onChange={(e) => setRepeatPassword(e.target.value)} 
+                        minLength={4} maxLength={20} 
+                        type="password" 
+                        name="password-repeat" 
+                        placeholder="Повторить пароль"/>
                         <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.3954 7.67444H1.60467C0.963496 7.67444 0.441895 8.19608 0.441895 8.83721V18.8372C0.441895 19.4784 0.963535 20 1.60467 20H14.3954C15.0365 20 15.5581 19.4783 15.5581 18.8372V8.83721C15.5581 8.19608 15.0365 7.67444 14.3954 7.67444ZM14.1628 18.6047H1.83725V9.06979H14.1628V18.6047H14.1628Z" fill="#ABAAAC"/>
                             <path d="M7.9999 0C4.85826 0 2.30225 2.57699 2.30225 5.74418V8.13953H3.6976V5.74418C3.6976 3.34629 5.6276 1.39535 7.99994 1.39535C10.3723 1.39535 12.3023 3.34629 12.3023 5.74418V8.13953H13.6976V5.74418C13.6976 2.57699 11.1418 0 7.9999 0Z" fill="#ABAAAC"/>
                             <path d="M7.88369 13.0232C7.49834 13.0232 7.18604 13.3355 7.18604 13.7209V15.3487C7.18604 15.7341 7.49838 16.0464 7.88369 16.0464C8.269 16.0464 8.58135 15.7341 8.58135 15.3487V13.7209C8.58139 13.3355 8.26904 13.0232 7.88369 13.0232Z" fill="#ABAAAC"/>
                         </svg>                            
                     </div>
-                    <input onClick={(e) => regBtnHandler(e)} className="reg__btn form__btn" type="submit" value="Регистрация"/>
+                    <input 
+                    onClick={(e) => regBtnHandler(e)} 
+                    className="reg__btn form__btn" 
+                    type="submit" 
+                    value="Регистрация"/>
                     {wrongRepeatPassword && <p className="reg__error">Пароли не совпадают!</p>}
                     {response[0] >= 400 && response[0] <= 500 && <p className="reg__error">{response[1]}</p>}
                     {response[0] === 200 && <p className="reg__success">{response[1]}</p>}
