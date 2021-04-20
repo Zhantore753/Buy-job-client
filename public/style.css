@@ -1988,12 +1988,36 @@ body {
   border-radius: 10px;
 }
 
+.placing-order__back{
+  margin-left: 40px;
+  margin-bottom: -55px;
+  padding: 10px 15px 10px 15px;
+  background-color: #FFCC80;
+  border: 1px solid #FFCC80;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.placing-order__back svg{
+  transform: rotate(-180deg);
+}
+
+.placing-order__back:hover{
+  margin-left: 36px;
+  background-color: transparent;
+}
+
 .placing-order__title {
+  text-align: center;
   padding: 0 0 24px 65px;
   font-weight: 700;
   font-size: 26px;
   line-height: 31px;
   border-bottom: 1px solid #F3EEEE;
+}
+
+.placing-ticket__title{
+  margin-top: -28px;
 }
 
 .placing-order__form {
@@ -2033,6 +2057,35 @@ body {
 
 .placing-order__desc-col:nth-child(2) {
   padding-left: 18px;
+}
+
+.placing-ticket{
+  font-size: 18px;
+  font-weight: normal;
+  padding: 40px;
+  margin-top: 10px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.placing-ticket:nth-child(1) {
+  padding-right: 40px;
+}
+
+.placing-ticket:nth-child(2) {
+  padding-left: 40px;
+}
+
+.placing-ticket__input{
+  font-size: 18px;
+  width: 100%;
+  border: 1px solid #E5E5E5;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 18px 35px;
+  line-height: 19px;
+  margin-bottom: 12px;
+  color: #8E8D8D;
 }
 
 .placing-order__desc-btn {
@@ -2191,6 +2244,8 @@ body {
 }
 
 .placing-order__description-label {
+  font-weight: 500;
+  margin-bottom: 4px;
   width: 100%;
   display: block;
 }
@@ -2202,11 +2257,20 @@ body {
   border: 1px solid #E5E5E5;
   box-sizing: border-box;
   border-radius: 10px;
+  min-height: 660px;
   height: 660px;
   max-height: 800px;
   font-size: 16px;
   line-height: 19px;
   color: #8E8D8D;
+}
+
+.placing-ticket__description{
+  font-size: 18px;
+  line-height: 28px;
+  min-height: 440px;
+  height: 440px;
+  max-height: 600px;
 }
 
 .placing-order__file {
@@ -2290,7 +2354,7 @@ body {
   text-overflow: ellipsis;
 }
 
-.placing-order__desc-btn input {
+.placing-order__desc-btn button {
   margin-top: 20px;
   cursor: pointer;
   font-weight: 800;
@@ -2308,9 +2372,13 @@ body {
   transition: all 0.3s;
 }
 
-.placing-order__desc-btn input:hover {
-  color: #FFCC80;
+.placing-order__desc-btn button:hover {
   background: #fff;
+}
+
+.placing-ticket__btn{
+  display: flex;
+  margin-left: 40px;
 }
 
 .orders__item {
@@ -3667,7 +3735,7 @@ input:checked ~ .questionary__form-area-radio-item {
 }
 
 @media (max-width: 600px) {
-  .placing-order__desc-btn input {
+  .placing-order__desc-btn button {
     padding: 16px 32px;
   }
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import Header from './header/Header';
-import Support from './support/Support';
 import Footer from './footer/Footer';
+import Support from './support/Support';
+import SupportCreate from './support/SupportCreate';
 
 const Main = () => {
     const burgerHandler = () =>{
@@ -21,6 +22,7 @@ const Main = () => {
                 <Header burgerHandler={burgerHandler}/>
                 <Switch>
                     <Route path="/support" component={Support}/>
+                    <Route path="/support-create" component={SupportCreate}/>
                     <Redirect to="/" />
                 </Switch>
                 <Footer />
