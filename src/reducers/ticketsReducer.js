@@ -5,16 +5,16 @@ const defaultState = {
     tickets: []
 };
 
-export default function userReducer(state = defaultState, action){
+export default function tiketsReducer(state = defaultState, action){
     switch(action.type){
         case SET_TICKETS:
             return{
                 ...state,
-                tickets: action.payload
+                tickets: [...state.tickets, ...action.payload]
             }
         default:
             return state;
     }
 }
 
-export const setTickets = user => ({type: SET_TICKETS, payload: user});
+export const setTickets = tickets => ({type: SET_TICKETS, payload: tickets});

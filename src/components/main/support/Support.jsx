@@ -6,6 +6,10 @@ import SupportList from './SupportList';
 const Support = () => {
     const dispatch = useDispatch();
 
+    const create = (i) =>{
+        dispatch(createTicket(`ticket ${i}`, 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione, aperiam? Voluptates nihil facilis quos deserunt ipsa corporis pariatur odio beatae hic quo delectus ea in, excepturi voluptatem sed reprehenderit tempora.'));
+    }
+
     useEffect(()=>{
         dispatch(getTickets());
     }, []);

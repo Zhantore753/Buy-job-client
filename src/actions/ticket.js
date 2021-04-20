@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {setTickets} from "../reducers/ticketsReducer";
+import {setTickets, countTickets} from "../reducers/ticketsReducer";
 import {API_URL} from "../config";
 
 export function getTickets(skip) {

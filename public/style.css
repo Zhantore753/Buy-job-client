@@ -1690,6 +1690,7 @@ body {
 }
 
 .support__item {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -1759,6 +1760,11 @@ body {
   font-size: 14px;
   line-height: 24px;
   color: #8E8D8D;
+}
+
+.support__load-more{
+  display: flex;
+  justify-content: center;
 }
 
 .settings__inner {
@@ -3682,6 +3688,7 @@ input:checked ~ .questionary__form-area-radio-item {
   }
 
   .support__item .support__item-col:last-child {
+    width: 100%;
     display: flex;
     justify-content: space-between;
   }
