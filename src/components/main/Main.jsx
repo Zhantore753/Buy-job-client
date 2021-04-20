@@ -18,12 +18,11 @@ const Main = () => {
     return (
         <BrowserRouter>
             <div className="main-body">
-                <Header />
-                <Support />
-                {/* <Switch>
+                <Header burgerHandler={burgerHandler}/>
+                <Switch>
                     <Route path="/support" component={Support}/>
                     <Redirect to="/" />
-                </Switch> */}
+                </Switch>
                 <Footer />
             </div>
         </BrowserRouter>
