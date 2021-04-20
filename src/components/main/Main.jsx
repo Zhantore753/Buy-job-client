@@ -1,6 +1,8 @@
 import React from 'react';
-// import './main.css';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import Header from './header/Header';
+import Support from './support/Support';
+import Footer from './footer/Footer';
 
 const Main = () => {
     const burgerHandler = () =>{
@@ -14,9 +16,17 @@ const Main = () => {
     }
 
     return (
-        <div className="main-body">
-            <Header burgerHandler={burgerHandler}/>
-        </div>
+        <BrowserRouter>
+            <div className="main-body">
+                <Header />
+                <Support />
+                {/* <Switch>
+                    <Route path="/support" component={Support}/>
+                    <Redirect to="/" />
+                </Switch> */}
+                <Footer />
+            </div>
+        </BrowserRouter>
     );
 };
 
