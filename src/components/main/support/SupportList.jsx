@@ -19,8 +19,8 @@ const SupportList = () => {
     return (
         <>
             <ul className="support__list">
-                {tickets.map(ticket =>
-                    <li key={ticket._id} className="support__item">
+                {tickets.map((ticket, index) =>
+                    <li key={index} className="support__item">
                         <div className="support__item-col">
                             <h3 className="support__item-title">{ticket.title}</h3>
                             <p className="support__item-subtitle">{ticket.description}</p>

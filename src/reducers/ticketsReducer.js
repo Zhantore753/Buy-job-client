@@ -1,5 +1,5 @@
 const SET_TICKETS = "SET_TICKETS";
-const ADD_TICKET =  "ADD_TICKET";
+const ADD_TICKET =  "SORT_TICKET";
 
 const defaultState = {
     tickets: []
@@ -12,9 +12,15 @@ export default function tiketsReducer(state = defaultState, action){
                 ...state,
                 tickets: [...state.tickets, ...action.payload]
             }
+        case ADD_TICKET: 
+            return{
+                ...state,
+                tickets: [...action.payload, ...state.tickets]
+            }
         default:
             return state;
     }
 }
 
 export const setTickets = tickets => ({type: SET_TICKETS, payload: tickets});
+export const addTicket = ticket => ({type: ADD_TICKET, payload: ticket});

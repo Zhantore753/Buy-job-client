@@ -1,11 +1,29 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {NavLink} from "react-router-dom";
+import {createTicket} from '../../../actions/ticket';
 
 const SupportCreate = () => {
+    const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [valid, setValid] = useState('');
 
-    console.log(title, description);
+    const createHandler = () => {
+        setValid('')
+        if(title.length < 4 || title.length > 51){
+            setValid('Заголовок должен быть не меньше 4 и не больше 50 символов');
+            return;
+        }
+        if(description.length < 14 || description.length > 401){
+            setValid('Описание должно быть не меньше 14 и не больше 400 символов');
+            return;
+        }
+        dispatch(createTicket(title, description, Date.now()));
+        setDescription('');
+        setTitle('');
+        setValid('Тикет был создан');
+    }
 
     return (
         <section className="placing-order main">
@@ -35,8 +53,14 @@ const SupportCreate = () => {
                         </ul>
                     </form>
                     <div className="placing-order__desc-btn placing-ticket__btn">
-                        <button>Отправить вопрос</button>
+                        <button onClick={createHandler}>Отправить вопрос</button>
                     </div>
+                    {valid.length > 20 &&
+                        <p className="reg-landing__error">{valid}</p>
+                    }
+                    {valid.length > 10 &&
+                        <p className="reg-landing__success">{valid}</p>
+                    }
                 </div>
             </div>
         </section>

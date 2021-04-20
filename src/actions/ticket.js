@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {setTickets, countTickets} from "../reducers/ticketsReducer";
+import {addTicket, setTickets} from "../reducers/ticketsReducer";
 import {API_URL} from "../config";
 
 export function getTickets(skip) {
@@ -19,20 +19,21 @@ export function getTickets(skip) {
     }
 }
 
-export function createTicket(title, description) {
+export function createTicket(title, description, date) {
     return async dispatch => {
         try {
-            const response = await axios.post(`${API_URL}api/tickets`,{
+            const response = await axios.post(`${API_URL}api/tickets`, {
                 title,
-                description
+                description,
+                date
             }, {
                 headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
             });
-            console.log(response.data);
-            // dispatch(setTickets(response.data.user));
-            return [response.status, response.data.message];
+            console.log(response);
+            dispatch(addTicket([response.data]));
+            return response.data;
         } catch (e) {
-            return [e.response.status, e.response.data.message];
+            return e;
         }
     }
 }
