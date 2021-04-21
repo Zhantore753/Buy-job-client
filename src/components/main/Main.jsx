@@ -4,6 +4,7 @@ import Header from './header/Header';
 import Footer from './footer/Footer';
 import Support from './support/Support';
 import SupportCreate from './support/SupportCreate';
+import AccountSettings from './accountSettings/AccountSettings';
 
 const Main = () => {
     const burgerHandler = () =>{
@@ -23,6 +24,7 @@ const Main = () => {
                 <Switch>
                     <Route path="/support" component={Support}/>
                     <Route path="/support-create" component={SupportCreate}/>
+                    <Route path="/account-settings" component={AccountSettings}/>
                     <Redirect to="/" />
                 </Switch>
                 <Footer />

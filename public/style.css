@@ -1421,7 +1421,6 @@ body {
 }
 
 .header__avatar button {
-  background-color: transparent;
   display: block;
   border-radius: 100%;
 }
