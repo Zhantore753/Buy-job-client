@@ -37,8 +37,6 @@ const ChangeGeneral = () => {
         offValidByTime();
     }
 
-    console.log(valid);
-
     return (
         <>
         <div className="settings__general">
@@ -83,11 +81,11 @@ const ChangeGeneral = () => {
                 <p><span>ID: </span>{currentUser.id}</p>
             </div>
         </div>
-        {valid[0] === 200 ?
+        {/* {valid[0] === 200 ?
             <p className="reg-landing__success">{valid[1]}</p>
         :
             <p className="reg-landing__error">{valid[1]}</p>
-        }
+        } */}
         </>
     );
 };
