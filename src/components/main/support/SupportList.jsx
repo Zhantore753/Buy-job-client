@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTickets } from '../../../actions/ticket';
+import moment from 'moment';
 
 const SupportList = () => {
     const tickets = useSelector(state => state.ticket.tickets);
@@ -50,9 +51,7 @@ const SupportList = () => {
                             </div>
                             <div className="support__item-date">
                                 <p>
-                                    <span className="date__day">11</span>.
-                                    <span className="date__month">02</span>.
-                                    <span className="date__year">11</span>
+                                    {moment(ticket.date).format('L')}
                                 </p>
                             </div>
                         </div>
@@ -63,6 +62,9 @@ const SupportList = () => {
                 <div className="support__load-more">
                     <button onClick={() => dispatch(getTickets(tickets.length))} className="support__head-btn">Загрузить еще</button>
                 </div>
+            }
+            {!ticketsCheck && ticketsCount < 1 &&
+                <p>Вы пока не обращались в поддержку</p>
             }
         </>
     );

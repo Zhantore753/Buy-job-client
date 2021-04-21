@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createTicket, getTickets } from '../../../actions/ticket';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getTickets} from '../../../actions/ticket';
 import SupportList from './SupportList';
 import {NavLink} from "react-router-dom";
 
 const Support = () => {
     const dispatch = useDispatch();
     const tikets = useSelector(state => state.ticket.tickets);
-
-    const create = (i) =>{
-        dispatch(createTicket(`ticket ${i}`, 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione, aperiam? Voluptates nihil facilis quos deserunt ipsa corporis pariatur odio beatae hic quo delectus ea in, excepturi voluptatem sed reprehenderit tempora.'));
-    }
 
     useEffect(()=>{
         if(tikets.length === 0){
