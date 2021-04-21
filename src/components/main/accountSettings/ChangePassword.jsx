@@ -9,6 +9,15 @@ const ChangePassword = () => {
     const [password, setPassword] = useState('');
     const [passwordShown, setPasswordShown] = useState(false);
     const [valid, setValid] = useState([false, '']);
+    const [disabledBtn, setDisabledBtn] = useState(false);
+
+    const offValidByTime = () =>{
+        setDisabledBtn(true);
+        setTimeout(() => {
+            setValid(false);
+            setDisabledBtn(false);
+        }, 3000);
+    }
 
     const updatePasswordHandler = (e) => {
         setValid([]);
@@ -16,10 +25,17 @@ const ChangePassword = () => {
         e.stopPropagation();
         if(newPassword.length < 4 || newPassword.length > 20){
             setValid([true, 'Пароль должен быть больше 3 и меньше 21 символа']);
+            offValidByTime();
             return;
         }
-        if(newPassword != newPasswordRepeat){
+        if(newPassword !== newPasswordRepeat){
             setValid([true, 'Пароли не совпадают']);
+            offValidByTime();
+            return;
+        }
+        if(newPassword === password){
+            setValid([true, 'Нельзя поменять пароль на тот же']);
+            offValidByTime();
             return;
         }
 
@@ -31,12 +47,14 @@ const ChangePassword = () => {
         setPassword('');
         setNewPasswordRepeat('');
         setNewPassword('');
+        offValidByTime();
     }
 
     return (
         <div className="settings__password">
             <h2 className="settings__password-title">Пароль</h2>
             <form className="settings__password-form" action="#">
+            <input type="text" name="email" autoComplete="username email" style={{display: 'none'}} />
                 <div className="settings__password-form-row">
                     <div className="form__pass">
                         <input autoComplete="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} type={newPasswordShown ? "text" : "password"} name="newpass" placeholder="Новый пароль" />
@@ -67,7 +85,7 @@ const ChangePassword = () => {
                     </div>
                 </div>
                 
-                <button onClick={(e) => updatePasswordHandler(e)} className="settings__form-btn">Изменить</button>
+                <button disabled={disabledBtn} onClick={(e) => updatePasswordHandler(e)} className="settings__form-btn">Изменить</button>
                 {valid[0] === 200 ?
                     <p className="reg-landing__success">{valid[1]}</p>
                 :

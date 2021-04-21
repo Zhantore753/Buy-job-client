@@ -1833,8 +1833,11 @@ body {
   margin-bottom: 16px;
 }
 
-.settings__general-name p {
+.settings__general-name input {
+  width: 100%;
   margin-right: 12px;
+  font-size: 18px;
+  line-height: 22px;
 }
 
 .settings__general-email {
@@ -1845,11 +1848,20 @@ body {
 }
 
 .settings__general-email p {
+  width: 100%;
+  display: flex;
   margin-right: 8px;
 }
 
 .settings__general-email span {
+  margin-right: 4px;
   font-weight: bold;
+}
+
+.settings__general-email p input{
+  width: 100%;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 .setting__general-btn {
@@ -1859,6 +1871,10 @@ body {
   padding: 8px;
   background: #3C4852;
   border-radius: 7px;
+}
+
+.setting__general-btn:disabled{
+  background: #dddddd;
 }
 
 .settings__general-id {
@@ -1939,6 +1955,11 @@ body {
 .settings__form-btn:hover {
   color: #66B87A;
   background-color: #fff;
+}
+
+.settings__form-btn:disabled {
+  background: #dddddd;
+  border: 1px solid #dddddd;
 }
 
 .settings__password {
@@ -3870,6 +3891,10 @@ input:checked ~ .questionary__form-area-radio-item {
   .custom-select-search:first-child {
     margin-right: 0;
     margin-bottom: 15px;
+  }
+
+  .settings__password-form-row .form__pass{
+    margin-right: 0;
   }
 }
 
