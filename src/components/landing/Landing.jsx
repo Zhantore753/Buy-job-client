@@ -31,7 +31,7 @@ const Landing = () => {
         }else{
             document.body.style.paddingRight = scrollWidth+'px';
         }
-
+        
         document.body.classList.toggle('overflow-h');
         burger.classList.toggle('nav-landing__burger-active');
         menu.classList.toggle('menu-landing-active');
@@ -40,13 +40,16 @@ const Landing = () => {
     const loginPopupHandler = (e) =>{
         const enterPopup = document.querySelector('.enter-landing');
         e.preventDefault();
+        
         enterPopup.classList.add('popup-landing-active');
+        enterPopup.classList.add('overflow-a');
         document.body.classList.toggle('overflow-h');
     }
 
     const popupCloseHandler = (e) =>{
         e.preventDefault();
         const popup = document.querySelector('.popup-landing-active');
+        popup.classList.remove('overflow-a');
         popup.classList.remove('popup-landing-active');
         document.body.classList.toggle('overflow-h');
     }
@@ -56,7 +59,8 @@ const Landing = () => {
         const registerPopup = document.querySelector('.register-landing');
         const popup = document.querySelector('.popup-landing-active');
         registerPopup.classList.add('popup-landing-active');
-        setTimeout(()=>popup.classList.remove('popup-landing-active'), 500);
+        registerPopup.classList.add('overflow-a');
+        setTimeout(()=>{popup.classList.remove('popup-landing-active');popup.classList.remove('overflow-a')}, 500);
     }
     
     return (

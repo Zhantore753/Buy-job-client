@@ -10,6 +10,7 @@ const Main = () => {
     const burgerHandler = () =>{
         const burger = document.querySelector('.nav__burger');
         const header = document.querySelector('.header');
+        header.scrollTo({top: 0, behavior: 'smooth'});
 
         document.body.classList.toggle('overflow-h');
         burger.classList.toggle('nav__burger-active');

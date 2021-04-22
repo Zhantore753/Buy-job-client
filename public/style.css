@@ -1208,6 +1208,10 @@ body {
   overflow: hidden;
 }
 
+.overflow-a{
+  overflow: auto;
+}
+
 .container-wide {
   max-width: 1360px;
   width: 100%;
