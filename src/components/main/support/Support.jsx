@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getTickets} from '../../../actions/ticket';
 import SupportList from './SupportList';
@@ -6,13 +6,17 @@ import {NavLink} from "react-router-dom";
 
 const Support = () => {
     const dispatch = useDispatch();
-    const tikets = useSelector(state => state.ticket.tickets);
+    const tickets = useSelector(state => state.ticket.tickets);
 
-    useEffect(()=>{
-        if(tikets.length === 0){
+    const loadTickets = useCallback(() => {
+        if(tickets.length === 0){
             dispatch(getTickets());
         }
-    }, []);
+    }, [dispatch, tickets.length]);
+
+    useEffect(()=>{
+        loadTickets();
+    }, [loadTickets]);
 
     return (
         <section className="support main">

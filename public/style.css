@@ -1392,6 +1392,8 @@ body {
 }
 
 .header__logout {
+  display: flex;
+  justify-content: space-between;
   padding-left: 23px;
   padding-right: 0;
 }
@@ -1407,7 +1409,6 @@ body {
   letter-spacing: 0.05em;
   color: #3C4852;
   padding: 18px 16px;
-  margin-right: 21px;
   transition: all 0.3s;
 }
 
@@ -1416,19 +1417,13 @@ body {
   background: #3C4852;
 }
 
-.header__avatar {
-  margin-right: 17px;
-}
-
-.header__avatar button {
-  width: 50px;
-  height: 50px;
-  display: block;
-  border-radius: 100%;
-}
-
 .header__avatar img {
-  border-radius: 100%;
+  display: block;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .header__logout-btn {
@@ -1801,13 +1796,13 @@ body {
 }
 
 .settings__general-avatar {
+  overflow: hidden;
   background: #FFFFFF;
   border: 1px solid #DBD5D5;
   box-sizing: border-box;
   border-radius: 10px;
-  max-width: 80px;
-  max-height: 80px;
-  width: 100%;
+  width: 80px;
+  height: 80px;
   margin-right: 27px;
   display: flex;
   position: relative;
@@ -1821,6 +1816,12 @@ body {
   height: 27px;
   bottom: 8px;
   right: 8px;
+}
+
+.settings__general-avatar img{
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
 }
 
 .settings__general-name {
