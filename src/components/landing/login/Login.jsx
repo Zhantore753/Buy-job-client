@@ -35,7 +35,7 @@ const Login = ({popupClose, regPopupHandler}) => {
             setResponse(res)
         });
         cleanInputsHandler();
-        document.body.style.overflow = 'auto';
+        document.body.classList.toggle('overflow-h');
     }
 
     return (

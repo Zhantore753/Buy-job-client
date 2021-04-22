@@ -1796,7 +1796,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  max-width: 500px;
+  max-width: 400px;
   width: 100%;
 }
 
@@ -1814,7 +1814,6 @@ body {
   align-items: center;
   justify-content: center;
   padding: 16px 0;
-  margin-bottom: 12px;
 }
 
 .settings__general-avatar .setting__general-btn {
@@ -3719,6 +3718,9 @@ input:checked ~ .questionary__form-area-radio-item {
 }
 
 @media (max-width: 650px) {
+  .settings__general-avatar{
+    margin-bottom: 12px;
+  }
   .order__exec__card {
     flex-direction: column;
   }

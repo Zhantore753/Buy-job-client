@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {setEmail} from "../reducers/userReducer";
+import {setEmail, setUser} from "../reducers/userReducer";
 import {API_URL} from "../config";
 
 export const updateAvatar = async (avatar) => {
@@ -61,7 +61,7 @@ export const updateEdu = (eduObj) => {
                 {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
             ); 
             console.log(response);
-            // dispatch(setEmail(response.data.user.email));
+            dispatch(setUser(response.data.user))
             return [response.status, response.data.message];
         }catch (e) {
             return [e.response.status, e.response.data.message];

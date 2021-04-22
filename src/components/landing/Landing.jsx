@@ -41,14 +41,14 @@ const Landing = () => {
         const enterPopup = document.querySelector('.enter-landing');
         e.preventDefault();
         enterPopup.classList.add('popup-landing-active');
-        document.body.style.overflow = 'hidden';
+        document.body.classList.toggle('overflow-h');
     }
 
     const popupCloseHandler = (e) =>{
         e.preventDefault();
         const popup = document.querySelector('.popup-landing-active');
         popup.classList.remove('popup-landing-active');
-        document.body.style.overflow = 'visible';
+        document.body.classList.toggle('overflow-h');
     }
 
     const regPopupHandler = (e) =>{
