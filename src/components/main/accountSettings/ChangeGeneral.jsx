@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateEmail } from '../../../actions/updateUser';
 
 const ChangeGeneral = () => {
     const currentUser = useSelector(state => state.user.currentUser);
+    const dispatch = useDispatch();
     const [email, setEmail] = useState(currentUser.email);
     const [fullName, setFullName] = useState(currentUser.fullName || 'ФИО');
     const [valid, setValid] = useState([false, '']);
@@ -30,7 +31,7 @@ const ChangeGeneral = () => {
             return;
         }
 
-        updateEmail(email)
+        dispatch(updateEmail(email))
         .then(async res =>{
             await setValid(res);
         });
@@ -81,11 +82,11 @@ const ChangeGeneral = () => {
                 <p><span>ID: </span>{currentUser.id}</p>
             </div>
         </div>
-        {/* {valid[0] === 200 ?
+        {valid[0] === 200 ?
             <p className="reg-landing__success">{valid[1]}</p>
         :
             <p className="reg-landing__error">{valid[1]}</p>
-        } */}
+        }
         </>
     );
 };

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {setUser} from "../reducers/userReducer";
+import {setEmail} from "../reducers/userReducer";
 import {API_URL} from "../config";
 
 export const updateAvatar = async (avatar) => {
@@ -16,15 +16,17 @@ export const updateAvatar = async (avatar) => {
     }
 }
 
-export const updateEmail = async (email) => {
-    try {
-        const response = await axios.post(`${API_URL}api/update/email`, {email},
-            {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
-        ); 
-        console.log(response);
-        return [response.status, response.data.message];
-    }catch (e) {
-        return [e.response.status, e.response.data.message];
+export const updateEmail = (email) => {
+    return async dispatch => {
+        try {
+            const response = await axios.post(`${API_URL}api/update/email`, {email},
+                {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+            ); 
+            dispatch(setEmail(response.data.user.email));
+            return [response.status, response.data.message];
+        }catch (e) {
+            return [e.response.status, e.response.data.message];
+        }
     }
 }
 
