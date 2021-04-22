@@ -163,7 +163,7 @@ const Header = ({burgerHandler}) => {
                             <div className="header__avatar">
                                 <img src={avatar} alt="avatar"/>
                             </div>
-                            <button onClick={()=>{document.body.classList.toggle('overflow-h');dispatch(logout())}} className="header__logout-btn">Выйти</button>
+                            <button onClick={()=>{burgerHandler();dispatch(logout())}} className="header__logout-btn">Выйти</button>
                         </li>
                     </ul>
                 </nav>
