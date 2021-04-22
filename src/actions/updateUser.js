@@ -53,3 +53,18 @@ export const updatePassword = async (newPassword, password) => {
         return [e.response.status, e.response.data.message];
     }
 }
+
+export const updateEdu = (eduObj) => {
+    return async dispatch => {
+        try {
+            const response = await axios.post(`${API_URL}api/update/edu`, eduObj,
+                {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+            ); 
+            console.log(response);
+            // dispatch(setEmail(response.data.user.email));
+            return [response.status, response.data.message];
+        }catch (e) {
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}
