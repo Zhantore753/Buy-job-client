@@ -7,22 +7,22 @@ const SupportCreate = () => {
     const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [valid, setValid] = useState('');
+    const [valid, setValid] = useState([]);
 
     const createHandler = () => {
-        setValid('')
+        setValid([])
         if(title.length < 4 || title.length > 51){
-            setValid('Заголовок должен быть не меньше 4 и не больше 50 символов');
+            setValid([false, 'Заголовок должен быть не меньше 4 и не больше 50 символов']);
             return;
         }
-        if(description.length < 14 || description.length > 401){
-            setValid('Описание должно быть не меньше 14 и не больше 400 символов');
+        if(description.length < 14 || description.length > 1000){
+            setValid([false, 'Описание должно быть не меньше 14 и не больше 1000 символов']);
             return;
         }
         dispatch(createTicket(title, description, Date.now()));
         setDescription('');
         setTitle('');
-        setValid('Тикет был создан');
+        setValid([true, 'Тикет был создан']);
     }
 
     return (
@@ -55,10 +55,9 @@ const SupportCreate = () => {
                     <div className="placing-order__desc-btn placing-ticket__btn">
                         <button onClick={createHandler}>Отправить вопрос</button>
                     </div>
-                    {valid.length > 20 &&
+                    {!valid[0] ?
                         <p className="reg-landing__error">{valid}</p>
-                    }
-                    {valid.length > 10 &&
+                    :
                         <p className="reg-landing__success">{valid}</p>
                     }
                 </div>
