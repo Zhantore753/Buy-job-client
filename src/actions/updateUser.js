@@ -30,15 +30,17 @@ export const updateEmail = (email) => {
     }
 }
 
-export const updateFullName = async (fullName) => {
-    try {
-        const response = await axios.post(`${API_URL}api/update/fullname`, {fullName},
-            {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
-        ); 
-        console.log(response);
-        // dispatch(setUser(response.data));
-    } catch (e) {
-        return [e.response.status, e.response.data.message];
+export const updateFullName = (fullName) => {
+    return async dispatch => {
+        try {
+            const response = await axios.post(`${API_URL}api/update/fullname`, {fullName},
+                {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+            ); 
+            dispatch(setUser(response.data.user));
+            return [response.status, response.data.message];
+        } catch (e) {
+            return [e.response.status, e.response.data.message];
+        }
     }
 }
 
