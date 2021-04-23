@@ -1240,6 +1240,7 @@ body {
 }
 
 .header-active {
+  overflow: auto;
   height: 100%;
 }
 
@@ -2047,7 +2048,7 @@ body {
 
 .placing-order__title {
   text-align: center;
-  padding: 0 0 24px 65px;
+  padding: 0 0 20px 0px;
   font-weight: 700;
   font-size: 26px;
   line-height: 31px;
@@ -2373,8 +2374,6 @@ body {
 }
 
 .placing-order__addedfiles li:nth-child(odd) {
-  padding-right: 20px;
-  border-right: 1px solid #C1B9B9;
   margin-right: 20px;
 }
 
@@ -3613,7 +3612,7 @@ input:checked ~ .questionary__form-area-radio-item {
 
 @media (max-width: 860px) {
   .placing-order__title {
-    padding: 0 0 24px 28px;
+    padding: 0 0 24px 0px;
   }
 
   .placing-order__form {
@@ -3838,10 +3837,6 @@ input:checked ~ .questionary__form-area-radio-item {
 }
 
 @media (max-width: 517px) {
-  .header-active {
-    overflow: auto;
-  }
-
   .header__balance {
     display: none;
   }

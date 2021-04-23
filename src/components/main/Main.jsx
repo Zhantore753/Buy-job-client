@@ -5,6 +5,7 @@ import Footer from './footer/Footer';
 import Support from './support/Support';
 import SupportCreate from './support/SupportCreate';
 import AccountSettings from './accountSettings/AccountSettings';
+import PlacingOrder from './placingOrder/PlacingOrder';
 
 const Main = () => {
     const burgerHandler = () =>{
@@ -25,6 +26,7 @@ const Main = () => {
                     <Route path="/support" component={Support}/>
                     <Route path="/support-create" component={SupportCreate}/>
                     <Route path="/account-settings" component={AccountSettings}/>
+                    <Route path="/placing-order" component={PlacingOrder} />
                     <Redirect to="/" />
                 </Switch>
                 <Footer />

@@ -91,7 +91,9 @@ const Header = ({burgerHandler}) => {
                             {currentUser.role === 'freelancer' ?
                                 <button className="header__post-order">Найти заказ</button>
                             :
-                                <button className="header__post-order"> Разместить заказ</button>
+                                <NavLink to="/placing-order">
+                                    <button className="header__post-order"> Разместить заказ</button>
+                                </NavLink>
                             }
                             <div className="header__avatar">
                                 <img src={avatar} alt="avatar"/>
@@ -159,7 +161,9 @@ const Header = ({burgerHandler}) => {
                             </NavLink>
                         </li>
                         <li className="menu__logout">
-                            <button className="header__post-order">Разместить заказ</button>
+                            <NavLink onClick={() => burgerHandler()} to="/placing-order">
+                                <button className="header__post-order">Разместить заказ</button>
+                            </NavLink>
                             <div className="header__avatar">
                                 <img src={avatar} alt="avatar"/>
                             </div>

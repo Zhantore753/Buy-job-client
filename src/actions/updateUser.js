@@ -2,7 +2,7 @@ import axios from 'axios';
 import {setEmail, setUser} from "../reducers/userReducer";
 import {API_URL} from "../config";
 
-export const updateAvatar =  (file) => {
+export const updateAvatar = (file) => {
     return async dispatch => {
         try {
             const formData = new FormData();
