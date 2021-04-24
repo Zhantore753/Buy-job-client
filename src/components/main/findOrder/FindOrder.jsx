@@ -8,19 +8,37 @@ const FindOrder = () => {
     const orders = useSelector(state => state.order.findOrders);
     const [search, setSearch] = useState('');
     const [category, setCategory] = useState(0);
+    const [ordersCheck, setOrdersCheck] = useState(true);
 
     const loadOrders = useCallback((findCategory, findSearch) => {
         if(orders.length === 0){
             dispatch(findOrder(0, findCategory, findSearch, 'set'));
         }
-        if(findSearch !== '' || findCategory !== 0){
-            dispatch(findOrder(0, findCategory, findSearch, 'set'));
-        }
+        // if(findSearch !== '' || findCategory !== 0){
+        //     dispatch(findOrder(0, findCategory, findSearch, 'set'));
+        // }
     }, [dispatch, orders.length]);
 
     useEffect(()=>{
         loadOrders(category, search);
     }, [loadOrders, category, search]);
+
+    useEffect(() => {
+        dispatch(findOrder(0, category, search, 'set'));
+        setOrdersCheck(true);
+    }, [category, search])
+
+    const searchHandler = async (e) => {
+        setSearch(e.target.value);
+        // prev => e.target.value,
+        // // 2nd argument is callback , `s` is *updated* state
+        // s => console.log("I am called after setState, state:", s)
+        // )
+        // setSearch(e.target.value, s => {
+        //     console.log(search);
+        //     dispatch(findOrder(0, category, search, 'set'));
+        // });
+    }
 
     return (
         <section className="search main">
@@ -29,7 +47,7 @@ const FindOrder = () => {
                     <div className="search__header">
                         <h1 className="search__title">Новые заказы</h1>
                         <form className="search__filter" >
-                            <input value={search} onChange={e => setSearch(e.target.value)} type="text"/>
+                            <input value={search} onChange={e => searchHandler(e)} type="text"/>
                             <div className="custom-select-search custom-select">
                                 <select value={category} onChange={e => setCategory(e.target.value)} name="type" className="placing-order__form-type" id="type-select">
                                     <option style={{background: '#ccc'}} value={0} defaultValue>Категория</option>
@@ -47,7 +65,7 @@ const FindOrder = () => {
                             </div>
                         </form>
                     </div>
-                    <FindOrderList search={search} category={category}/>
+                    <FindOrderList ordersCheck={ordersCheck} setOrdersCheck={setOrdersCheck} search={search} category={category}/>
                 </div>
             </div>
         </section>

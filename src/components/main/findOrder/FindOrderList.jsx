@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { findOrder } from '../../../actions/order';
 import moment from 'moment';
 
-const FindOrderList = ({search, category}) => {
+const FindOrderList = ({search, category, setOrdersCheck, ordersCheck}) => {
     const orders = useSelector(state => state.order.findOrders);
     const dispatch = useDispatch();
-    const [ordersCheck, setOrdersCheck] = useState(true);
     const [ordersCount, setOrdersCount] = useState(-1);
 
     useEffect(() => {
@@ -14,14 +13,16 @@ const FindOrderList = ({search, category}) => {
             setOrdersCount(orders.length);
         }
     }, [orders]);
+    console.log(orders);
 
     const loadMoreHandler = () => {
-        dispatch(findOrder(orders.length, category, search, 'add'))
+        let skip = Math.ceil(orders.length / 10) * 10;
+        dispatch(findOrder(skip, category, search, 'add'))
         .then(async (res) =>{
-            if(res.length < 1){
-                setOrdersCheck(false);
+            if(res.length < 10){
+                await setOrdersCheck(false);
             }else{
-                setOrdersCheck(true);
+                await setOrdersCheck(true);
             }
         });
     }
