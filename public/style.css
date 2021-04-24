@@ -3018,13 +3018,26 @@ body {
   align-items: center;
 }
 
+.search__filter-seacrh{
+  display: flex;
+  margin-right: 10px;
+  background: transparent;
+  border: 1px solid #E5E5E5;
+  border-radius: 10px;
+  height: 53px;
+  font-size: 18px;
+  padding: 0 15px;
+}
+
 .custom-select-search {
   margin-bottom: 0;
 }
 
 .custom-select-search select {
   width: 100%;
-  padding: 18px 58px 18px 24px;
+  height: 53px;
+  padding: 0 15px;
+  font-size: 18px;
 }
 
 .custom-select-search:first-child {

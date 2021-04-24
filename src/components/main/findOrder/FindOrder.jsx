@@ -47,7 +47,7 @@ const FindOrder = () => {
                     <div className="search__header">
                         <h1 className="search__title">Новые заказы</h1>
                         <form className="search__filter" >
-                            <input value={search} onChange={e => searchHandler(e)} type="text"/>
+                            <input placeholder="Поиск" className="search__filter-seacrh" value={search} onChange={e => searchHandler(e)} type="text"/>
                             <div className="custom-select-search custom-select">
                                 <select value={category} onChange={e => setCategory(e.target.value)} name="type" className="placing-order__form-type" id="type-select">
                                     <option style={{background: '#ccc'}} value={0} defaultValue>Категория</option>

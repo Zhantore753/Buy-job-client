@@ -13,7 +13,6 @@ const FindOrderList = ({search, category, setOrdersCheck, ordersCheck}) => {
             setOrdersCount(orders.length);
         }
     }, [orders]);
-    console.log(orders);
 
     const loadMoreHandler = () => {
         let skip = Math.ceil(orders.length / 10) * 10;
@@ -45,7 +44,7 @@ const FindOrderList = ({search, category, setOrdersCheck, ordersCheck}) => {
                     </li>
                 )}
             </ul>
-            {ordersCheck &&
+            {ordersCheck && ordersCount > 9 &&
                 <div className="support__load-more">
                     <button onClick={() => loadMoreHandler()} className="support__head-btn">Загрузить еще</button>
                 </div>
