@@ -117,7 +117,7 @@ const OrdersList = () => {
                 </div>
             }
             {!ordersCheck && ordersCount < 1 &&
-                <p>Вы пока не обращались в поддержку</p>
+                <p>У вас пока нет заказов</p>
             }
         </>
     );

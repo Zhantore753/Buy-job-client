@@ -1429,6 +1429,7 @@ body {
   height: 80px;
   object-fit: cover;
   border-radius: 50%;
+  background: #FFCC80;
 }
 
 .header__logout-btn {
@@ -3042,7 +3043,6 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
 }
 
 .search__item-details {
@@ -3057,7 +3057,8 @@ body {
   line-height: 24px;
 }
 
-.search__item-details a {
+.search__item-details button {
+  background: transparent;
   font-weight: bold;
   font-size: 15px;
   line-height: 24px;
@@ -3070,7 +3071,7 @@ body {
   transition: all 0.3s;
 }
 
-.search__item-details a:hover {
+.search__item-details button:hover {
   background-color: #FFCC80;
 }
 
