@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { createOrder } from '../../../actions/order';
 import Calendar from './Calendar';
 import filesRender from './renderFiles';
 
 const PlacingOrder = () => {
+    const dispatch = useDispatch();
     const [category, setCategory] = useState(0);
     const [subject, setSubject] = useState('');
     const [title, setTitle] = useState('');
@@ -87,9 +89,9 @@ const PlacingOrder = () => {
             keyWords.toLowerCase();
             keys = keyWords.split(' ');
         }
-        createOrder(category, subject, title, selectedDate, price, keys, description, files)
-        .then(res =>{
-            setValid(res);
+        dispatch(createOrder(category, subject, title, selectedDate, price, keys, description, files))
+        .then(async res =>{
+            await setValid(res);
         });
         offValidByTime();
 
