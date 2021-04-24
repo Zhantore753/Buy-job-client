@@ -2383,10 +2383,12 @@ body {
   max-width: 80%;
   display: inline-block;
   white-space: nowrap;
-  /* Запрещаем перенос строк */
   overflow: hidden;
-  /* Обрезаем все, что не помещается в область */
   text-overflow: ellipsis;
+}
+
+.placing-ticket__addedfiles li{
+  margin-right: 20px;
 }
 
 .placing-order__desc-btn button {
@@ -2418,7 +2420,7 @@ body {
 
 .placing-ticket__btn{
   display: flex;
-  margin-left: 40px;
+  margin: 20px;
 }
 
 .orders__item {
@@ -3795,6 +3797,10 @@ input:checked ~ .questionary__form-area-radio-item {
   .placing-order__desc-btn button {
     padding: 16px 32px;
   }
+
+  .placing-ticket:nth-child(2){
+    padding: 20px;
+  }
 }
 
 @media (max-width: 565px) {
@@ -3928,6 +3934,12 @@ input:checked ~ .questionary__form-area-radio-item {
 }
 
 @media (max-width: 433px) {
+  .placing-order__addedfiles li:nth-child(odd){
+    margin-right: 0px;
+  }
+  .placing-ticket__addedfiles li{
+    margin-right: 0px;
+  }
   .support__item-date-t {
     display: none;
   }
