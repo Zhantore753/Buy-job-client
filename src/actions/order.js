@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {API_URL} from "../config";
+import { setOrders } from '../reducers/orderReducer';
 
 export const createOrder = async (category, subject, title, selectedDate, price, keyWords, description, files) => {
     try {
@@ -14,11 +15,9 @@ export const createOrder = async (category, subject, title, selectedDate, price,
         formData.append('price', price);
         formData.append('keyWords', keyWords);
         formData.append('description', description);
-        console.log(formData);
         const response = await axios.post(`${API_URL}api/order/create`, formData, 
             {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
         )
-        console.log(response);
         // dispatch(setUser(response.data.user));
         return [response.status, response.data.message];
     } catch (e) {
@@ -27,3 +26,21 @@ export const createOrder = async (category, subject, title, selectedDate, price,
     }
 }
 
+export const getOrders = (skip) => {
+    return async dispatch => {
+        try {
+            let url = `${API_URL}api/order/orders`;
+            if(skip){
+                url = `${API_URL}api/order/orders?startfrom=${skip}`
+            }
+            const response = await axios.get(url, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            dispatch(setOrders(response.data));
+            // return [response.status, response.data.message];
+        } catch (e) {
+            console.log(e);
+            // return [e.response.status, e.response.data.message];
+        }
+    }
+}

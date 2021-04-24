@@ -3,10 +3,12 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import userReducer from "./userReducer";
 import ticketsReducer from './ticketsReducer';
+import orderReducer from "./orderReducer";
 
 export const rootReducer = combineReducers({
     user: userReducer,
-    ticket: ticketsReducer
+    ticket: ticketsReducer,
+    order: orderReducer
 });
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
