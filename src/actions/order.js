@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {API_URL} from "../config";
-import { addFindOrders, addOrder, setCurrentCustomer, setCurrentOrder, setFindOrders, setOrders } from '../reducers/orderReducer';
+import { addFindOrders, addOrder, setCurrentCustomer, setCurrentFiles, setCurrentOrder, setFindOrders, setOrders } from '../reducers/orderReducer';
 
 export const createOrder =  (category, subject, title, selectedDate, price, keyWords, description, files) => {
     return async dispatch =>{
@@ -97,5 +97,41 @@ export const defineCurrentCustomer = (userId) => {
         }catch(e){
             console.log(e);
         }
+    }
+}
+
+export const defineCurrentFiles = (files) => {
+    return async dispatch => {
+        try{
+            if(files.length < 1){
+                dispatch(setCurrentFiles([]));
+                return;
+            }
+            const response = await axios.get(`${API_URL}api/order/files?files=${files}`, 
+                {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+            );
+            dispatch(setCurrentFiles(response.data.fullFiles));
+        }catch(e){
+            console.log(e);
+            return [e.response.status, e.response.data.titlemessage];
+        }
+    }
+}
+
+export async function downloadFile(file) {
+    const response = await fetch(`${API_URL}api/order/download?path=${file.path}&name=${file.name}`,{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+    if (response.status === 200) {
+        const blob = await response.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = file.name;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
     }
 }
