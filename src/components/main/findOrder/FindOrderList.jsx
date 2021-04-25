@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { findOrder } from '../../../actions/order';
+import {NavLink} from "react-router-dom";
+import { defineCurrentOrder, findOrder } from '../../../actions/order';
 import moment from 'moment';
 
 const FindOrderList = ({search, category, setOrdersCheck, ordersCheck}) => {
@@ -26,6 +27,10 @@ const FindOrderList = ({search, category, setOrdersCheck, ordersCheck}) => {
         });
     }
 
+    const orderDetailHandler = (order) => {
+        dispatch(defineCurrentOrder(order));
+    }
+
     return (
         <>
             <ul className="search__list orders__list support__list">
@@ -38,7 +43,7 @@ const FindOrderList = ({search, category, setOrdersCheck, ordersCheck}) => {
                         <div className="search__item-col orders__item-col support__item-col">
                             <div className="search__item-details">
                                 <p>Сделать до {moment(order.deadline).format('L')}</p>
-                                <button>Подробнее</button>
+                                <NavLink to="/order-detail" onClick={() => orderDetailHandler(order)}>Подробнее</NavLink>
                             </div>
                         </div>
                     </li>

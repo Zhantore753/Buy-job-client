@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {API_URL} from "../config";
-import { addFindOrders, addOrder, setFindOrders, setOrders } from '../reducers/orderReducer';
+import { addFindOrders, addOrder, setCurrentCustomer, setCurrentOrder, setFindOrders, setOrders } from '../reducers/orderReducer';
 
 export const createOrder =  (category, subject, title, selectedDate, price, keyWords, description, files) => {
     return async dispatch =>{
@@ -72,6 +72,30 @@ export const findOrder = (skip, category, search, stateAction) => {
         } catch (e) {
             console.log(e);
             return [e.response.status, e.response.data.message];
+        }
+    }
+}
+
+export const defineCurrentOrder = (order) => {
+    return async dispatch => {
+        try{
+            dispatch(setCurrentOrder(order));
+        }catch(e){
+            console.log(e);
+            return e;
+        }
+    } 
+}
+
+export const defineCurrentCustomer = (userId) => {
+    return async dispatch => {
+        try{
+            const response = await axios.get(`${API_URL}api/user/user?userId=${userId}`, 
+                {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+            );
+            dispatch(setCurrentCustomer(response.data.customer));
+        }catch(e){
+            console.log(e);
         }
     }
 }

@@ -3070,7 +3070,7 @@ body {
   line-height: 24px;
 }
 
-.search__item-details button {
+.search__item-details a {
   background: transparent;
   font-weight: bold;
   font-size: 15px;
@@ -3084,7 +3084,7 @@ body {
   transition: all 0.3s;
 }
 
-.search__item-details button:hover {
+.search__item-details a:hover {
   background-color: #FFCC80;
 }
 
@@ -3248,6 +3248,40 @@ body {
   background: transparent;
 }
 
+.order__detail-head{
+  display: flex;
+  align-items: center;    
+  font-size: 24px;
+  flex-wrap: wrap;
+}
+
+.order__detail-head h3{
+  margin-left: 12px;
+}
+
+.order__detail-avatar{
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.order__detail-desc{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.order__detail-files{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.order__detail-files li{
+  cursor: pointer;
+  margin: 10px;
+}
 .reg__header {
   background: #3C4852;
 }
