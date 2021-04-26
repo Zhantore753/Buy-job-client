@@ -2514,6 +2514,7 @@ body {
 }
 
 .order-change__item-cost {
+  align-items: center;
   color: #66B87A;
   font-size: 20px;
   font-weight: 700;
@@ -2956,6 +2957,11 @@ body {
   text-transform: uppercase;
   color: #8E8D8D;
   text-decoration: underline;
+}
+
+.price__input{
+  color: #66B87A;
+  font-size: 22px;
 }
 
 .executor__rating-orders-more-btn {
