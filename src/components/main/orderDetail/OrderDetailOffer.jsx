@@ -20,7 +20,7 @@ const OrderDetailOffer = () => {
 
     useEffect(() => {
         dispatch(defineCurrentOffer(currentOrder._id));
-    });
+    }, [currentOrder]);
 
     const respondHandler = (e) => {
         e.preventDefault();

@@ -6,7 +6,10 @@ import Main from './components/main/Main';
 
 function App() {
   const isAuth = useSelector(state => state.user.isAuth);
+  const state = useSelector(state => state);
   const dispatch = useDispatch();
+
+  console.log(state);
 
   const authCheck = useCallback(() => {
     dispatch(auth());
