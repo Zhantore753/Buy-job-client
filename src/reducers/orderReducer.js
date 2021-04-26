@@ -14,7 +14,7 @@ const defaultState = {
     currentOrder: {},
     currentCustomer: {},
     currentFiles: [],
-    currentOffer: 0,
+    currentOffer: {},
 };
 
 export default function orderReducer(state = defaultState, action){

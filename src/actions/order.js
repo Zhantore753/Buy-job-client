@@ -136,13 +136,13 @@ export async function downloadFile(file) {
     }
 }
 
-export const respondToOrder = (offer, order) => {
+export const respondToOrder = (offer, order, respondId) => {
     return async dispatch => {
         try{
-            const response = await axios.post(`${API_URL}api/order/create-respond`, {offer, order},
+            const response = await axios.post(`${API_URL}api/order/create-respond`, {offer, order, respondId},
                 {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
             );
-            dispatch(setCurrentOffer(response.data.offer));
+            dispatch(setCurrentOffer(response.data.respond));
             return [response.status, response.data.message];
         }catch(e){
             console.log(e);
@@ -157,7 +157,7 @@ export const defineCurrentOffer = (orderId) => {
             const response = await axios.get(`${API_URL}api/order/find-respond?orderId=${orderId}`,
                 {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
             );
-            dispatch(setCurrentOffer(response.data.offer));
+            dispatch(setCurrentOffer(response.data.respond));
             return [response.status, response.data.message];
         }catch(e){
             console.log(e);

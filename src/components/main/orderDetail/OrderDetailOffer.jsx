@@ -31,7 +31,9 @@ const OrderDetailOffer = () => {
             return;
         }
 
-        dispatch(respondToOrder(offer, currentOrder._id))
+        const respondId = currentOffer ? currentOffer._id : null
+
+        dispatch(respondToOrder(offer, currentOrder._id, respondId))
         .then(async res => {
             await setValid(res);
         });
@@ -40,8 +42,8 @@ const OrderDetailOffer = () => {
 
     return (
         <>
-        {currentOffer > 100 &&
-            <p className="reg-landing__success">Вы уже делали ставку {currentOffer}, хотите изменить ее?</p>
+        {currentOffer &&
+            <p className="reg-landing__success">Вы уже делали ставку {currentOffer.offer}, хотите изменить ее?</p>
         }
         <div className="order__exec__details-price">
             <label htmlFor="price">Предложение: </label>
