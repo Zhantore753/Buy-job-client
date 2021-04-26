@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {getOrders} from '../../../actions/order';
+import { NavLink } from 'react-router-dom';
+import {defineCurrentOrder, getOrders} from '../../../actions/order';
 
 const OrdersList = () => {
-
     const orders = useSelector(state => state.order.orders);
     const dispatch = useDispatch();
     const [ordersCheck, setOrdersCheck] = useState(true);
@@ -17,21 +17,46 @@ const OrdersList = () => {
         }
     }, [orders]);
 
+    const orderDetailHandler = (order) => {
+        dispatch(defineCurrentOrder(order));
+    }
+
     return (
         <>
             <ul className="orders__list support__list">
                 {orders.map((order, index) =>
-                    <li key={index} className="orders__item orders__item-search support__item">
+                <NavLink to='/order-detail'>
+                    <li key={index}
+                    onClick={() => orderDetailHandler(order)}
+                    className={
+                        order.status === "Участвует в конкурсе" ?
+                            "orders__item support__item"
+                        : order.status === "Выполняется" || order.status === "Исполнено" ?
+                            "orders__item orders__item-done support__item"
+                        : "orders__item orders__item-cancel support__item"
+                    }>
                         <div className="orders__item-col support__item-col">
                             <h3 className="orders__item-title support__item-title">{order.title}</h3>
                             <p className="orders__item-subtitle support__item-subtitle">{`${order.subject}, ${order.category}`}</p>
                         </div>
-                        <div className="orders__item-col support__item-col">
-                            <div className="orders__item-status support__item-status">
-                                <p>{order.status}</p>
+                        {order.status === "Выполняется" || order.status === "Исполнено" ?
+                            <div className="orders__item-col support__item-col">
+                                <div className="orders__item-cost">
+                                    <p><span>Цена: </span>{order.price}</p>
+                                </div>
+                                <div className="orders__item-executor">
+                                    <p>Исполнитель: {order.executor}</p>
+                                </div>
                             </div>
-                        </div>
+                            :
+                            <div className="orders__item-col support__item-col">
+                                <div className="orders__item-status support__item-status">
+                                    <p>{order.status}</p>
+                                </div>
+                            </div>
+                        }
                     </li>
+                </NavLink>
                 )}
                 {/* <a href="order__change.html">
                     <li class="orders__item orders__item-done support__item">
