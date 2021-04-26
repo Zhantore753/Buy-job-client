@@ -1,5 +1,6 @@
 const SET_ORDERS = "SET_ORDERS";
 const ADD_ORDER =  "ADD_ORDER";
+const RESET_ORDERS = "RESET_ORDERS";
 const SET_FIND_ORDERS = "SET_FIND_ORDERS";
 const ADD_FIND_ORDERS = "ADD_FIND_ORDERS";
 const SET_CURRENT_ORDER = "SET_CURRENT_ORDER"
@@ -18,6 +19,7 @@ const defaultState = {
 
 export default function orderReducer(state = defaultState, action){
     switch(action.type){
+
         case SET_ORDERS:
             return{
                 ...state,
@@ -27,6 +29,11 @@ export default function orderReducer(state = defaultState, action){
             return{
                 ...state,
                 orders: [...action.payload, ...state.orders]
+            }
+        case RESET_ORDERS: 
+            return{
+                ...state,
+                orders: [...action.payload]
             }
         case SET_FIND_ORDERS:
             return{
@@ -65,6 +72,7 @@ export default function orderReducer(state = defaultState, action){
 
 export const setOrders = orders => ({type: SET_ORDERS, payload: orders});
 export const addOrder = order => ({type: ADD_ORDER, payload: [order]});
+export const resetOrders = orders => ({type: RESET_ORDERS, payload: orders});
 export const setFindOrders = orders => ({type: SET_FIND_ORDERS, payload: orders});
 export const addFindOrders = orders => ({type: ADD_FIND_ORDERS, payload: orders});
 export const setCurrentOrder = order => ({type: SET_CURRENT_ORDER, payload: order});

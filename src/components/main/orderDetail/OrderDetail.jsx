@@ -1,32 +1,14 @@
-import moment from 'moment';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import OrderDetailDesc from './OrderDetailDesc';
+import OrderDetailHead from './OrderDetailHead';
 
 const OrderDetail = () => {
-    const currentOrder = useSelector(state => state.order.currentOrder);
 
     return (
         <section className="order__exec main">
             <div className="container">
                 <div className="order__exec__inner">
-                    <h1 className="order__exec__title">Заказ {currentOrder._id}</h1>
-                    <div className="order__exec__card">
-                        <div className="order__exec__card-col">
-                            <p className="order__exec__card-title">{currentOrder.title}</p>
-                            <p className="order__exec__card-subtitle">{currentOrder.subject}, {currentOrder.category}</p>
-                        </div>
-                        <div className="order__exec__card-col-2">
-                            <div className="order__exec__card-time">
-                                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.5287 10.0012L9.15844 8.22346V4.60227C9.15844 4.23816 8.86412 3.94385 8.50002 3.94385C8.13591 3.94385 7.8416 4.23816 7.8416 4.60227V8.55271C7.8416 8.76009 7.93905 8.95566 8.10497 9.07944L10.7386 11.0547C10.8571 11.1435 10.9954 11.1863 11.133 11.1863C11.3338 11.1863 11.5313 11.0961 11.6604 10.9223C11.879 10.6319 11.8197 10.2191 11.5287 10.0012Z" fill="#8E8D8D"/>
-                                    <path d="M8.5 0C3.81281 0 0 3.81281 0 8.5C0 13.1872 3.81281 17 8.5 17C13.1872 17 17 13.1872 17 8.5C17 3.81281 13.1872 0 8.5 0ZM8.5 15.6832C4.5397 15.6832 1.3168 12.4603 1.3168 8.5C1.3168 4.5397 4.5397 1.3168 8.5 1.3168C12.461 1.3168 15.6832 4.5397 15.6832 8.5C15.6832 12.4603 12.4603 15.6832 8.5 15.6832Z" fill="#8E8D8D"/>
-                                </svg>
-                                <p>Сделать до {moment(currentOrder.deadline).format('L')}</p>
-                            </div>
-                            <p className="order__exec__card-cost">Предложение заказчка:  <span>{currentOrder.price}  ₽</span></p>
-                        </div>
-                    </div>
+                    <OrderDetailHead />
                     <div className="order__exec__details">
                         <OrderDetailDesc />
                         <div className="order__exec__details-dialog change__feedback-details__dialog">

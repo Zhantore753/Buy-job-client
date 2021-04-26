@@ -2561,6 +2561,10 @@ body {
   margin-bottom: 10px;
 }
 
+.order-change__item-btn-change svg{
+  margin-right: 8px;
+}
+
 .order-change__item-btn-change svg path {
   transition: all 0.3s;
 }
@@ -3089,6 +3093,7 @@ body {
 }
 
 .order__exec__title {
+  word-wrap: break-word;
   font-weight: bold;
   font-size: 30px;
   line-height: 36px;
@@ -3268,6 +3273,7 @@ body {
 }
 
 .order__detail-desc{
+  word-wrap: break-word;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -3823,6 +3829,10 @@ input:checked ~ .questionary__form-area-radio-item {
 }
 
 @media (max-width: 644px) {
+  .order__exec__card-title{
+    text-align: center;
+  }
+
   .settings__title {
     padding: 0 32px 16px 24px;
   }
