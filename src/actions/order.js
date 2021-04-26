@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {API_URL} from "../config";
-import { addFindOrders, addOrder, setCurrentCustomer, setCurrentFiles, setCurrentOrder, setFindOrders, setOrders } from '../reducers/orderReducer';
+import { addFindOrders, addOrder, setCurrentCustomer, setCurrentFiles, setCurrentOffer, setCurrentOrder, setFindOrders, setOrders } from '../reducers/orderReducer';
 
 export const createOrder =  (category, subject, title, selectedDate, price, keyWords, description, files) => {
     return async dispatch =>{
@@ -113,7 +113,7 @@ export const defineCurrentFiles = (files) => {
             dispatch(setCurrentFiles(response.data.fullFiles));
         }catch(e){
             console.log(e);
-            return [e.response.status, e.response.data.titlemessage];
+            return [e.response.status, e.response.data.message];
         }
     }
 }
@@ -134,4 +134,34 @@ export async function downloadFile(file) {
         link.click();
         link.remove();
     }
+}
+
+export const respondToOrder = (offer, order) => {
+    return async dispatch => {
+        try{
+            const response = await axios.post(`${API_URL}api/order/create-respond`, {offer, order},
+                {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+            );
+            dispatch(setCurrentOffer(response.data.offer));
+            return [response.status, response.data.message];
+        }catch(e){
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}
+
+export const defineCurrentOffer = (orderId) => {
+    return async dispatch => {
+        try{
+            const response = await axios.get(`${API_URL}api/order/find-respond?orderId=${orderId}`,
+                {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+            );
+            dispatch(setCurrentOffer(response.data.offer));
+            return [response.status, response.data.message];
+        }catch(e){
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    } 
 }

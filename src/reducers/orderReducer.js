@@ -5,13 +5,15 @@ const ADD_FIND_ORDERS = "ADD_FIND_ORDERS";
 const SET_CURRENT_ORDER = "SET_CURRENT_ORDER"
 const SET_CURRENT_CUSTOMER = "SET_CURRENT_CUSTOMER";
 const SET_CURRENT_FILES = "SET_CURRENT_FILES";
+const SET_CURRENT_OFFER = "SET_CURRENT_OFFER"
 
 const defaultState = {
     orders: [],
     findOrders: [],
     currentOrder: {},
     currentCustomer: {},
-    currentFiles: []
+    currentFiles: [],
+    currentOffer: 0,
 };
 
 export default function orderReducer(state = defaultState, action){
@@ -51,6 +53,11 @@ export default function orderReducer(state = defaultState, action){
                 ...state,
                 currentFiles: action.payload
             }
+        case SET_CURRENT_OFFER: 
+            return{
+                ...state,
+                currentOffer: action.payload
+            }
         default:
             return state;
     }
@@ -63,3 +70,4 @@ export const addFindOrders = orders => ({type: ADD_FIND_ORDERS, payload: orders}
 export const setCurrentOrder = order => ({type: SET_CURRENT_ORDER, payload: order});
 export const setCurrentCustomer = customer => ({type: SET_CURRENT_CUSTOMER, payload: customer});
 export const setCurrentFiles = files => ({type: SET_CURRENT_FILES, payload: files});
+export const setCurrentOffer = offer => ({type: SET_CURRENT_OFFER, payload: offer});

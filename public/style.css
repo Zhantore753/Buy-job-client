@@ -2709,7 +2709,7 @@ body {
 .dialog__list {
   padding-top: 50px;
   padding-bottom: 50px;
-  height: 380px;
+  height: 600px;
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-width: none;
@@ -3226,6 +3226,7 @@ body {
 }
 
 .order__exec__details-submit {
+  color: #3C4852;
   cursor: pointer;
   max-width: 270px;
   width: 100%;

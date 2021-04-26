@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { defineCurrentCustomer, defineCurrentFiles, downloadFile } from '../../../actions/order';
+import { defineCurrentCustomer, defineCurrentFiles, defineCurrentOffer, downloadFile, respondToOrder } from '../../../actions/order';
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
 import { formatBytes } from '../../formatBytes';
@@ -10,14 +10,27 @@ const OrderDetailDesc = () => {
     const currentOrder = useSelector(state => state.order.currentOrder);
     const currentCustomer = useSelector(state => state.order.currentCustomer);
     const currentFiles = useSelector(state => state.order.currentFiles);
+    const currentOffer = useSelector(state => state.order.currentOffer);
     const dispatch = useDispatch();
+    const [offer, setOffer] = useState(currentOrder.price);
+    const [valid, setValid] = useState([]);
+    const [disabledBtn, setDisabledBtn] = useState(false);
 
     const avatar = currentCustomer.avatar ? `${API_URL +  currentCustomer.avatar}` : avatarLogo;
     
+    const offValidByTime = () =>{
+        setDisabledBtn(true);
+        setTimeout(() => {
+            setValid(false);
+            setDisabledBtn(false);
+        }, 3000);
+    }
+
     useEffect(() => {
         if(currentOrder.user){
             dispatch(defineCurrentCustomer(currentOrder.user));
             dispatch(defineCurrentFiles(currentOrder.files));
+            dispatch(defineCurrentOffer(currentOrder._id));
         }
     }, [currentOrder]);
 
@@ -26,11 +39,25 @@ const OrderDetailDesc = () => {
         downloadFile(file);
     }
 
+    const respondHandler = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if(offer < 100 || offer > 999999){
+            setValid([true, 'Сумма не должна быть меньше 100 и превышать 999999']);
+            offValidByTime();
+            return;
+        }
+
+        dispatch(respondToOrder(offer, currentOrder._id))
+        .then(async res => {
+            await setValid(res);
+        });
+        offValidByTime();
+    }
+
     if(!currentOrder.user){
         return <Redirect to='/' />
     }
-
-    console.log(currentFiles);
 
     return (
         <form className="order__exec__details-bid">
@@ -56,11 +83,19 @@ const OrderDetailDesc = () => {
                     </li>
                 )}
             </ul>
+            {currentOffer > 100 &&
+                <p className="reg-landing__success">Вы уже делали ставку {currentOffer}, хотите изменить ее?</p>
+            }
             <div className="order__exec__details-price">
                 <label htmlFor="price">Предложение: </label>
-                <input type="text" id="price" name="price" />
+                <input value={offer} onChange={e => setOffer(e.target.value)} type="text" id="price" name="price" />
             </div>
-            <button className="order__exec__details-submit">Отправить заявку</button>
+            <button disabled={disabledBtn} onClick={e => respondHandler(e)} className="order__exec__details-submit">Отправить заявку</button>
+            {valid[0] === 200 ?
+                <p className="reg-landing__success">{valid[1]}</p>
+            :
+                <p className="reg-landing__error">{valid[1]}</p>
+            }
         </form>
     );
 };
