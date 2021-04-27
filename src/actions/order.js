@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {API_URL} from "../config";
-import { addFindOrders, addOrder, resetOrders, setCurrentCustomer, setCurrentFiles, setCurrentOffer, setCurrentOrder, setFindOrders, setOrders, setResponds } from '../reducers/orderReducer';
+import { addFindOrders, addMessage, addOrder, resetOrders, setCurrentCustomer, setCurrentFiles, setCurrentOffer, setCurrentOrder, setCurrentRespond, setFindOrders, setMessage, setOrders, setResponds } from '../reducers/orderReducer';
 
 export const createOrder =  (category, subject, title, selectedDate, price, keyWords, description, files) => {
     return async dispatch =>{
@@ -151,7 +151,7 @@ export const respondToOrder = (offer, order, respondId) => {
     }
 }
 
-export const defineCurrentOffer = (orderId) => {
+export const defineCurrentRespond = (orderId) => {
     return async dispatch => {
         try{
             const response = await axios.get(`${API_URL}api/order/find-respond?orderId=${orderId}`,
@@ -195,6 +195,35 @@ export const getResponds = (orderId) => {
 
             dispatch(setResponds(response.data.responds));
             return [response.status, response.data.message]; 
+        }catch(e){
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}
+
+export const getMessages = (respondId) => {
+    return async dispatch => {
+        try{
+            dispatch(setMessage([]));
+            const response = await axios.get(`${API_URL}api/order/get-messages?respondId=${respondId}`, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            console.log(response);
+            dispatch(setMessage(response.data.messages));
+        }catch(e){
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}
+
+export const addMessages = (messages) => {
+    return async dispatch => {
+        try{
+            if(messages){
+                dispatch(addMessage(messages));
+            }
         }catch(e){
             console.log(e);
             return [e.response.status, e.response.data.message];

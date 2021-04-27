@@ -8,7 +8,9 @@ const SET_CURRENT_CUSTOMER = "SET_CURRENT_CUSTOMER";
 const SET_CURRENT_FILES = "SET_CURRENT_FILES";
 const SET_CURRENT_OFFER = "SET_CURRENT_OFFER";
 const SET_RESPONDS = "SET_RESPONDS";
-const SET_CURRENT_RESPOND = "SET_CURRENT_RESPOND"
+const SET_CURRENT_RESPOND = "SET_CURRENT_RESPOND";
+const ADD_MESSAGE = "ADD_MESSAGE";
+const SET_MESSAGE = "SET_MESSAGE";
 
 const defaultState = {
     orders: [],
@@ -18,7 +20,8 @@ const defaultState = {
     currentFiles: [],
     currentOffer: {},
     responds: [],
-    currentRespond: {}
+    currentRespond: {},
+    messages: []
 };
 
 export default function orderReducer(state = defaultState, action){
@@ -78,6 +81,16 @@ export default function orderReducer(state = defaultState, action){
                 ...state,
                 currentRespond: action.payload
             }
+        case SET_MESSAGE: 
+            return{
+                ...state,
+                messages: action.payload
+            }
+        case ADD_MESSAGE:
+            return{
+                ...state,
+                messages: [...state.messages, ...action.payload]
+            }
         default:
             return state;
     }
@@ -94,3 +107,5 @@ export const setCurrentFiles = files => ({type: SET_CURRENT_FILES, payload: file
 export const setCurrentOffer = offer => ({type: SET_CURRENT_OFFER, payload: offer});
 export const setResponds = responds => ({type: SET_RESPONDS, payload: responds});
 export const setCurrentRespond = respond => ({type: SET_CURRENT_RESPOND, payload: respond});
+export const addMessage = message => ({type:ADD_MESSAGE, payload: message});
+export const setMessage = message => ({type:SET_MESSAGE, payload: message});

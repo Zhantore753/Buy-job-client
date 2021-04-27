@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getResponds } from '../../../actions/order';
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
+import { setCurrentRespond } from '../../../reducers/orderReducer';
 
 const OrderDetailResponds = () => {
     const currentOrder = useSelector(state => state.order.currentOrder);
@@ -13,13 +14,15 @@ const OrderDetailResponds = () => {
         dispatch(getResponds(currentOrder._id));
     }, [currentOrder]);
 
-    const respondChooseHandler = (e, id) => {
+    const respondChooseHandler = (id, respond) => {
         const respondsElements = document.querySelectorAll('.feedback-executors__item');
 
         respondsElements.forEach(item => {
             item.classList.remove('feedback-executors__item-active');
         });
         respondsElements[id].classList.add('feedback-executors__item-active');
+
+        dispatch(setCurrentRespond(respond));
     }
 
     return (
@@ -34,7 +37,7 @@ const OrderDetailResponds = () => {
                     const name = respond.userFullName ? respond.userFullName : respond.userEmail;
 
                     return(
-                        <button onClick={e => respondChooseHandler(e, index)} key={index}>
+                        <button onClick={() => respondChooseHandler(index, respond)} key={index}>
                             <li className="feedback-executors__item">
                                 <img className="feedback-executors__item-avatar" src={avatar} alt="feedback__avatar" />
                                 <p className="feedback-executors__item-name">{name}</p>

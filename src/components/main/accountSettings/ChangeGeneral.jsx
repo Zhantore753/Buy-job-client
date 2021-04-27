@@ -8,7 +8,7 @@ const ChangeGeneral = () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const dispatch = useDispatch();
     const [email, setEmail] = useState(currentUser.email);
-    const [fullName, setFullName] = useState(currentUser.fullName ? currentUser.fullName : 'ФИО');
+    const [fullName, setFullName] = useState(currentUser.fullName ? currentUser.fullName : 'Nick Name');
     const [valid, setValid] = useState([false, '']);
     const [disabledBtn, setDisabledBtn] = useState(false);
 
@@ -30,7 +30,7 @@ const ChangeGeneral = () => {
             return;
         }
         if(fullName.length < 4 || fullName.length > 25){
-            setValid([true, 'ФИО должно быть не меньше 4 символов и не больше 25']);
+            setValid([true, 'NickName должен быть не меньше 4 символов и не больше 25']);
             offValidByTime();
             return;
         }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { defineCurrentOffer, respondToOrder } from '../../../actions/order';
+import { defineCurrentRespond, respondToOrder } from '../../../actions/order';
 
 const OrderDetailOffer = () => {
     const currentOrder = useSelector(state => state.order.currentOrder);
@@ -19,7 +19,7 @@ const OrderDetailOffer = () => {
     }
 
     useEffect(() => {
-        dispatch(defineCurrentOffer(currentOrder._id));
+        dispatch(defineCurrentRespond(currentOrder._id));
     }, [currentOrder]);
 
     const respondHandler = (e) => {

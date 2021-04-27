@@ -1693,7 +1693,6 @@ body {
 }
 
 .support__item {
-  align-items: center;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -2490,6 +2489,7 @@ body {
 }
 
 .order-change__item {
+  align-items: center;
   cursor: unset;
   padding: 26px 45px 26px 36px;
   max-height: 150px;
@@ -2745,6 +2745,7 @@ body {
 }
 
 .dialog__item .dialog__item-message .dialog__item-message-text {
+  word-wrap: break-word;
   width: 100%;
   padding: 16px 20px 28px 20px;
   background: #F8F8F8;
@@ -2754,6 +2755,7 @@ body {
 }
 
 .dialog__item .dialog__item-message .dialog__item-message-text span {
+  font-size: 14px;
   color: rgba(60, 72, 82, 0.6);
   position: absolute;
   right: 14px;
@@ -2801,7 +2803,10 @@ body {
 }
 
 .dialog__item-avatar {
-  max-height: 57px;
+  height: 57px;
+  width: 57px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .dialog__item-message-reply {
@@ -2857,6 +2862,7 @@ body {
 }
 
 .dialog__form-sumbit-btn {
+  font-size: 16px;
   cursor: pointer;
   display: flex;
   padding: 12px 18px 12px 20px;
@@ -3549,6 +3555,7 @@ input:checked ~ .questionary__form-area-radio-item {
 }
 
 .order__tabs-btns{
+  border-radius: 7px;
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #3C4852;
@@ -3711,6 +3718,10 @@ input:checked ~ .questionary__form-area-radio-item {
 }
 
 @media (max-width: 1024px) {
+  .order__tabs{
+    max-width: 100%;
+  }
+
   .order-change__feedback {
     flex-direction: column;
   }
@@ -3997,6 +4008,10 @@ input:checked ~ .questionary__form-area-radio-item {
 }
 
 @media (max-width: 480px) {
+  .order__tabs{
+    font-size: 16px;
+  }
+
   .footer__copyright {
     align-self: flex-start;
   }
