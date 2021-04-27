@@ -1,16 +1,38 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import OrderDetailDesc from './OrderDetailDesc';
 import OrderDetailHead from './OrderDetailHead';
 
 const OrderDetail = () => {
+    const currentUser = useSelector(state => state.user.currentUser);
 
     return (
         <section className="order__exec main">
             <div className="container">
                 <div className="order__exec__inner">
+                    
                     <OrderDetailHead />
                     <div className="order__exec__details">
-                        <OrderDetailDesc />
+                        {currentUser.role === 'customer' ?
+                            <Tabs className='order__tabs'>
+                                <TabList className='order__tabs-btns'>
+                                    <Tab className="order__tabs-btn" selectedClassName="order__tabs-btn-active">Описание</Tab>
+                                    <Tab className="order__tabs-btn" selectedClassName="order__tabs-btn-active">Предложения</Tab>
+                                </TabList>
+
+                                <TabPanel>
+                                    <OrderDetailDesc />
+                                </TabPanel>
+                                <TabPanel>
+                                    <h2>Any content 2</h2>
+                                </TabPanel>
+                            </Tabs>
+                        :
+                            <OrderDetailDesc />
+                        }
+                        
                         <div className="order__exec__details-dialog change__feedback-details__dialog">
                             <ul className="dialog__list">
                                 <li className="dialog__item dialog__item-my">

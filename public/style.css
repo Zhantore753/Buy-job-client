@@ -3532,6 +3532,45 @@ input:checked ~ .questionary__form-area-radio-item {
   border-bottom: 1px solid #F3EEEE;
 }
 
+.order__tabs{
+  max-width: 480px;
+  width: 100%;
+}
+
+.order__tabs-btns{
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #3C4852;
+  margin: 0 10px 10px;
+  padding: 0;
+}
+
+.order__tabs-btn{
+  display: inline-block;
+  border: 1px solid transparent;
+  border-bottom: none;
+  bottom: -1px;
+  position: relative;
+  list-style: none;
+  padding: 6px 40px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.order__tabs-btn:hover{
+  background: #FFCC80;
+  border-color: #3C4852;
+  color: #3C4852;
+  border-radius: 5px 5px 0 0;
+}
+
+.order__tabs-btn-active{
+  background: #FFCC80;
+  border-color: #3C4852;
+  color: #3C4852;
+  border-radius: 5px 5px 0 0;
+}
+
 @media (max-width: 1381px) {
   .header__balance {
     max-width: 100%;
