@@ -6,7 +6,9 @@ const ADD_FIND_ORDERS = "ADD_FIND_ORDERS";
 const SET_CURRENT_ORDER = "SET_CURRENT_ORDER"
 const SET_CURRENT_CUSTOMER = "SET_CURRENT_CUSTOMER";
 const SET_CURRENT_FILES = "SET_CURRENT_FILES";
-const SET_CURRENT_OFFER = "SET_CURRENT_OFFER"
+const SET_CURRENT_OFFER = "SET_CURRENT_OFFER";
+const SET_RESPONDS = "SET_RESPONDS";
+const SET_CURRENT_RESPOND = "SET_CURRENT_RESPOND"
 
 const defaultState = {
     orders: [],
@@ -15,11 +17,12 @@ const defaultState = {
     currentCustomer: {},
     currentFiles: [],
     currentOffer: {},
+    responds: [],
+    currentRespond: {}
 };
 
 export default function orderReducer(state = defaultState, action){
     switch(action.type){
-
         case SET_ORDERS:
             return{
                 ...state,
@@ -65,6 +68,16 @@ export default function orderReducer(state = defaultState, action){
                 ...state,
                 currentOffer: action.payload
             }
+        case SET_RESPONDS:
+            return{
+                ...state,
+                responds: action.payload
+            }
+        case SET_CURRENT_RESPOND: 
+            return{
+                ...state,
+                currentRespond: action.payload
+            }
         default:
             return state;
     }
@@ -79,3 +92,5 @@ export const setCurrentOrder = order => ({type: SET_CURRENT_ORDER, payload: orde
 export const setCurrentCustomer = customer => ({type: SET_CURRENT_CUSTOMER, payload: customer});
 export const setCurrentFiles = files => ({type: SET_CURRENT_FILES, payload: files});
 export const setCurrentOffer = offer => ({type: SET_CURRENT_OFFER, payload: offer});
+export const setResponds = responds => ({type: SET_RESPONDS, payload: responds});
+export const setCurrentRespond = respond => ({type: SET_CURRENT_RESPOND, payload: respond});

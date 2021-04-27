@@ -2598,12 +2598,14 @@ body {
 
 .order-change__feedback-executors__list button {
   color: #3C4852;
+  width: 100%;
   background: transparent;
 }
 
 .feedback-executors__item {
   cursor: pointer;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 16px 26px 16px 21px;
@@ -2635,8 +2637,16 @@ body {
 }
 
 .feedback-executors__item-avatar {
-  margin-right: 22px;
+  background: #FFCC80;
   border-radius: 100%;
+  object-fit: cover;
+  width: 80px;
+  height: 80px;
+}
+
+.feedback-executors__item-name{
+  margin: 0 14px;
+  word-wrap: break-word;
 }
 
 .feedback-executors__item-cost {
@@ -3540,20 +3550,24 @@ input:checked ~ .questionary__form-area-radio-item {
 
 .order__tabs-btns{
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   border-bottom: 1px solid #3C4852;
-  margin: 0 10px 10px;
-  padding: 0;
+  margin: 0 5px 10px;
+  padding: 0 10px;
 }
 
 .order__tabs-btn{
+  width: 50%;
   display: inline-block;
   border: 1px solid transparent;
   border-bottom: none;
   bottom: -1px;
   position: relative;
   list-style: none;
-  padding: 6px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 12px;
   cursor: pointer;
   transition: 0.3s;
 }
