@@ -4,6 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import OrderDetailDesc from './OrderDetailDesc';
 import OrderDetailHead from './OrderDetailHead';
+import OrderDetailResponds from './OrderDetailResponds';
 
 const OrderDetail = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -26,7 +27,7 @@ const OrderDetail = () => {
                                     <OrderDetailDesc />
                                 </TabPanel>
                                 <TabPanel>
-                                    <h2>Any content 2</h2>
+                                    <OrderDetailResponds />
                                 </TabPanel>
                             </Tabs>
                         :

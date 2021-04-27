@@ -2596,8 +2596,9 @@ body {
   margin-bottom: 22px;
 }
 
-.order-change__feedback-executors__list a {
+.order-change__feedback-executors__list button {
   color: #3C4852;
+  background: transparent;
 }
 
 .feedback-executors__item {
