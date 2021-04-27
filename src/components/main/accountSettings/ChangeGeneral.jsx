@@ -29,8 +29,8 @@ const ChangeGeneral = () => {
             offValidByTime();
             return;
         }
-        if(fullName.length < 4){
-            setValid([true, 'ФИО должно быть больше 4 символов']);
+        if(fullName.length < 4 || fullName.length > 25){
+            setValid([true, 'ФИО должно быть не меньше 4 символов и не больше 25']);
             offValidByTime();
             return;
         }
