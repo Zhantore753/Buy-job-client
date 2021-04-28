@@ -209,7 +209,6 @@ export const getMessages = (respondId) => {
             const response = await axios.get(`${API_URL}api/order/get-messages?respondId=${respondId}`, {
                 headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
             });
-            console.log(response);
             dispatch(setMessage(response.data.messages));
         }catch(e){
             console.log(e);

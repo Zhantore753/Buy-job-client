@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { setCurrentRespondByOrder } from '../../../actions/order';
-import { setCurrentRespond } from '../../../reducers/orderReducer';
+import { setCurrentRespond, setMessage } from '../../../reducers/orderReducer';
 import socket from '../../../socket';
 import OrderDetailAccept from './OrderDetailAccept';
 import OrderDetailChat from './OrderDetailChat';
@@ -19,16 +19,15 @@ const OrderDetail = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(currentRespond._id){
-            try{
+        dispatch(setMessage([]));
+        try{
+            if(currentRespond._id){
                 socket.emit('ROOM:LEAVE', currentRespond._id);
-            }catch(e){}
-        }
-        if(currentOffer._id){
-            try{
+            }
+            if(currentOffer._id){
                 socket.emit('ROOM:LEAVE', currentOffer._id);
-            }catch(e){}
-        }
+            }
+        }catch(e){}
         dispatch(setCurrentRespond({}));
         if(currentOffer){
             dispatch(setCurrentRespond(currentOffer));

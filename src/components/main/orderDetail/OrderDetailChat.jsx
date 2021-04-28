@@ -65,7 +65,6 @@ const OrderDetailChat = () => {
                 time: Date.now(),
                 files: []
             }
-            console.log(obj);
             socket.emit('NEW_MESSAGE', obj);
             dispatch(addMessages([obj]));
             setMessage('');

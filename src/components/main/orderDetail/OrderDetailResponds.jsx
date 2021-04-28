@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getResponds } from '../../../actions/order';
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
-import { setCurrentRespond } from '../../../reducers/orderReducer';
+import { setCurrentRespond, setMessage } from '../../../reducers/orderReducer';
+import socket from '../../../socket';
 
 const OrderDetailResponds = () => {
     const currentOrder = useSelector(state => state.order.currentOrder);
+    const currentRespond = useSelector(state => state.order.currentRespond);
+    const currentOffer = useSelector(state => state.order.currentOffer);
     const responds = useSelector(state => state.order.responds);
     const dispatch = useDispatch();
 
@@ -21,6 +24,16 @@ const OrderDetailResponds = () => {
             item.classList.remove('feedback-executors__item-active');
         });
         respondsElements[id].classList.add('feedback-executors__item-active');
+
+        dispatch(setMessage([]));
+        try{
+            if(currentRespond._id){
+                socket.emit('ROOM:LEAVE', currentRespond._id);
+            }
+            if(currentOffer._id){
+                socket.emit('ROOM:LEAVE', currentOffer._id);
+            }
+        }catch(e){}
 
         dispatch(setCurrentRespond(respond));
     }
