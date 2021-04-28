@@ -2809,6 +2809,13 @@ body {
   object-fit: cover;
 }
 
+.loader {
+  position: relative;
+  top: 200px;
+  background: transparent;
+  z-index: 9999;
+}
+
 .dialog__item-message-reply {
   display: flex;
   align-items: center;
@@ -2872,6 +2879,10 @@ body {
   box-sizing: border-box;
   border-radius: 10px;
   transition: all 0.3s;
+}
+
+.order__exec__card-subtitle{
+  text-align: center;
 }
 
 .dialog__form-sumbit-btn p {

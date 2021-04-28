@@ -5,6 +5,7 @@ import { addMessages, getMessages } from '../../../actions/order';
 import socket from '../../../socket'
 import avatarLogo from '../../../img/avatarlogo.svg';
 import { API_URL } from '../../../config';
+import Loader from 'react-loader';
 
 const OrderDetailChat = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -13,6 +14,7 @@ const OrderDetailChat = () => {
     const currentOffer = useSelector(state => state.order.currentOffer);
     const messages = useSelector(state => state.order.messages);
     const [message, setMessage] = useState('');
+    const [loaded, setLoaded] = useState(false);
     const dispatch = useDispatch();
     const messageEl = useRef(null);
     useEffect(() => {
@@ -23,21 +25,15 @@ const OrderDetailChat = () => {
             if(currentUser.role === "freelancer" && currentOffer){
                 socket.emit('ROOM:JOIN', currentOffer._id);
                 dispatch(getMessages(currentOffer._id));
-                if (messageEl) {
-                    messageEl.current.addEventListener('DOMNodeInserted', event => {
-                        const { currentTarget: target } = event;
-                        target.scroll({ top: target.scrollHeight});
-                    });
-                }
             }else if(currentRespond && currentRespond._id){
                 socket.emit('ROOM:JOIN', currentRespond._id);
                 dispatch(getMessages(currentRespond._id));
-                if (messageEl && messageEl.current) {
-                    messageEl.current.addEventListener('DOMNodeInserted', event => {
-                        const { currentTarget: target } = event;
-                        target.scroll({ top: target.scrollHeight});
-                    });
-                }
+            }
+            if (messageEl && messageEl.current) {
+                messageEl.current.addEventListener('DOMNodeInserted', event => {
+                    const { currentTarget: target } = event;
+                    target.scroll({ top: target.scrollHeight});
+                });
             }
         }
         if(socket){
@@ -49,6 +45,13 @@ const OrderDetailChat = () => {
             });
         }
     }, [currentRespond, currentOffer, socket]);
+
+    useEffect(() => {
+        setLoaded(false);
+        if(messages && messages.length > 0){
+            setLoaded(true);
+        }
+    }, [messages]);
 
     const submitMessageHandler = (e) => {
         e.preventDefault();
@@ -73,6 +76,7 @@ const OrderDetailChat = () => {
         {(currentUser.role === "customer" && currentRespond._id) || currentUser.role === "freelancer" ?
             <>
             <ul ref={messageEl} className="dialog__list">
+                <Loader loaded={loaded}>
                 {messages.map((currentMessage, index) => {
                     let sender;
                     let classes = 'dialog__item';
@@ -110,6 +114,7 @@ const OrderDetailChat = () => {
                     </li>
                     )}
                 )}
+                </Loader>
             </ul>
             <form className="dialog__form">
                 <input className="dialog__form-file" type="file" id="file" name="file" multiple />
