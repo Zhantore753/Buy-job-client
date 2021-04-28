@@ -16,8 +16,9 @@ const OrderDetailChat = () => {
     const dispatch = useDispatch();
     const messageEl = useRef(null);
     useEffect(() => {
-        if(currentOffer._id || currentRespond._id){
-            if(currentUser.role === "freelancer"){
+        socket.removeAllListeners();
+        if(currentOffer || currentRespond || currentOffer._id || currentRespond._id){
+            if(currentUser.role === "freelancer" && currentOffer){
                 socket.emit('ROOM:JOIN', currentOffer._id);
                 dispatch(getMessages(currentOffer._id));
                 if (messageEl) {
@@ -37,9 +38,6 @@ const OrderDetailChat = () => {
                 }
             }
         }
-    }, [currentRespond, currentOffer]);
-
-    useEffect(async () =>{
         if(socket){
             socket.on('NEW_MESSAGE', ({room, text, user, time, files}) => {
                 const newMessage ={
@@ -48,7 +46,7 @@ const OrderDetailChat = () => {
                 dispatch(addMessages([newMessage]));
             });
         }
-    }, [socket]);
+    }, [currentRespond, currentOffer, socket]);
 
     const submitMessageHandler = (e) => {
         e.preventDefault();
@@ -67,24 +65,6 @@ const OrderDetailChat = () => {
             setMessage('');
         }
     }
-
-    // useEffect(() => {
-    //     if(currentUser.role === "customer"){
-    //         if (messageEl) {
-    //             messageEl.current.addEventListener('DOMNodeInserted', event => {
-    //                 const { currentTarget: target } = event;
-    //                 target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-    //             });
-    //         }
-    //     }else{
-    //         if (messageEl) {
-    //             messageEl.current.addEventListener('DOMNodeInserted', event => {
-    //                 const { currentTarget: target } = event;
-    //                 target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-    //             });
-    //         }
-    //     }
-    // }, [messages])
 
     return (
         <div className="order__exec__details-dialog change__feedback-details__dialog">
