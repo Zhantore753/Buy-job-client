@@ -74,7 +74,7 @@ const OrderDetailChat = () => {
 
     return (
         <div className="order__exec__details-dialog change__feedback-details__dialog">
-        {(currentUser.role === "customer" && currentRespond._id) || currentUser.role === "freelancer" ?
+        {(currentUser.role === "customer" && currentRespond._id) || currentUser.role === "freelancer" && currentRespond._id ?
             <>
             <ul ref={messageEl} className="dialog__list">
                 <Loader loaded={loaded}>
@@ -141,7 +141,15 @@ const OrderDetailChat = () => {
                 </button>
             </form>
         </>
-        : <p>Выберите отклик для просмотра чата</p>}
+        : 
+            <p>
+                {currentUser.role === "customer" ?
+                    'Выберите отклик для просмотра чата'
+                : 
+                    'Отправьте заявку для открытия чата'
+                }
+            </p>
+        }
         </div>
     );
 };

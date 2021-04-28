@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { setCurrentRespondByOrder } from '../../../actions/order';
+import { setCurrentRespond } from '../../../reducers/orderReducer';
+import socket from '../../../socket';
 import OrderDetailAccept from './OrderDetailAccept';
 import OrderDetailChat from './OrderDetailChat';
 import OrderDetailDesc from './OrderDetailDesc';
@@ -12,13 +14,29 @@ import OrderDetailResponds from './OrderDetailResponds';
 const OrderDetail = () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const currentOrder = useSelector(state => state.order.currentOrder);
+    const currentOffer = useSelector(state => state.order.currentOffer);
+    const currentRespond = useSelector(state => state.order.currentRespond);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if(currentRespond._id){
+            try{
+                socket.emit('ROOM:LEAVE', currentRespond._id);
+            }catch(e){}
+        }
+        if(currentOffer._id){
+            try{
+                socket.emit('ROOM:LEAVE', currentOffer._id);
+            }catch(e){}
+        }
+        dispatch(setCurrentRespond({}));
+        if(currentOffer){
+            dispatch(setCurrentRespond(currentOffer));
+        }
         if(currentOrder.executorRespond){
             dispatch(setCurrentRespondByOrder(currentOrder.executorRespond));
         }
-    }, [currentOrder]);
+    }, [currentOrder, currentOffer]);
 
     return (
         <section className="order__exec main">

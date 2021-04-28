@@ -4016,6 +4016,19 @@ input:checked ~ .questionary__form-area-radio-item {
 }
 
 @media (max-width: 517px) {
+  .header{
+    height: 70px;
+  }
+
+  .header__list{
+    height: 75px;
+  }
+
+  .header-active {
+    overflow: auto;
+    height: 100%;
+  }
+
   .header__balance {
     display: none;
   }
