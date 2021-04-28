@@ -230,3 +230,31 @@ export const addMessages = (messages) => {
         }
     }
 }
+
+export const acceptRespond = (respondId) => {
+    return async dispatch => {
+        try{
+            const response = await axios.post(`${API_URL}api/order/access-respond`, {respondId},{
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            dispatch(setCurrentOrder(response.data.order));
+        }catch(e){ 
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}
+
+export const setCurrentRespondByOrder = (respondId) => {
+    return async dispatch => {
+        try{
+            const response = await axios.get(`${API_URL}api/order/get-respond?respondId=${respondId}`,{
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            dispatch(setCurrentRespond(response.data.respond));
+        }catch(e){ 
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}

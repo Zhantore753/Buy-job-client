@@ -1,7 +1,8 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import { setCurrentRespondByOrder } from '../../../actions/order';
 import OrderDetailAccept from './OrderDetailAccept';
 import OrderDetailChat from './OrderDetailChat';
 import OrderDetailDesc from './OrderDetailDesc';
@@ -10,6 +11,14 @@ import OrderDetailResponds from './OrderDetailResponds';
 
 const OrderDetail = () => {
     const currentUser = useSelector(state => state.user.currentUser);
+    const currentOrder = useSelector(state => state.order.currentOrder);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(currentOrder.executorRespond){
+            dispatch(setCurrentRespondByOrder(currentOrder.executorRespond));
+        }
+    }, [currentOrder]);
 
     return (
         <section className="order__exec main">
@@ -18,7 +27,7 @@ const OrderDetail = () => {
                     
                     <OrderDetailHead />
                     <div className="order__exec__details">
-                        {currentUser.role === 'customer' ?
+                        {currentUser.role === 'customer' && !currentOrder.executorRespond ?
                             <Tabs className='order__tabs'>
                                 <TabList className='order__tabs-btns'>
                                     <Tab className="order__tabs-btn" selectedClassName="order__tabs-btn-active">Описание</Tab>

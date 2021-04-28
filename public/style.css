@@ -2539,7 +2539,6 @@ body {
   background: #FF4B55;
   border-radius: 6px;
   padding: 8px 22px;
-  margin-right: 10px;
   transition: all 0.3s;
   margin-bottom: 10px;
 }
@@ -2600,6 +2599,10 @@ body {
   color: #3C4852;
   width: 100%;
   background: transparent;
+}
+
+.order-change__item-btns button:nth-child(1){
+  margin-right: 10px;
 }
 
 .feedback-executors__item {
