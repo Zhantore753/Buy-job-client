@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import OrderDetailAccept from './OrderDetailAccept';
 import OrderDetailChat from './OrderDetailChat';
 import OrderDetailDesc from './OrderDetailDesc';
 import OrderDetailHead from './OrderDetailHead';
@@ -9,7 +10,6 @@ import OrderDetailResponds from './OrderDetailResponds';
 
 const OrderDetail = () => {
     const currentUser = useSelector(state => state.user.currentUser);
-    const currentRespond = useSelector(state => state.order.currentRespond);
 
     return (
         <section className="order__exec main">
@@ -35,8 +35,12 @@ const OrderDetail = () => {
                         :
                             <OrderDetailDesc />
                         }
-                        
-                        <OrderDetailChat />
+                        <div className="order-change__feedback-details">
+                            {currentUser.role === 'customer' &&
+                                <OrderDetailAccept />
+                            }
+                            <OrderDetailChat />
+                        </div>
                     </div>
                 </div>
             </div>

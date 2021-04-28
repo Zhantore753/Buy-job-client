@@ -23,11 +23,19 @@ const OrderDetailChat = () => {
         }
         if((currentOffer && currentOffer._id) || (currentRespond && currentRespond._id)){
             if(currentUser.role === "freelancer" && currentOffer){
+                setLoaded(false);
                 socket.emit('ROOM:JOIN', currentOffer._id);
-                dispatch(getMessages(currentOffer._id));
+                dispatch(getMessages(currentOffer._id))
+                .then(() => {
+                    setLoaded(true);
+                });
             }else if(currentRespond && currentRespond._id){
+                setLoaded(false);
                 socket.emit('ROOM:JOIN', currentRespond._id);
-                dispatch(getMessages(currentRespond._id));
+                dispatch(getMessages(currentRespond._id))
+                .then(() => {
+                    setLoaded(true);
+                });
             }
             if (messageEl && messageEl.current) {
                 messageEl.current.addEventListener('DOMNodeInserted', event => {
@@ -45,13 +53,6 @@ const OrderDetailChat = () => {
             });
         }
     }, [currentRespond, currentOffer, socket]);
-
-    useEffect(() => {
-        setLoaded(false);
-        if(messages && messages.length > 0){
-            setLoaded(true);
-        }
-    }, [messages]);
 
     const submitMessageHandler = (e) => {
         e.preventDefault();
@@ -117,14 +118,14 @@ const OrderDetailChat = () => {
                 </Loader>
             </ul>
             <form className="dialog__form">
-                <input className="dialog__form-file" type="file" id="file" name="file" multiple />
-                <label htmlFor="file" className="dialog__form-btn">
+                <input disabled={!loaded} className="dialog__form-file" type="file" id="file" name="file" multiple />
+                <label disabled={!loaded} htmlFor="file" className="dialog__form-btn">
                     <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17.2209 2.28462C14.8529 -0.0834793 10.9997 -0.0834793 8.63128 2.28462L1.26849 9.64738C-0.422922 11.339 -0.42281 14.0913 1.26871 15.7828C2.11454 16.6287 3.22523 17.0515 4.33636 17.0514C5.44719 17.0513 6.55847 16.6285 7.40415 15.7828L14.1532 9.03362C14.6449 8.542 14.9157 7.88832 14.9158 7.19304C14.9158 6.49772 14.645 5.84407 14.1533 5.3523C13.1383 4.3374 11.4867 4.33743 10.4719 5.35249L6.05834 9.76598C5.7195 10.1048 5.7195 10.6542 6.05827 10.9931C6.39708 11.332 6.94648 11.3319 7.28536 10.9931L11.699 6.57955C12.0373 6.24122 12.5877 6.24114 12.9261 6.57947C13.09 6.74335 13.1803 6.96125 13.1803 7.193C13.1803 7.42475 13.09 7.64258 12.9261 7.80653L6.17706 14.5557C5.16208 15.5705 3.51071 15.5707 2.49581 14.5558C1.4809 13.5408 1.48083 11.8893 2.49562 10.8744L9.85838 3.51171C11.55 1.82012 14.3024 1.82012 15.9938 3.51171C16.8133 4.33109 17.2646 5.42058 17.2646 6.5794C17.2646 7.73821 16.8133 8.8277 15.9938 9.64715L8.63117 17.01C8.29236 17.3489 8.29236 17.8982 8.63125 18.2371C8.80069 18.4066 9.02275 18.4912 9.24478 18.4912C9.46684 18.4912 9.6889 18.4065 9.85834 18.2371L17.2209 10.8743C18.3682 9.72712 18.9999 8.20185 19 6.57943C19 4.95705 18.3682 3.43178 17.2209 2.28462Z" fill="#3C4852"/>
                     </svg>
                 </label>
                 <textarea value={message} onChange={e => setMessage(e.target.value)} className="dialog__form-message" autoComplete="off" name="message" type="text" placeholder="Введите сообщение ..."></textarea>
-                <button onClick={e => submitMessageHandler(e)} htmlFor="submit" className="dialog__form-sumbit-btn">
+                <button disabled={!loaded} onClick={e => submitMessageHandler(e)} htmlFor="submit" className="dialog__form-sumbit-btn">
                     <p>Отправить</p>
                     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0)">
