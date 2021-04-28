@@ -16,8 +16,10 @@ const OrderDetailChat = () => {
     const dispatch = useDispatch();
     const messageEl = useRef(null);
     useEffect(() => {
-        socket.removeAllListeners();
-        if(currentOffer || currentRespond || currentOffer._id || currentRespond._id){
+        if(socket){
+            socket.removeAllListeners();
+        }
+        if((currentOffer && currentOffer._id) || (currentRespond && currentRespond._id)){
             if(currentUser.role === "freelancer" && currentOffer){
                 socket.emit('ROOM:JOIN', currentOffer._id);
                 dispatch(getMessages(currentOffer._id));
@@ -27,10 +29,10 @@ const OrderDetailChat = () => {
                         target.scroll({ top: target.scrollHeight});
                     });
                 }
-            }else{
+            }else if(currentRespond && currentRespond._id){
                 socket.emit('ROOM:JOIN', currentRespond._id);
                 dispatch(getMessages(currentRespond._id));
-                if (messageEl) {
+                if (messageEl && messageEl.current) {
                     messageEl.current.addEventListener('DOMNodeInserted', event => {
                         const { currentTarget: target } = event;
                         target.scroll({ top: target.scrollHeight});
