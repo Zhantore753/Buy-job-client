@@ -11,12 +11,17 @@ const OrderDetailResponds = () => {
     const currentRespond = useSelector(state => state.order.currentRespond);
     const responds = useSelector(state => state.order.responds);
     const dispatch = useDispatch();
+    const disabledChooseRespond = useSelector(state => state.order.disabledChooseRespond)
 
     useEffect(() => {
         dispatch(getResponds(currentOrder._id));
     }, [currentOrder]);
 
     const respondChooseHandler = (id, respond) => {
+        if(currentRespond._id === respond._id || disabledChooseRespond){
+            return;
+        }
+
         const respondsElements = document.querySelectorAll('.feedback-executors__item');
 
         respondsElements.forEach(item => {
@@ -46,7 +51,7 @@ const OrderDetailResponds = () => {
                     const name = respond.userFullName ? respond.userFullName : respond.userEmail;
 
                     return(
-                        <button onClick={() => respondChooseHandler(index, respond)} key={index}>
+                        <button disabled={disabledChooseRespond} className="feedback-executors__item-btn-respond" onClick={() => respondChooseHandler(index, respond)} key={index}>
                             <li className="feedback-executors__item">
                                 <img className="feedback-executors__item-avatar" src={avatar} alt="feedback__avatar" />
                                 <p className="feedback-executors__item-name">{name}</p>

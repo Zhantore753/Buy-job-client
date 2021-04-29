@@ -2813,7 +2813,7 @@ body {
 
 .loader {
   position: relative;
-  top: 200px;
+  top: 40px;
   background: transparent;
   z-index: 9999;
 }

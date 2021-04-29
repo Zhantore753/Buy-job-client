@@ -3,11 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMessages, getMessages } from '../../../actions/order';
 import socket from '../../../socket'
+import 'moment/locale/ru';
 import avatarLogo from '../../../img/avatarlogo.svg';
 import { API_URL } from '../../../config';
 import Loader from 'react-loader';
 import InfiniteScroll from "react-infinite-scroll-component";
-import { addInputMessage } from '../../../reducers/orderReducer';
+import { addInputMessage, setDisabledChooseRespond } from '../../../reducers/orderReducer';
 
 const OrderDetailChat = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -24,11 +25,13 @@ const OrderDetailChat = () => {
             socket.removeAllListeners();
         }
         if(currentRespond && currentRespond._id && messages.length < 1){
+            dispatch(setDisabledChooseRespond(true));
             setLoaded(false);
             socket.emit('ROOM:JOIN', currentRespond._id);
             dispatch(getMessages(currentRespond._id, messages.length))
             .then(() => {
                 setLoaded(true);
+                dispatch(setDisabledChooseRespond(false));
             });
             if (messageEl && messageEl.current) {
                 messageEl.current.addEventListener('DOMNodeInserted', event => {
@@ -70,7 +73,7 @@ const OrderDetailChat = () => {
 
     return (
         <div className="order__exec__details-dialog change__feedback-details__dialog">
-        {currentRespond ?
+        {currentRespond && currentRespond._id ?
             <>
             <Loader loaded={loaded}>
             <ul id="scrollableDiv" ref={messageEl} className="dialog__list"
@@ -92,6 +95,7 @@ const OrderDetailChat = () => {
                     let sender;
                     let classes = 'dialog__item';
                     let avatar;
+                    moment.locale('ru');
                     if(currentMessage.user === currentUser.id){
                         sender = currentUser.fullName ? currentUser.fullName : currentUser.email;
                         classes = 'dialog__item dialog__item-my';
