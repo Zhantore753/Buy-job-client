@@ -49,10 +49,14 @@ const OrderDetailResponds = () => {
                 {responds.map((respond, index) => {
                     const avatar = respond.userAvatar ? `${API_URL +  respond.userAvatar}` : avatarLogo;
                     const name = respond.userFullName ? respond.userFullName : respond.userEmail;
+                    let classes = 'feedback-executors__item';
+                    if(respond._id === currentRespond._id){
+                        classes += ' feedback-executors__item-active'
+                    }
 
                     return(
                         <button disabled={disabledChooseRespond} className="feedback-executors__item-btn-respond" onClick={() => respondChooseHandler(index, respond)} key={index}>
-                            <li className="feedback-executors__item">
+                            <li className={classes}>
                                 <img className="feedback-executors__item-avatar" src={avatar} alt="feedback__avatar" />
                                 <p className="feedback-executors__item-name">{name}</p>
                                 <div className="feedback-executors__item-cost">
