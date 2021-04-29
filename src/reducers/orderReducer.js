@@ -10,7 +10,9 @@ const SET_CURRENT_OFFER = "SET_CURRENT_OFFER";
 const SET_RESPONDS = "SET_RESPONDS";
 const SET_CURRENT_RESPOND = "SET_CURRENT_RESPOND";
 const ADD_MESSAGE = "ADD_MESSAGE";
+const ADD_INPUT_MESSAGE = 'ADD_INPUT_MESSAGE';
 const SET_MESSAGE = "SET_MESSAGE";
+const NO_HAS_MORE_MESSAGES = "NO_HAS_MORE_MESSAGES";
 
 const defaultState = {
     orders: [],
@@ -21,7 +23,8 @@ const defaultState = {
     currentOffer: {},
     responds: [],
     currentRespond: {},
-    messages: []
+    messages: [],
+    hasMoreMessages: true
 };
 
 export default function orderReducer(state = defaultState, action){
@@ -91,7 +94,17 @@ export default function orderReducer(state = defaultState, action){
                 ...state,
                 messages: [...state.messages, ...action.payload]
             }
-        default:
+        case ADD_INPUT_MESSAGE:
+            return{
+                ...state,
+                messages: [...action.payload, ...state.messages]
+            }
+        case NO_HAS_MORE_MESSAGES:
+            return{
+                ...state,
+                hasMoreMessages: action.payload
+            }
+        default: 
             return state;
     }
 }
@@ -108,4 +121,6 @@ export const setCurrentOffer = offer => ({type: SET_CURRENT_OFFER, payload: offe
 export const setResponds = responds => ({type: SET_RESPONDS, payload: responds});
 export const setCurrentRespond = respond => ({type: SET_CURRENT_RESPOND, payload: respond});
 export const addMessage = message => ({type:ADD_MESSAGE, payload: message});
+export const addInputMessage = message => ({type: ADD_INPUT_MESSAGE, payload: message});
 export const setMessage = message => ({type:SET_MESSAGE, payload: message});
+export const changeHasMoreMessages = hasMore => ({type: NO_HAS_MORE_MESSAGES, payload: hasMore});

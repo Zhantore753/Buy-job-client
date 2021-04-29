@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {API_URL} from "../config";
-import { addFindOrders, addMessage, addOrder, resetOrders, setCurrentCustomer, setCurrentFiles, setCurrentOffer, setCurrentOrder, setCurrentRespond, setFindOrders, setMessage, setOrders, setResponds } from '../reducers/orderReducer';
+import { addFindOrders, addMessage, addOrder, changeHasMoreMessages, resetOrders, setCurrentCustomer, setCurrentFiles, setCurrentOffer, setCurrentOrder, setCurrentRespond, setFindOrders, setMessage, setOrders, setResponds } from '../reducers/orderReducer';
 
 export const createOrder =  (category, subject, title, selectedDate, price, keyWords, description, files) => {
     return async dispatch =>{
@@ -202,14 +202,15 @@ export const getResponds = (orderId) => {
     }
 }
 
-export const getMessages = (respondId) => {
+export const getMessages = (respondId, skip) => {
     return async dispatch => {
         try{
             dispatch(setMessage([]));
-            const response = await axios.get(`${API_URL}api/order/get-messages?respondId=${respondId}`, {
+            const response = await axios.get(`${API_URL}api/order/get-messages?respondId=${respondId}&skip=${skip}`, {
                 headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
             });
             dispatch(setMessage(response.data.messages));
+            dispatch(changeHasMoreMessages(response.data.hasMore));
         }catch(e){
             console.log(e);
             return [e.response.status, e.response.data.message];
@@ -217,11 +218,15 @@ export const getMessages = (respondId) => {
     }
 }
 
-export const addMessages = (messages) => {
+export const addMessages = (respondId, skip) => {
     return async dispatch => {
         try{
-            if(messages){
-                dispatch(addMessage(messages));
+            const response = await axios.get(`${API_URL}api/order/get-messages?respondId=${respondId}&skip=${skip}`, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            if(response){
+                dispatch(addMessage(response.data.messages));
+                dispatch(changeHasMoreMessages(response.data.hasMore));
             }
         }catch(e){
             console.log(e);

@@ -6,12 +6,15 @@ import socket from '../../../socket'
 import avatarLogo from '../../../img/avatarlogo.svg';
 import { API_URL } from '../../../config';
 import Loader from 'react-loader';
+import InfiniteScroll from "react-infinite-scroll-component";
+import { addInputMessage } from '../../../reducers/orderReducer';
 
 const OrderDetailChat = () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const currentRespond = useSelector(state => state.order.currentRespond);
     const currentCustomer = useSelector(state => state.order.currentCustomer);
     const messages = useSelector(state => state.order.messages);
+    const hasMore = useSelector(state => state.order.hasMoreMessages);
     const [message, setMessage] = useState('');
     const [loaded, setLoaded] = useState(false);
     const dispatch = useDispatch();
@@ -23,7 +26,7 @@ const OrderDetailChat = () => {
         if(currentRespond && currentRespond._id && messages.length < 1){
             setLoaded(false);
             socket.emit('ROOM:JOIN', currentRespond._id);
-            dispatch(getMessages(currentRespond._id))
+            dispatch(getMessages(currentRespond._id, messages.length))
             .then(() => {
                 setLoaded(true);
             });
@@ -39,7 +42,7 @@ const OrderDetailChat = () => {
                 const newMessage ={
                     room, text, user, time, files
                 }
-                dispatch(addMessages([newMessage]));
+                dispatch(addInputMessage([newMessage]));
             });
         }
     }, [currentRespond, socket]);
@@ -47,7 +50,7 @@ const OrderDetailChat = () => {
     const submitMessageHandler = (e) => {
         e.preventDefault();
         if(message){
-            const room = currentRespond;
+            const room = currentRespond._id;
             const obj = {
                 room, 
                 text: message,
@@ -56,17 +59,35 @@ const OrderDetailChat = () => {
                 files: []
             }
             socket.emit('NEW_MESSAGE', obj);
-            dispatch(addMessages([obj]));
+            dispatch(addInputMessage([obj]));
             setMessage('');
         }
     }
 
+    const loadMoreHandler = () => {
+        dispatch(addMessages(currentRespond._id, messages.length))
+    }
+
     return (
         <div className="order__exec__details-dialog change__feedback-details__dialog">
-        {(currentUser.role === "customer" && currentRespond) || currentUser.role === "freelancer" && currentRespond ?
+        {currentRespond ?
             <>
-            <ul ref={messageEl} className="dialog__list">
-                <Loader loaded={loaded}>
+            <Loader loaded={loaded}>
+            <ul id="scrollableDiv" ref={messageEl} className="dialog__list"
+             style={{
+                display: 'flex',
+                flexDirection: 'column-reverse',
+              }}>
+                
+                <InfiniteScroll
+                    dataLength={messages.length}
+                    next={() => loadMoreHandler()}
+                    style={{ display: 'flex', flexDirection: 'column-reverse' }}
+                    inverse={true}
+                    hasMore={hasMore}
+                    loader={<h4>{currentRespond ? 'Загрузка...' : 'Выберите отклик(предложение) для просмотра чата'}</h4>}
+                    scrollableTarget="scrollableDiv"
+                >
                 {messages.map((currentMessage, index) => {
                     let sender;
                     let classes = 'dialog__item';
@@ -104,8 +125,9 @@ const OrderDetailChat = () => {
                     </li>
                     )}
                 )}
-                </Loader>
+                </InfiniteScroll>
             </ul>
+            </Loader>
             <form className="dialog__form">
                 <input disabled={!loaded} className="dialog__form-file" type="file" id="file" name="file" multiple />
                 <label disabled={!loaded} htmlFor="file" className="dialog__form-btn">

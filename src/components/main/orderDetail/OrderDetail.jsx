@@ -19,11 +19,9 @@ const OrderDetail = () => {
 
     useEffect(() => {
         dispatch(setMessage([]));
-        try{
-            if(currentRespond._id){
-                socket.emit('ROOM:LEAVE', currentRespond._id);
-            }
-        }catch(e){}
+        if(currentRespond){
+            socket.emit('ROOM:LEAVE', currentRespond._id);
+        }
         dispatch(setCurrentRespond({}));
         if(currentOrder.executorRespond){
             dispatch(setCurrentRespondByOrder(currentOrder.executorRespond));
