@@ -9,7 +9,6 @@ import socket from '../../../socket';
 const OrderDetailResponds = () => {
     const currentOrder = useSelector(state => state.order.currentOrder);
     const currentRespond = useSelector(state => state.order.currentRespond);
-    const currentOffer = useSelector(state => state.order.currentOffer);
     const responds = useSelector(state => state.order.responds);
     const dispatch = useDispatch();
 
@@ -29,9 +28,6 @@ const OrderDetailResponds = () => {
         try{
             if(currentRespond._id){
                 socket.emit('ROOM:LEAVE', currentRespond._id);
-            }
-            if(currentOffer._id){
-                socket.emit('ROOM:LEAVE', currentOffer._id);
             }
         }catch(e){}
 

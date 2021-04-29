@@ -10,5 +10,9 @@ export const rootReducer = combineReducers({
     ticket: ticketsReducer,
     order: orderReducer
 });
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    trace: true,
+    traceLimit: 25,
+}) || composeWithDevTools;
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

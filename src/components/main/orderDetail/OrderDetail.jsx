@@ -14,7 +14,6 @@ import OrderDetailResponds from './OrderDetailResponds';
 const OrderDetail = () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const currentOrder = useSelector(state => state.order.currentOrder);
-    const currentOffer = useSelector(state => state.order.currentOffer);
     const currentRespond = useSelector(state => state.order.currentRespond);
     const dispatch = useDispatch();
 
@@ -24,18 +23,12 @@ const OrderDetail = () => {
             if(currentRespond._id){
                 socket.emit('ROOM:LEAVE', currentRespond._id);
             }
-            if(currentOffer._id){
-                socket.emit('ROOM:LEAVE', currentOffer._id);
-            }
         }catch(e){}
         dispatch(setCurrentRespond({}));
-        if(currentOffer){
-            dispatch(setCurrentRespond(currentOffer));
-        }
         if(currentOrder.executorRespond){
             dispatch(setCurrentRespondByOrder(currentOrder.executorRespond));
         }
-    }, [currentOrder, currentOffer]);
+    }, [currentOrder]);
 
     return (
         <section className="order__exec main">

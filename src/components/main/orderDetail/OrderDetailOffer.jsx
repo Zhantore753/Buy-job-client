@@ -4,7 +4,7 @@ import { defineCurrentRespond, respondToOrder } from '../../../actions/order';
 
 const OrderDetailOffer = () => {
     const currentOrder = useSelector(state => state.order.currentOrder);
-    const currentOffer = useSelector(state => state.order.currentOffer);
+    const currentRespond = useSelector(state => state.order.currentRespond);
     const [offer, setOffer] = useState(currentOrder.price);
     const [valid, setValid] = useState([]);
     const [disabledBtn, setDisabledBtn] = useState(false);
@@ -31,7 +31,7 @@ const OrderDetailOffer = () => {
             return;
         }
 
-        const respondId = currentOffer ? currentOffer._id : null
+        const respondId = currentRespond ? currentRespond._id : null
 
         dispatch(respondToOrder(offer, currentOrder._id, respondId))
         .then(async res => {
@@ -42,8 +42,8 @@ const OrderDetailOffer = () => {
 
     return (
         <>
-        {currentOffer &&
-            <p className="reg-landing__success">Вы уже делали ставку {currentOffer.offer}, хотите изменить ее?</p>
+        {currentRespond &&
+            <p className="reg-landing__success">Вы уже делали ставку {currentRespond.offer}, хотите изменить ее?</p>
         }
         <div className="order__exec__details-price">
             <label htmlFor="price">Предложение: </label>

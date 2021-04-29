@@ -14,9 +14,6 @@ const FindOrder = () => {
         if(orders.length === 0){
             dispatch(findOrder(0, findCategory, findSearch, 'set'));
         }
-        // if(findSearch !== '' || findCategory !== 0){
-        //     dispatch(findOrder(0, findCategory, findSearch, 'set'));
-        // }
     }, [dispatch, orders.length]);
 
     useEffect(()=>{
@@ -24,20 +21,14 @@ const FindOrder = () => {
     }, [loadOrders, category, search]);
 
     useEffect(() => {
-        dispatch(findOrder(0, category, search, 'set'));
-        setOrdersCheck(true);
+        if(category && category !== '' || search && search !== 0){
+            dispatch(findOrder(0, category, search, 'set'));
+            setOrdersCheck(true);
+        }
     }, [category, search])
 
     const searchHandler = async (e) => {
         setSearch(e.target.value);
-        // prev => e.target.value,
-        // // 2nd argument is callback , `s` is *updated* state
-        // s => console.log("I am called after setState, state:", s)
-        // )
-        // setSearch(e.target.value, s => {
-        //     console.log(search);
-        //     dispatch(findOrder(0, category, search, 'set'));
-        // });
     }
 
     return (

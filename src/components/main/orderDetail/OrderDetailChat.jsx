@@ -11,7 +11,6 @@ const OrderDetailChat = () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const currentRespond = useSelector(state => state.order.currentRespond);
     const currentCustomer = useSelector(state => state.order.currentCustomer);
-    const currentOffer = useSelector(state => state.order.currentOffer);
     const messages = useSelector(state => state.order.messages);
     const [message, setMessage] = useState('');
     const [loaded, setLoaded] = useState(false);
@@ -21,22 +20,13 @@ const OrderDetailChat = () => {
         if(socket){
             socket.removeAllListeners();
         }
-        if((currentOffer && currentOffer._id) || (currentRespond && currentRespond._id)){
-            if(currentUser.role === "freelancer" && currentOffer){
-                setLoaded(false);
-                socket.emit('ROOM:JOIN', currentOffer._id);
-                dispatch(getMessages(currentOffer._id))
-                .then(() => {
-                    setLoaded(true);
-                });
-            }else if(currentRespond && currentRespond._id){
-                setLoaded(false);
-                socket.emit('ROOM:JOIN', currentRespond._id);
-                dispatch(getMessages(currentRespond._id))
-                .then(() => {
-                    setLoaded(true);
-                });
-            }
+        if(currentRespond && currentRespond._id && messages.length < 1){
+            setLoaded(false);
+            socket.emit('ROOM:JOIN', currentRespond._id);
+            dispatch(getMessages(currentRespond._id))
+            .then(() => {
+                setLoaded(true);
+            });
             if (messageEl && messageEl.current) {
                 messageEl.current.addEventListener('DOMNodeInserted', event => {
                     const { currentTarget: target } = event;
@@ -52,12 +42,12 @@ const OrderDetailChat = () => {
                 dispatch(addMessages([newMessage]));
             });
         }
-    }, [currentRespond, currentOffer, socket]);
+    }, [currentRespond, socket]);
 
     const submitMessageHandler = (e) => {
         e.preventDefault();
         if(message){
-            const room = currentUser.role === 'freelancer' ? currentOffer._id : currentRespond._id;
+            const room = currentRespond;
             const obj = {
                 room, 
                 text: message,
@@ -73,7 +63,7 @@ const OrderDetailChat = () => {
 
     return (
         <div className="order__exec__details-dialog change__feedback-details__dialog">
-        {(currentUser.role === "customer" && currentRespond._id) || currentUser.role === "freelancer" && currentRespond._id ?
+        {(currentUser.role === "customer" && currentRespond) || currentUser.role === "freelancer" && currentRespond ?
             <>
             <ul ref={messageEl} className="dialog__list">
                 <Loader loaded={loaded}>
