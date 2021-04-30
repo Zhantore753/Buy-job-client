@@ -1236,7 +1236,7 @@ body {
   transition: all 0.3s;
   position: fixed;
   width: 100%;
-  z-index: 2;
+  z-index: 3;
 }
 
 .header-active {
@@ -2903,13 +2903,23 @@ body {
 .dialog__date{
   position: -webkit-sticky;
   position: sticky;
-  bottom: 100%;
+  bottom: 104%;
   display: flex;
   justify-content: center;
   margin: 2px 60px;
   border-radius: 8px;
   background: #FFCC80;
+  z-index: 1;
+}
+
+.dialog__date-next{
+  display: flex;
+  justify-content: center;
   z-index: 2;
+  margin: 2px 60px;
+  margin-top: -25px;
+  border-radius: 8px;
+  background: #FFCC80;
 }
 
 .executor__inner {

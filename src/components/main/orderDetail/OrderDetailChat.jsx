@@ -9,6 +9,8 @@ import { API_URL } from '../../../config';
 import Loader from 'react-loader';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { addInputMessage, setDisabledChooseRespond } from '../../../reducers/orderReducer';
+import filesRender from '../placingOrder/renderFiles';
+import SocketIOFileUpload from 'socketio-file-upload';
 
 const OrderDetailChat = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -20,6 +22,9 @@ const OrderDetailChat = () => {
     const [loaded, setLoaded] = useState(false);
     const dispatch = useDispatch();
     const messageEl = useRef(null);
+    const [files, setFiles] = useState([]);
+    const [valid, setValid] = useState([false, '']);
+    const [disabledBtn, setDisabledBtn] = useState(false);
 
     const chatScrollToBottom = () => {
         if (messageEl && messageEl.current) {
@@ -52,6 +57,14 @@ const OrderDetailChat = () => {
                 }
                 dispatch(addInputMessage([newMessage]));
             });
+            socket.on('FILE_UPLOAD_ERROR', (message) => {
+                setValid([true, message]);
+            });
+            offValidByTime();
+        }
+        if(socket && document.getElementById("siofu_input")){
+            const siofu = new SocketIOFileUpload(socket);
+            siofu.listenOnInput(document.getElementById("siofu_input"));
         }
     }, [currentRespond, socket]);
 
@@ -66,6 +79,7 @@ const OrderDetailChat = () => {
                 time: Date.now(),
                 files: []
             }
+            
             socket.emit('NEW_MESSAGE', obj);
             dispatch(addInputMessage([obj]));
             setMessage('');
@@ -74,6 +88,14 @@ const OrderDetailChat = () => {
 
     const loadMoreHandler = () => {
         dispatch(addMessages(currentRespond._id, messages.length))
+    }
+
+    function offValidByTime(){
+        setDisabledBtn(true);
+        setTimeout(() => {
+            setValid(false);
+            setDisabledBtn(false);
+        }, 3000);
     }
 
     return (
@@ -103,8 +125,8 @@ const OrderDetailChat = () => {
                     moment.locale('ru');
                     let date = moment(currentMessage.time).format('L');
                     let prevDate;
-                    if(index < messages.length - 1){
-                        prevDate = moment(messages[index + 1].time).format('L');
+                    if(index > 0){
+                        prevDate = moment(messages[index - 1].time).format('L');
                     }
                     if(currentMessage.user === currentUser.id){
                         sender = currentUser.fullName ? currentUser.fullName : currentUser.email;
@@ -123,7 +145,10 @@ const OrderDetailChat = () => {
                     return(
                         <Fragment key={index}>
                             {date != prevDate &&
-                                <li key={currentMessage._id} className='dialog__date'>{date}</li>
+                                <>
+                                    <li className='dialog__date-next'>{prevDate}</li>
+                                    <li className='dialog__date'>{date}</li>
+                                </>
                             }
                             <li className={classes}>
                                 {prevDate && currentMessage.user !== currentUser.id &&
@@ -149,8 +174,8 @@ const OrderDetailChat = () => {
             </ul>
             </Loader>
             <form className="dialog__form">
-                <input disabled={!loaded} className="dialog__form-file" type="file" id="file" name="file" multiple />
-                <label disabled={!loaded} htmlFor="file" className="dialog__form-btn">
+                <input disabled={!loaded} className="dialog__form-file" type="file" id="siofu_input" name="file" multiple />
+                <label disabled={!loaded && disabledBtn} htmlFor="siofu_input" className="dialog__form-btn">
                     <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17.2209 2.28462C14.8529 -0.0834793 10.9997 -0.0834793 8.63128 2.28462L1.26849 9.64738C-0.422922 11.339 -0.42281 14.0913 1.26871 15.7828C2.11454 16.6287 3.22523 17.0515 4.33636 17.0514C5.44719 17.0513 6.55847 16.6285 7.40415 15.7828L14.1532 9.03362C14.6449 8.542 14.9157 7.88832 14.9158 7.19304C14.9158 6.49772 14.645 5.84407 14.1533 5.3523C13.1383 4.3374 11.4867 4.33743 10.4719 5.35249L6.05834 9.76598C5.7195 10.1048 5.7195 10.6542 6.05827 10.9931C6.39708 11.332 6.94648 11.3319 7.28536 10.9931L11.699 6.57955C12.0373 6.24122 12.5877 6.24114 12.9261 6.57947C13.09 6.74335 13.1803 6.96125 13.1803 7.193C13.1803 7.42475 13.09 7.64258 12.9261 7.80653L6.17706 14.5557C5.16208 15.5705 3.51071 15.5707 2.49581 14.5558C1.4809 13.5408 1.48083 11.8893 2.49562 10.8744L9.85838 3.51171C11.55 1.82012 14.3024 1.82012 15.9938 3.51171C16.8133 4.33109 17.2646 5.42058 17.2646 6.5794C17.2646 7.73821 16.8133 8.8277 15.9938 9.64715L8.63117 17.01C8.29236 17.3489 8.29236 17.8982 8.63125 18.2371C8.80069 18.4066 9.02275 18.4912 9.24478 18.4912C9.46684 18.4912 9.6889 18.4065 9.85834 18.2371L17.2209 10.8743C18.3682 9.72712 18.9999 8.20185 19 6.57943C19 4.95705 18.3682 3.43178 17.2209 2.28462Z" fill="#3C4852"/>
                     </svg>
@@ -171,6 +196,11 @@ const OrderDetailChat = () => {
                     </svg>
                 </button>
             </form>
+            {valid[0] === 200 ?
+                <p className="reg-landing__success">{valid[1]}</p>
+            :
+                <p className="reg-landing__error">{valid[1]}</p>
+            }
         </>
         : 
             <p>
