@@ -25,7 +25,7 @@ const OrderDetailDesc = () => {
 
     function downloadClickHandler(e, file){
         e.stopPropagation();
-        downloadFile(file);
+        downloadFile(file.path, file.name);
     }
 
     if(!currentOrder.user){

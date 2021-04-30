@@ -2832,6 +2832,15 @@ body {
   margin-left: 6px;
 }
 
+.dialog__item-file{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.dialog__item-file:hover{
+  text-decoration: none;
+}
+
 .dialog__form {
   margin-top: 20px;
   display: flex;
