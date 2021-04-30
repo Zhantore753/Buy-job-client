@@ -20,6 +20,16 @@ const OrderDetailChat = () => {
     const [loaded, setLoaded] = useState(false);
     const dispatch = useDispatch();
     const messageEl = useRef(null);
+
+    const chatScrollToBottom = () => {
+        if (messageEl && messageEl.current) {
+            messageEl.current.addEventListener('DOMNodeInserted', event => {
+                const { currentTarget: target } = event;
+                target.scroll({ top: target.scrollHeight});
+            });
+        }
+    }
+
     useEffect(() => {
         if(socket){
             socket.removeAllListeners();
@@ -33,12 +43,7 @@ const OrderDetailChat = () => {
                 setLoaded(true);
                 dispatch(setDisabledChooseRespond(false));
             });
-            if (messageEl && messageEl.current) {
-                messageEl.current.addEventListener('DOMNodeInserted', event => {
-                    const { currentTarget: target } = event;
-                    target.scroll({ top: target.scrollHeight});
-                });
-            }
+            chatScrollToBottom();
         }
         if(socket){
             socket.on('NEW_MESSAGE', ({room, text, user, time, files}) => {
@@ -85,7 +90,7 @@ const OrderDetailChat = () => {
                 <InfiniteScroll
                     dataLength={messages.length}
                     next={() => loadMoreHandler()}
-                    style={{ display: 'flex', flexDirection: 'column-reverse' }}
+                    style={{ display: 'flex', flexDirection: 'column-reverse', overflow: 'unset' }}
                     inverse={true}
                     hasMore={hasMore}
                     loader={<h4>{currentRespond ? 'Загрузка...' : 'Выберите отклик(предложение) для просмотра чата'}</h4>}
@@ -96,6 +101,11 @@ const OrderDetailChat = () => {
                     let classes = 'dialog__item';
                     let avatar;
                     moment.locale('ru');
+                    let date = moment(currentMessage.time).format('L');
+                    let prevDate;
+                    if(index < messages.length - 1){
+                        prevDate = moment(messages[index + 1].time).format('L');
+                    }
                     if(currentMessage.user === currentUser.id){
                         sender = currentUser.fullName ? currentUser.fullName : currentUser.email;
                         classes = 'dialog__item dialog__item-my';
@@ -109,24 +119,30 @@ const OrderDetailChat = () => {
                             avatar = currentRespond.userAvatar ? `${API_URL + currentRespond.userAvatar}` : avatarLogo;
                         }
                     }
+
                     return(
-                    <li key={index} className={classes}>
-                        {currentMessage.user !== currentUser.id &&
-                            <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
-                        }
-                        <div className="dialog__item-message">
-                            <div className="dialog__item-message-reply">
-                                <p>{sender}</p>
-                            </div>
-                            <div className="dialog__item-message-text">
-                                <p>{currentMessage.text}</p>
-                                <span>{moment(currentMessage.time).format('LT')}</span>
-                            </div>
-                        </div>
-                        {currentMessage.user === currentUser.id &&
-                            <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
-                        }
-                    </li>
+                        <>
+                            {date != prevDate &&
+                                <div className='dialog__date'>{date}</div>
+                            }
+                            <li key={index} className={classes}>
+                                {prevDate && currentMessage.user !== currentUser.id &&
+                                    <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
+                                }
+                                <div className="dialog__item-message">
+                                    <div className="dialog__item-message-reply">
+                                        <p>{sender}</p>
+                                    </div>
+                                    <div className="dialog__item-message-text">
+                                        <p>{currentMessage.text}</p>
+                                        <span>{moment(currentMessage.time).format('LT')}</span>
+                                    </div>
+                                </div>
+                                {currentMessage.user === currentUser.id &&
+                                    <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
+                                }
+                            </li>
+                        </>
                     )}
                 )}
                 </InfiniteScroll>

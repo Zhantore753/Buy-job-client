@@ -2900,6 +2900,18 @@ body {
   background: #fff;
 }
 
+.dialog__date{
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 2px 60px;
+  border-radius: 8px;
+  background: #FFCC80;
+  z-index: 2;
+}
+
 .executor__inner {
   display: flex;
 }
