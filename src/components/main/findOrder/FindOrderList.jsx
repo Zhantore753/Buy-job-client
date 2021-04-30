@@ -13,7 +13,7 @@ const FindOrderList = ({search, category, setOrdersCheck, ordersCheck}) => {
         if(ordersCount !== orders.length){
             setOrdersCount(orders.length);
         }
-    }, [orders]);
+    }, [orders, ordersCount]);
 
     const loadMoreHandler = () => {
         let skip = Math.ceil(orders.length / 10) * 10;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import renderCalendar from './renderCalendar';
 
 const Calendar = ({date, setSelectedDate}) => {
@@ -13,8 +13,12 @@ const Calendar = ({date, setSelectedDate}) => {
         renderCalendar(date, setSelectedDate);
     };
 
-    useEffect(() => {
+    const renderCalendarCallback = useCallback(() => {
         renderCalendar(date, setSelectedDate);
+    }, [date, setSelectedDate]);
+
+    useEffect(() => {
+        renderCalendarCallback();
     }, []);
 
     return (

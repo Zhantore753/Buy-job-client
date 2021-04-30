@@ -129,7 +129,6 @@ const OrderDetailChat = () => {
                     let sender;
                     let classes = 'dialog__item';
                     let avatar;
-                    let filePath = currentMessage.filePath && currentMessage.filePath;
                     moment.locale('ru');
                     let date = moment(currentMessage.time).format('L');
                     let prevDate;
@@ -152,7 +151,7 @@ const OrderDetailChat = () => {
 
                     return(
                         <Fragment key={index}>
-                            {date != prevDate &&
+                            {date !== prevDate &&
                                 <>
                                     <li className='dialog__date-next'>{prevDate}</li>
                                     <li className='dialog__date'>{date}</li>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { defineCurrentCustomer, defineCurrentFiles, downloadFile, respondToOrder } from '../../../actions/order';
+import { defineCurrentCustomer, defineCurrentFiles, downloadFile } from '../../../actions/order';
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
 import { formatBytes } from '../../formatBytes';

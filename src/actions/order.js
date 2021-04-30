@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {API_URL} from "../config";
-import { addFindOrders, addMessage, addOrder, changeHasMoreMessages, resetOrders, setCurrentCustomer, setCurrentFiles, setCurrentOffer, setCurrentOrder, setCurrentRespond, setFindOrders, setMessage, setOrders, setResponds } from '../reducers/orderReducer';
+import { addFindOrders, addMessage, addOrder, changeHasMoreMessages, resetOrders, setCurrentCustomer, setCurrentFiles, setCurrentOrder, setCurrentRespond, setFindOrders, setMessage, setOrders, setResponds } from '../reducers/orderReducer';
 
 export const createOrder =  (category, subject, title, selectedDate, price, keyWords, description, files) => {
     return async dispatch =>{

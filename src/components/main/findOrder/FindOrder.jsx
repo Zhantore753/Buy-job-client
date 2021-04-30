@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { findOrder } from '../../../actions/order';
-import { setFindOrders } from '../../../reducers/orderReducer';
 import FindOrderList from './FindOrderList';
 
 const FindOrder = () => {
@@ -24,7 +23,7 @@ const FindOrder = () => {
     useEffect(() => {
         dispatch(findOrder(0, category, search, 'set'));
         setOrdersCheck(true);
-    }, [category, search]);
+    }, [category, search, dispatch]);
 
     const searchHandler = async (e) => {
         setSearch(e.target.value);
