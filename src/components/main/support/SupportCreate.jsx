@@ -33,10 +33,18 @@ const SupportCreate = () => {
             return;
         }
         const fileArr = [];
+        let size = 0;
 
         const addedFilesWrapper = document.querySelector('.placing-order__addedfiles');
         for(let i = 0; i < inputFiles.length; i++){
+            size += inputFiles[i].size;
             fileArr.push(inputFiles[i]);
+        }
+
+        if(+size > 10000000){
+            setValid([true, 'Выбранные файлы не должны превышать 10Мб']);
+            offValidByTime();
+            return;
         }
 
         filesRender(fileArr, addedFilesWrapper, setFiles);

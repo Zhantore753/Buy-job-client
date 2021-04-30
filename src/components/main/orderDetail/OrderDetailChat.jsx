@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMessages, getMessages } from '../../../actions/order';
 import socket from '../../../socket'
@@ -121,11 +121,11 @@ const OrderDetailChat = () => {
                     }
 
                     return(
-                        <>
+                        <Fragment key={index}>
                             {date != prevDate &&
-                                <div className='dialog__date'>{date}</div>
+                                <li key={currentMessage._id} className='dialog__date'>{date}</li>
                             }
-                            <li key={index} className={classes}>
+                            <li className={classes}>
                                 {prevDate && currentMessage.user !== currentUser.id &&
                                     <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
                                 }
@@ -142,7 +142,7 @@ const OrderDetailChat = () => {
                                     <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
                                 }
                             </li>
-                        </>
+                        </Fragment>
                     )}
                 )}
                 </InfiniteScroll>
