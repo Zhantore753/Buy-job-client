@@ -125,7 +125,7 @@ const OrderDetailChat = () => {
                     scrollThreshold='300px'
                     loader={<>{currentRespond ?
                         <div className="dialog__spinner">
-                            <div class="loadingio-spinner-spinner-7avhlle7zo4"><div class="ldio-nt1j1mrfjgo">
+                            <div className="loadingio-spinner-spinner-7avhlle7zo4"><div class="ldio-nt1j1mrfjgo">
                             <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
                             </div></div>
                         </div>

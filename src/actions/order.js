@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {API_URL} from "../config";
 import { addFindOrders, addMessage, addOrder, changeHasMoreMessages, resetOrders, setCurrentCustomer, setCurrentFiles, setCurrentOrder, setCurrentRespond, setFindOrders, setMessage, setOrders, setResponds } from '../reducers/orderReducer';
+import { setCurrentBalance } from '../reducers/userReducer';
 
 export const createOrder =  (category, subject, title, selectedDate, price, keyWords, description, files) => {
     return async dispatch =>{
@@ -243,6 +244,22 @@ export const acceptRespond = (respondId) => {
             });
             dispatch(setCurrentOrder(response.data.order));
         }catch(e){ 
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}
+
+export const acceptWork = (respondId) => {
+    return async dispatch => {
+        try{
+            const response = await axios.post(`${API_URL}api/order/access-work`, {respondId},{
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+
+            dispatch(setCurrentOrder(response.data.order));
+            dispatch(setCurrentBalance(response.data.balance));
+        }catch(e){
             console.log(e);
             return [e.response.status, e.response.data.message];
         }

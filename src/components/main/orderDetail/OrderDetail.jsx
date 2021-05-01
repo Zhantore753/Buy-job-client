@@ -54,7 +54,22 @@ const OrderDetail = () => {
                         }
                         <div className="order-change__feedback-details">
                             {currentUser.role === 'customer' &&
-                                <OrderDetailAccept />
+                                <OrderDetailAccept 
+                                isAccept={currentOrder.executorRespond}
+                                acceptText={<p>{currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} готов взяться за работу за: <span> {currentRespond.offer}  ₽</span></p>}
+                                isSureText={<p>Вы уверенны что принимаете предложение от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}</p>}
+                                btnText='Начать сотрудничать'
+                                accept='respond'
+                                />
+                            }
+                            {currentUser.role === 'customer' && currentOrder.executorRespond &&
+                                <OrderDetailAccept 
+                                isAccept={currentOrder.status === 'Исполнено'}
+                                acceptText={<p>Принять работу от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}</p>}
+                                isSureText={<p>Вы уверенны что принимаете работу от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}, учтите {currentRespond.offer}  ₽ будут переведены</p>}
+                                btnText='Принять работу'
+                                accept='work'
+                                />
                             }
                             <OrderDetailChat />
                         </div>
