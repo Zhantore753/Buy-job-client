@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { acceptWork } from '../../../actions/order';
 import { setCurrentOrder } from '../../../reducers/orderReducer';
+import { setCurrentBalance } from '../../../reducers/userReducer';
 import socket from '../../../socket';
 
 const OrderDetailAccept = ({isAccept, acceptedText, acceptText, isSureText, btnText, accept}) => {
     const currentRespond = useSelector(state => state.order.currentRespond);
     const currentOrder = useSelector(state => state.order.currentOrder);
+    const currentUser = useSelector(state => state.user.currentUser);
     const dispatch = useDispatch();
     const [sure, setSure] = useState();
 
     const acceptHandler = () => {
         if(accept === 'respond'){
-            // dispatch(acceptRespond(currentRespond._id));
             if(socket){
                 socket.emit('ACCEPT_RESPOND');
                 const newOrder = currentOrder;
@@ -23,7 +23,15 @@ const OrderDetailAccept = ({isAccept, acceptedText, acceptText, isSureText, btnT
                 dispatch(setCurrentOrder(newOrder));
             }
         }else{
-            dispatch(acceptWork(currentRespond._id));
+            // dispatch(acceptWork(currentRespond._id));
+            if(socket){
+                socket.emit('ACCEPT_WORK');
+                const newOrder = currentOrder;
+                newOrder.status = 'Исполнено';
+                let balance = currentUser.balance - currentRespond.offer;
+                dispatch(setCurrentOrder(newOrder));
+                dispatch(setCurrentBalance(balance));
+            }
         }
     }
 

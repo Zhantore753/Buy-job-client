@@ -236,22 +236,6 @@ export const addMessages = (respondId, skip) => {
     }
 }
 
-export const acceptWork = (respondId) => {
-    return async dispatch => {
-        try{
-            const response = await axios.post(`${API_URL}api/order/access-work`, {respondId},{
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-            });
-
-            dispatch(setCurrentOrder(response.data.order));
-            dispatch(setCurrentBalance(response.data.balance));
-        }catch(e){
-            console.log(e);
-            return [e.response.status, e.response.data.message];
-        }
-    }
-}
-
 export const setCurrentRespondByOrder = (respondId) => {
     return async dispatch => {
         try{

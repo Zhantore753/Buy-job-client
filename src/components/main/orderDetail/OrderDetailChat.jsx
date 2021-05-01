@@ -10,6 +10,7 @@ import Loader from 'react-loader';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { addInputMessage, setCurrentOrder, setDisabledChooseRespond } from '../../../reducers/orderReducer';
 import SocketIOFileUpload from 'socketio-file-upload';
+import { setCurrentBalance } from '../../../reducers/userReducer';
 
 const OrderDetailChat = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -71,6 +72,11 @@ const OrderDetailChat = () => {
             socket.on('ACCEPT_RESPOND', ({order, message}) => {
                 console.log(message);
                 dispatch(setCurrentOrder(order));
+            });
+            socket.on('ACCEPT_WORK', ({order, balance, message}) => {
+                console.log(message);
+                dispatch(setCurrentOrder(order));
+                dispatch(setCurrentBalance(balance));
             });
         }
         if(socket && document.getElementById("siofu_input")){
