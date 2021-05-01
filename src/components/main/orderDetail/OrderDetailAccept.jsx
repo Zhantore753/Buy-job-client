@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { acceptRespond, acceptWork } from '../../../actions/order';
+import { acceptWork } from '../../../actions/order';
+import { setCurrentOrder } from '../../../reducers/orderReducer';
+import socket from '../../../socket';
 
 const OrderDetailAccept = ({isAccept, acceptedText, acceptText, isSureText, btnText, accept}) => {
     const currentRespond = useSelector(state => state.order.currentRespond);
+    const currentOrder = useSelector(state => state.order.currentOrder);
     const dispatch = useDispatch();
     const [sure, setSure] = useState();
 
     const acceptHandler = () => {
         if(accept === 'respond'){
-            dispatch(acceptRespond(currentRespond._id));
+            // dispatch(acceptRespond(currentRespond._id));
+            if(socket){
+                socket.emit('ACCEPT_RESPOND');
+                const newOrder = currentOrder;
+                newOrder.executorRespond = currentRespond._id;
+                newOrder.executor = currentRespond.executor;
+                newOrder.status = 'Выполняется';
+                newOrder.price = currentRespond.offer;
+                dispatch(setCurrentOrder(newOrder));
+            }
         }else{
             dispatch(acceptWork(currentRespond._id));
         }

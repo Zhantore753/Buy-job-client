@@ -8,7 +8,7 @@ import avatarLogo from '../../../img/avatarlogo.svg';
 import { API_URL } from '../../../config';
 import Loader from 'react-loader';
 import InfiniteScroll from "react-infinite-scroll-component";
-import { addInputMessage, setDisabledChooseRespond } from '../../../reducers/orderReducer';
+import { addInputMessage, setCurrentOrder, setDisabledChooseRespond } from '../../../reducers/orderReducer';
 import SocketIOFileUpload from 'socketio-file-upload';
 
 const OrderDetailChat = () => {
@@ -68,12 +68,16 @@ const OrderDetailChat = () => {
                 console.log(file);
                 dispatch(addInputMessage([message]));
             });
+            socket.on('ACCEPT_RESPOND', ({order, message}) => {
+                console.log(message);
+                dispatch(setCurrentOrder(order));
+            });
         }
         if(socket && document.getElementById("siofu_input")){
             const siofu = new SocketIOFileUpload(socket);
             siofu.listenOnInput(document.getElementById("siofu_input"));
         }
-    }, [currentRespond, socket]);
+    }, [currentRespond, socket, dispatch]);
 
     const submitMessageHandler = (e) => {
         e.preventDefault();

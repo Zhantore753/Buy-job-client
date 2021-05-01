@@ -26,7 +26,7 @@ const OrderDetail = () => {
         if(currentOrder.executorRespond){
             dispatch(setCurrentRespondByOrder(currentOrder.executorRespond));
         }
-    }, [currentOrder]);
+    }, [currentOrder, dispatch]);
 
     return (
         <section className="order__exec main">

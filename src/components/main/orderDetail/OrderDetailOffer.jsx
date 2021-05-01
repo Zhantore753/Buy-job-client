@@ -20,13 +20,18 @@ const OrderDetailOffer = () => {
 
     useEffect(() => {
         dispatch(defineCurrentRespond(currentOrder._id));
-    }, [currentOrder]);
+    }, [currentOrder, dispatch]);
 
     const respondHandler = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        if(offer < 100 || offer > 999999){
+        if(+offer < 100 || +offer > 999999){
             setValid([true, 'Сумма не должна быть меньше 100 и превышать 999999']);
+            offValidByTime();
+            return;
+        }
+        if(+offer === +currentRespond.offer){
+            setValid([true, 'Нелья поменять цену на ту же']);
             offValidByTime();
             return;
         }

@@ -15,7 +15,7 @@ const OrderDetailResponds = () => {
 
     useEffect(() => {
         dispatch(getResponds(currentOrder._id));
-    }, [currentOrder]);
+    }, [currentOrder, dispatch]);
 
     const respondChooseHandler = (id, respond) => {
         if(currentRespond._id === respond._id || disabledChooseRespond){

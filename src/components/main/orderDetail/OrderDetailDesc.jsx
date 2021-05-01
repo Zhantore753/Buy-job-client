@@ -21,7 +21,7 @@ const OrderDetailDesc = () => {
             dispatch(defineCurrentCustomer(currentOrder.user));
             dispatch(defineCurrentFiles(currentOrder.files));
         }
-    }, [currentOrder]);
+    }, [currentOrder, dispatch]);
 
     function downloadClickHandler(e, file){
         e.stopPropagation();
