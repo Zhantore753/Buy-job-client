@@ -10,10 +10,11 @@ const OrdersList = () => {
     const [ordersCount, setOrdersCount] = useState(-1);
 
     useEffect(() => {
-        if(ordersCount < orders.length){
-            setOrdersCount(orders.length);
-        }else{
+        if(ordersCount >= orders.length){
             setOrdersCheck(false);
+        }else{
+            setOrdersCheck(true);
+            setOrdersCount(orders.length);
         }
     }, [orders]);
 
@@ -63,9 +64,6 @@ const OrdersList = () => {
                 <div className="support__load-more">
                     <button onClick={() => dispatch(getOrders(orders.length))} className="support__head-btn">Загрузить еще</button>
                 </div>
-            }
-            {!ordersCheck && ordersCount < 1 &&
-                <p>У вас пока нет заказов</p>
             }
         </>
     );

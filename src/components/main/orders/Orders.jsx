@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrders } from '../../../actions/order';
+import { resetOrders } from '../../../reducers/orderReducer';
 import OrdersList from './OrdersList';
 
 const Orders = () => {
@@ -8,14 +9,15 @@ const Orders = () => {
     const orders = useSelector(state => state.order.orders);
 
     const loadOrders = useCallback(() => {
-        if(orders.length === 0){
-            dispatch(getOrders());
+        if(orders.length > 0){
+            dispatch(resetOrders([]));
         }
+            dispatch(getOrders());
     }, [dispatch, orders.length]);
 
     useEffect(()=>{
         loadOrders();
-    }, [loadOrders]);
+    }, []);
 
     return (
         <section className="orders main">
@@ -24,7 +26,11 @@ const Orders = () => {
                     <div className="orders__head support__head">
                         <h1 className="orders__head-title support__head-title">Мои заказы</h1>
                     </div>
-                    <OrdersList />
+                    {orders.length > 0 ?
+                        <OrdersList />
+                    :
+                        <p>У вас пока нет заказов</p>
+                    }
                 </div>
             </div>
         </section>
