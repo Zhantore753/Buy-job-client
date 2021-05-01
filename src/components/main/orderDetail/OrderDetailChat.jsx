@@ -122,7 +122,14 @@ const OrderDetailChat = () => {
                     style={{ display: 'flex', flexDirection: 'column-reverse', overflow: 'unset' }}
                     inverse={true}
                     hasMore={hasMore}
-                    loader={<h4>{currentRespond ? 'Загрузка...' : 'Выберите отклик(предложение) для просмотра чата'}</h4>}
+                    scrollThreshold='300px'
+                    loader={<>{currentRespond ?
+                        <div className="dialog__spinner">
+                            <div class="loadingio-spinner-spinner-7avhlle7zo4"><div class="ldio-nt1j1mrfjgo">
+                            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                            </div></div>
+                        </div>
+                        : <h3>Выберите отклик(предложение) для просмотра чата</h3>}</>}
                     scrollableTarget="scrollableDiv"
                 >
                 {messages.map((currentMessage, index) => {
