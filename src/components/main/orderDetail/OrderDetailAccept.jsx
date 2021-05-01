@@ -23,7 +23,6 @@ const OrderDetailAccept = ({isAccept, acceptedText, acceptText, isSureText, btnT
                 dispatch(setCurrentOrder(newOrder));
             }
         }else{
-            // dispatch(acceptWork(currentRespond._id));
             if(socket){
                 socket.emit('ACCEPT_WORK');
                 const newOrder = currentOrder;

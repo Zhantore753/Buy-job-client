@@ -8,6 +8,7 @@ import socket from '../../../socket';
 import OrderDetailAccept from './OrderDetailAccept';
 import OrderDetailChat from './OrderDetailChat';
 import OrderDetailDesc from './OrderDetailDesc';
+import OrderDetailFeedback from './OrderDetailFeedback';
 import OrderDetailHead from './OrderDetailHead';
 import OrderDetailResponds from './OrderDetailResponds';
 
@@ -73,8 +74,20 @@ const OrderDetail = () => {
                                 accept='work'
                                 />
                             }
-                            {currentOrder.status === 'Исполнено'
-
+                            {currentUser.role === 'freelancer' && currentOrder.executorRespond &&
+                                <OrderDetailAccept 
+                                isAccept={true}
+                                acceptedText={<p className="reg-landing__success">Ваше предложение было принято</p>}
+                                />
+                            }
+                            {currentUser.role === 'freelancer' && currentOrder.executorRespond && currentOrder.status === 'Исполнено' &&
+                                <OrderDetailAccept 
+                                isAccept={true}
+                                acceptedText={<p className="reg-landing__success">Ваша работа была принята</p>}
+                                />
+                            }
+                            {currentOrder.executorRespond && currentOrder.status === 'Исполнено' &&
+                                <OrderDetailFeedback />
                             }
                             <OrderDetailChat />
                         </div>

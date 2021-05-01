@@ -249,3 +249,18 @@ export const setCurrentRespondByOrder = (respondId) => {
         }
     }
 }
+
+export const rateOrder = (orderId, stars) => {
+    return async dispatch => {
+        try{
+            const response = await axios.post(`${API_URL}api/rate-order`, {orderId, stars}, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            console.log(response);
+            // dispatch(setCurrentRespond(response.data.respond));
+        }catch(e){ 
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}
