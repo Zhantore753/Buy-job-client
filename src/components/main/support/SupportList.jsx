@@ -10,10 +10,11 @@ const SupportList = () => {
     const [ticketsCount, setTicketsCount] = useState(-1);
 
     useEffect(() => {
-        if(ticketsCount < tickets.length){
-            setTicketsCount(tickets.length);
-        }else{
+        if(ticketsCount >= tickets.length){
             setTicketsCheck(false);
+        }else{
+            setTicketsCheck(true);
+            setTicketsCount(tickets.length);
         }
     }, [tickets]);
 
@@ -62,9 +63,6 @@ const SupportList = () => {
                 <div className="support__load-more">
                     <button onClick={() => dispatch(getTickets(tickets.length))} className="support__head-btn">Загрузить еще</button>
                 </div>
-            }
-            {!ticketsCheck && ticketsCount < 1 &&
-                <p>Вы пока не обращались в поддержку</p>
             }
         </>
     );

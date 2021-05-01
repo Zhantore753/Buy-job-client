@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrders } from '../../../actions/order';
 import { resetOrders } from '../../../reducers/orderReducer';
@@ -6,18 +6,22 @@ import OrdersList from './OrdersList';
 
 const Orders = () => {
     const dispatch = useDispatch();
+    const hasFetchedData = useRef(false);
     const orders = useSelector(state => state.order.orders);
 
     const loadOrders = useCallback(() => {
-        if(orders.length > 0){
-            dispatch(resetOrders([]));
-        }
+        if (!hasFetchedData.current){
+            if(orders.length > 0){
+                dispatch(resetOrders([]));
+            }
             dispatch(getOrders());
+            hasFetchedData.current = true;
+        }
     }, [dispatch, orders.length]);
 
     useEffect(()=>{
         loadOrders();
-    }, []);
+    }, [loadOrders]);
 
     return (
         <section className="orders main">

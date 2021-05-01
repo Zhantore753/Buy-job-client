@@ -1,16 +1,22 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getTickets} from '../../../actions/ticket';
 import SupportList from './SupportList';
 import {NavLink} from "react-router-dom";
+import { resetTickets } from '../../../reducers/ticketsReducer';
 
 const Support = () => {
     const dispatch = useDispatch();
+    const hasFetchedData = useRef(false);
     const tickets = useSelector(state => state.ticket.tickets);
 
     const loadTickets = useCallback(() => {
-        if(tickets.length === 0){
+        if (!hasFetchedData.current){
+            if(tickets.length > 0){
+                dispatch(resetTickets([]));
+            }
             dispatch(getTickets());
+            hasFetchedData.current = true;
         }
     }, [dispatch, tickets.length]);
 
@@ -33,7 +39,11 @@ const Support = () => {
                             </button>
                         </NavLink>
                     </div>
-                    <SupportList />
+                    {tickets.length > 0 ?
+                        <SupportList />
+                    :
+                        <p>ВЫ еще не обращались в поддержку</p>
+                    }
                 </div>
             </div>
         </section>
