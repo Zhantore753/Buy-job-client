@@ -56,6 +56,7 @@ const OrderDetail = () => {
                             {currentUser.role === 'customer' &&
                                 <OrderDetailAccept 
                                 isAccept={currentOrder.executorRespond}
+                                acceptedText={<p>{currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} был выбран за: <span> {currentRespond.offer}  ₽</span></p>}
                                 acceptText={<p>{currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} готов взяться за работу за: <span> {currentRespond.offer}  ₽</span></p>}
                                 isSureText={<p>Вы уверенны что принимаете предложение от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}</p>}
                                 btnText='Начать сотрудничать'
@@ -65,11 +66,15 @@ const OrderDetail = () => {
                             {currentUser.role === 'customer' && currentOrder.executorRespond &&
                                 <OrderDetailAccept 
                                 isAccept={currentOrder.status === 'Исполнено'}
+                                acceptedText={<p>Работа {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} была принята</p>}
                                 acceptText={<p>Принять работу от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}</p>}
                                 isSureText={<p>Вы уверенны что принимаете работу от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}, учтите {currentRespond.offer}  ₽ будут переведены</p>}
                                 btnText='Принять работу'
                                 accept='work'
                                 />
+                            }
+                            {currentOrder.status === 'Исполнено'
+
                             }
                             <OrderDetailChat />
                         </div>

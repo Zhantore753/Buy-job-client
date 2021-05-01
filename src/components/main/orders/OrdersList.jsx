@@ -30,7 +30,7 @@ const OrdersList = () => {
                     onClick={() => orderDetailHandler(order)}
                     className={
                         order.status === "Участвует в конкурсе" ?
-                            "orders__item support__item"
+                            "orders__item orders__item-search support__item"
                         : order.status === "Выполняется" || order.status === "Исполнено" ?
                             "orders__item orders__item-done support__item"
                         : "orders__item orders__item-cancel support__item"

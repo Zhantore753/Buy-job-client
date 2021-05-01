@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { acceptRespond, acceptWork } from '../../../actions/order';
 
-const OrderDetailAccept = ({isAccept, acceptText, isSureText, btnText, accept}) => {
+const OrderDetailAccept = ({isAccept, acceptedText, acceptText, isSureText, btnText, accept}) => {
     const currentRespond = useSelector(state => state.order.currentRespond);
     const dispatch = useDispatch();
     const [sure, setSure] = useState();
@@ -20,7 +20,7 @@ const OrderDetailAccept = ({isAccept, acceptText, isSureText, btnText, accept}) 
             {currentRespond.offer ? 
                 <div className="change__feedback-details__pay">
                     {isAccept ? 
-                        <p>{currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} был выбран за: <span> {currentRespond.offer}  ₽</span></p>
+                        acceptedText
                     :
                         <>
                         {!sure ?

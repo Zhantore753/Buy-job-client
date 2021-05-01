@@ -42,18 +42,25 @@ const OrderDetailOffer = () => {
 
     return (
         <>
-        {currentRespond &&
+        {currentRespond && currentOrder.executorRespond &&
+            <p className="reg-landing__success">Заказчик выбрал вашу цену {currentOrder.price}</p>
+        }
+        {currentRespond && !currentOrder.executorRespond &&
             <p className="reg-landing__success">Вы уже делали ставку {currentRespond.offer}, хотите изменить ее?</p>
         }
-        <div className="order__exec__details-price">
-            <label htmlFor="price">Предложение: </label>
-            <input value={offer} onChange={e => setOffer(e.target.value)} type="text" id="price" name="price" />
-        </div>
-        <button disabled={disabledBtn} onClick={e => respondHandler(e)} className="order__exec__details-submit">Отправить заявку</button>
-        {valid[0] === 200 ?
-            <p className="reg-landing__success">{valid[1]}</p>
-        :
-            <p className="reg-landing__error">{valid[1]}</p>
+        {!currentOrder.executorRespond &&
+            <>
+            <div className="order__exec__details-price">
+                <label htmlFor="price">Предложение: </label>
+                <input value={offer} onChange={e => setOffer(e.target.value)} type="text" id="price" name="price" />
+            </div>
+            <button disabled={disabledBtn} onClick={e => respondHandler(e)} className="order__exec__details-submit">Отправить заявку</button>
+            {valid[0] === 200 ?
+                <p className="reg-landing__success">{valid[1]}</p>
+            :
+                <p className="reg-landing__error">{valid[1]}</p>
+            }
+            </>
         }
         </>
     );
