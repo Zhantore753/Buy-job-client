@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { setCurrentRespondByOrder } from '../../../actions/order';
-import { setCurrentRespond, setMessage } from '../../../reducers/orderReducer';
+import { setCurrentRespondByOrder, getFeedback } from '../../../actions/order';
+import { setCurrentRespond, setMessage, setRate } from '../../../reducers/orderReducer';
 import socket from '../../../socket';
 import OrderDetailAccept from './OrderDetailAccept';
 import OrderDetailChat from './OrderDetailChat';
@@ -16,6 +16,7 @@ const OrderDetail = () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const currentOrder = useSelector(state => state.order.currentOrder);
     const currentRespond = useSelector(state => state.order.currentRespond);
+    const rate = useSelector(state => state.order.rate);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -26,6 +27,19 @@ const OrderDetail = () => {
         dispatch(setCurrentRespond({}));
         if(currentOrder.executorRespond){
             dispatch(setCurrentRespondByOrder(currentOrder.executorRespond));
+        }
+    }, [currentOrder, dispatch]);
+
+    useEffect(() => {
+        dispatch(setRate({}));
+        if(currentOrder.execFeedback || currentOrder.userFeedback){
+            if(currentUser.role === 'freelancer'){
+                dispatch(getFeedback(currentOrder.execFeedback));
+            }if(currentUser.role === 'customer'){
+                dispatch(getFeedback(currentOrder.userFeedback));
+            }
+        }else{
+            dispatch(setRate({rating: 0}));
         }
     }, [currentOrder, dispatch]);
 
@@ -86,7 +100,7 @@ const OrderDetail = () => {
                                 acceptedText={<p className="reg-landing__success">Ваша работа была принята</p>}
                                 />
                             }
-                            {currentOrder.executorRespond && currentOrder.status === 'Исполнено' &&
+                            {currentOrder.executorRespond && currentOrder.status === 'Исполнено' && rate && rate.rating >= 0 &&
                                 <OrderDetailFeedback />
                             }
                             <OrderDetailChat />

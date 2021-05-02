@@ -30,10 +30,12 @@ const OrderDetailOffer = () => {
             offValidByTime();
             return;
         }
-        if(+offer === +currentRespond.offer){
-            setValid([true, 'Нелья поменять цену на ту же']);
-            offValidByTime();
-            return;
+        if(currentRespond){
+            if(+offer === +currentRespond.offer){
+                setValid([true, 'Нелья поменять цену на ту же']);
+                offValidByTime();
+                return;
+            }
         }
 
         const respondId = currentRespond ? currentRespond._id : null

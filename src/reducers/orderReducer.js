@@ -14,6 +14,7 @@ const ADD_INPUT_MESSAGE = 'ADD_INPUT_MESSAGE';
 const SET_MESSAGE = "SET_MESSAGE";
 const NO_HAS_MORE_MESSAGES = "NO_HAS_MORE_MESSAGES";
 const SET_DISABLED_CHOOSE_RESPOND = "SET_DISABLED_CHOOSE_RESPOND";
+const SET_RATE = "SET_RATE";
 
 const defaultState = {
     orders: [],
@@ -26,7 +27,8 @@ const defaultState = {
     currentRespond: {},
     messages: [],
     hasMoreMessages: true,
-    disabledChooseRespond: false
+    disabledChooseRespond: false,
+    rate: {}
 };
 
 export default function orderReducer(state = defaultState, action){
@@ -111,6 +113,11 @@ export default function orderReducer(state = defaultState, action){
                 ...state,
                 disabledChooseRespond: action.payload
             }
+        case SET_RATE: 
+            return{
+                ...state,
+                rate: action.payload
+            }
         default: 
             return state;
     }
@@ -132,3 +139,4 @@ export const addInputMessage = message => ({type: ADD_INPUT_MESSAGE, payload: me
 export const setMessage = message => ({type:SET_MESSAGE, payload: message});
 export const changeHasMoreMessages = hasMore => ({type: NO_HAS_MORE_MESSAGES, payload: hasMore});
 export const setDisabledChooseRespond = change => ({type: SET_DISABLED_CHOOSE_RESPOND, payload: change});
+export const setRate = rate => ({type: SET_RATE, payload: rate});

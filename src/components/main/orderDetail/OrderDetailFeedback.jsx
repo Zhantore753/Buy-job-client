@@ -6,35 +6,42 @@ import { feedback } from '../../../actions/order';
 const OrderDetailFeedback = () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const currentOrder = useSelector(state => state.order.currentOrder);
-    const [stars, setStars] = useState(0);
+    const rate = useSelector(state => state.order.rate);
+    const [stars, setStars] = useState(rate.rating);
     const [valid, setValid] = useState([false, '']);
-    const [disabledBtn, setDisabledBtn] = useState(false);
     const dispatch = useDispatch();
 
+    let timeout;
+
     function offValidByTime(){
-        setDisabledBtn(true);
-        setTimeout(() => {
+        timeout = setTimeout(() => {
             setValid(false);
-            setDisabledBtn(false);
         }, 3000);
     }
 
     const rateHandler = (newValue) => {
-        if(disabledBtn){
-            return;
+        let id = window.setTimeout(() => {}, 0);
+            console.log(id);
+        while (id) {
+            window.clearTimeout(id);
+            id--;
         }
-        if((currentUser.role === 'freelancer' && currentOrder.execFeedback === stars) 
-            || (currentUser.role === 'customer' && currentOrder.userFeedback === stars)
-        ){
-            setValid([true, 'Нельзя менять оценку на ту же']);
-            offValidByTime();
-        }
-
+        setValid(false);
+        
         setStars(newValue);
+
         if(currentUser.role === 'freelancer'){
-            dispatch(feedback(currentOrder._id, currentOrder.user, currentUser._id,  newValue));
+            dispatch(feedback(currentOrder._id, currentOrder.user, currentUser._id,  newValue))
+            .then(res => {
+                setValid(res);
+                offValidByTime();
+            });
         }else{
             dispatch(feedback(currentOrder._id, currentOrder.executor, currentUser._id,  newValue))
+            .then(res => {
+                setValid(res);
+                offValidByTime();
+            });
         }
     }
 
@@ -51,6 +58,7 @@ const OrderDetailFeedback = () => {
                 color="#3C4852"
                 activeColor="#FFCC80"
                 value={stars}
+                edit={true}
                 a11y={true}
                 isHalf={true}
                 emptyIcon={<i className="far fa-star"/>}

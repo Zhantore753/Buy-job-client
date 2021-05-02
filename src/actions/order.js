@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {API_URL} from "../config";
-import { addFindOrders, addMessage, addOrder, changeHasMoreMessages, resetOrders, setCurrentCustomer, setCurrentFiles, setCurrentOrder, setCurrentRespond, setFindOrders, setMessage, setOrders, setResponds } from '../reducers/orderReducer';
+import { addFindOrders, addMessage, addOrder, changeHasMoreMessages, resetOrders, setCurrentCustomer, setCurrentFiles, setCurrentOrder, setCurrentRespond, setFindOrders, setMessage, setOrders, setRate, setResponds } from '../reducers/orderReducer';
 import { setCurrentBalance } from '../reducers/userReducer';
 
 export const createOrder =  (category, subject, title, selectedDate, price, keyWords, description, files) => {
@@ -257,8 +257,24 @@ export const feedback = (orderId, toUser, fromUser, rating) => {
                 headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
             });
             console.log(response);
-            // dispatch(setCurrentRespond(response.data.respond));
+            dispatch(setRate(response.data.feedback));
+            return [response.status, response.data.message];
         }catch(e){ 
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}
+
+export const getFeedback = (feedbackId) => {
+    return async dispatch => {
+        try{
+            const response = await axios.get(`${API_URL}api/order/get-feedback?feedbackId=${feedbackId}`, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            dispatch(setRate(response.data.feedback));
+            return response.data.feedback;
+        }catch(e){
             console.log(e);
             return [e.response.status, e.response.data.message];
         }
