@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { getResponds } from '../../../actions/order';
+import { getSelectedUser } from '../../../actions/user';
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
 import { setCurrentRespond, setMessage } from '../../../reducers/orderReducer';
@@ -57,7 +59,9 @@ const OrderDetailResponds = () => {
                     return(
                         <button disabled={disabledChooseRespond} className="feedback-executors__item-btn-respond" onClick={() => respondChooseHandler(index, respond)} key={index}>
                             <li className={classes}>
-                                <img className="feedback-executors__item-avatar" src={avatar} alt="feedback__avatar" />
+                                <NavLink className="feedback-executors__avatar-link" onClick={() => dispatch(getSelectedUser(respond.executor))} to='/user'>
+                                    <img className="feedback-executors__item-avatar" src={avatar} alt="feedback__avatar" />
+                                </NavLink>
                                 <p className="feedback-executors__item-name">{name}</p>
                                 <div className="feedback-executors__item-cost">
                                     <p>Предложение:</p>

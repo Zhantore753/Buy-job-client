@@ -11,6 +11,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { addInputMessage, setCurrentOrder, setDisabledChooseRespond } from '../../../reducers/orderReducer';
 import SocketIOFileUpload from 'socketio-file-upload';
 import { setCurrentBalance } from '../../../reducers/userReducer';
+import { NavLink } from 'react-router-dom';
+import { getSelectedUser } from '../../../actions/user';
 
 const OrderDetailChat = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -176,8 +178,10 @@ const OrderDetailChat = () => {
                                 </>
                             }
                             <li className={classes}>
-                                {prevDate && currentMessage.user !== currentUser.id &&
-                                    <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
+                                {currentMessage.user !== currentUser.id &&
+                                    <NavLink to="/user" onClick={() => dispatch(getSelectedUser(currentMessage.user))}>
+                                        <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
+                                    </NavLink>
                                 }
                                 <div className="dialog__item-message">
                                     <div className="dialog__item-message-reply">
@@ -194,7 +198,9 @@ const OrderDetailChat = () => {
                                     </div>
                                 </div>
                                 {currentMessage.user === currentUser.id &&
-                                    <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
+                                    <NavLink to="/user" onClick={() => dispatch(getSelectedUser(currentMessage.user))}>
+                                        <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
+                                    </NavLink>
                                 }
                             </li>
                         </Fragment>

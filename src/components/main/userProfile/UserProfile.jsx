@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedUser } from '../../../reducers/userReducer';
 import ProfileRating from './ProfileRating';
@@ -6,19 +6,27 @@ import ProfileRating from './ProfileRating';
 const UserProfile = () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const selectedUser = useSelector(state => state.user.selectedUser);
+    const [selected, setSelected] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(!selectedUser && (!selectedUser._id || !selectedUser.id)){
+        if(!selectedUser._id || !selectedUser.id){
             dispatch(setSelectedUser(currentUser));
         }
-    }, []);
+    }, [])
+
+    useEffect(() => {
+        setSelected(false);
+        setTimeout(() => {
+            setSelected(true);
+        }, 200)
+    }, [selectedUser]);
 
     return (
         <section className="executor main">
             <div className="container">
                 <div className="executor__inner">
-                    {selectedUser && (selectedUser.id || selectedUser._id) &&
+                    {selectedUser.rating && selected &&
                         <ProfileRating />
                     }
                     <div className="executor__history">

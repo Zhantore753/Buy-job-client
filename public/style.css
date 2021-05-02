@@ -2635,7 +2635,7 @@ body {
 }
 
 .feedback-executors__item-active:hover {
-  background-color: #3C4852;
+  background-color: #7f8488;
   border: 1px solid #3C4852;
 }
 
@@ -2645,6 +2645,16 @@ body {
   object-fit: cover;
   width: 80px;
   height: 80px;
+}
+
+.feedback-executors__avatar-link{
+  border-radius: 50%;
+  border: 5px solid #3C4852;
+  transition: all 0.15s;
+}
+
+.feedback-executors__avatar-link:hover{
+  border: 5px solid #FFCC80;
 }
 
 .feedback-executors__item-name{
