@@ -18,33 +18,36 @@ const UserProfile = () => {
 
     const hasFetchedData = useRef(false);
     const feedbacks = useSelector(state => state.user.feedbacks);
-
-    const loadFeedbacks = useCallback(() => {
-        if (!hasFetchedData.current){
-            if(feedbacks.length > 0){
-                dispatch(setFeedbacks([]));
-            }
-            dispatch(getFeedbacks());
-            hasFetchedData.current = true;
-        }
-    }, [dispatch, feedbacks.length]);
-
-    useEffect(()=>{
-        loadFeedbacks();
-    }, [loadFeedbacks]);
     
     useEffect(() => {
         setSelectedUser({});
         if(selectedUserId){
             dispatch(getSelectedUser(selectedUserId));
+            if (!hasFetchedData.current){
+                if(feedbacks.length > 0){
+                    dispatch(setFeedbacks([]));
+                }
+                dispatch(getFeedbacks(selectedUserId));
+                hasFetchedData.current = true;
+            }
         }else{
             dispatch(getSelectedUser(currentUser.id));
+            if (!hasFetchedData.current){
+                if(feedbacks.length > 0){
+                    dispatch(setFeedbacks([]));
+                }
+                dispatch(getFeedbacks(currentUser.id));
+                hasFetchedData.current = true;
+            }
         }
     }, [selectedUserId]);
 
     useEffect(() => {
         setStars(-1);
         setStars(selectedUser.rating);
+        dispatch(setFeedbacks([]));
+        dispatch(getFeedbacks(selectedUserId));
+        hasFetchedData.current = true;
     }, [selectedUser]);
 
     return (
@@ -59,9 +62,10 @@ const UserProfile = () => {
                         {selectedUser && selectedUser.rating && stars >= 0 &&
                             <ProfileRating stars={stars}/>
                         }
-                        {feedbacks && feedbacks.length > 0 ?
-                            <ProfileFeedbacks />
-                        :
+                        {feedbacks && feedbacks.length > 0 && stars >= 0  &&
+                            <ProfileFeedbacks stars={stars}/>
+                        }
+                        {!feedbacks &&
                             <p>У данного пользователя еще нет отзывов</p>
                         }
                     </div>

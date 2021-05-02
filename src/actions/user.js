@@ -60,12 +60,12 @@ export const getSelectedUser = (userId) => {
     }
 }
 
-export const getFeedbacks = (skip) => {
+export const getFeedbacks = (userId, skip) => {
     return async dispatch => {
         try {
-            let url = `${API_URL}api/user/feedbacks`;
+            let url = `${API_URL}api/user/feedbacks?userId=${userId}`;
             if(skip){
-                url = `${API_URL}api/user/feedbacks?startfrom=${skip}`
+                url = `${API_URL}api/user/feedbacks?userId=${userId}&startfrom=${skip}`
             }
             const response = await axios.get(url, {
                 headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
