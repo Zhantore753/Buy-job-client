@@ -4,12 +4,15 @@ const LOGOUT =  "LOGOUT";
 const SET_BALANCE = "SET_BALANCE";
 const SET_SELECTED_USER = "SET_SELECTED_USER";
 const SET_SELECTED_USER_ID = "SET_SELECTED_USER_ID";
+const SET_FEEDBACKS = "SET_FEEDBACKS";
+const ADD_FEEDBACKS = "ADD_FEEDBACKS";
 
 const defaultState = {
     currentUser: {},
     isAuth: false,
     selectedUser: {},
-    selectedUserId: ''
+    selectedUserId: '',
+    feedbacks: [],
 };
 
 export default function userReducer(state = defaultState, action){
@@ -43,6 +46,16 @@ export default function userReducer(state = defaultState, action){
                 ...state,
                 selectedUserId: action.payload
             }
+        case SET_FEEDBACKS:
+            return{
+                ...state,
+                feedbacks: [...action.payload]
+            }
+        case ADD_FEEDBACKS:
+            return{
+                ...state,
+                feedbacks: [...state.feedbacks, ...action.payload]
+            }
         default:
             return state;
     }
@@ -54,3 +67,5 @@ export const setEmail = email => ({type: SET_EMAIL, payload: email});
 export const setCurrentBalance = balance => ({type: SET_BALANCE, payload: balance});
 export const setSelectedUser = user => ({type: SET_SELECTED_USER, payload: user});
 export const setSelectedUserId = userId => ({type: SET_SELECTED_USER_ID, payload: userId});
+export const setFeedbacks = feedbacks => ({type: SET_FEEDBACKS, payload: feedbacks});
+export const addFeedbacks = feedbacks => ({type: ADD_FEEDBACKS, payload: feedbacks});

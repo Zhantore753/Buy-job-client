@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {setSelectedUser, setUser} from "../reducers/userReducer";
+import {addFeedbacks, setSelectedUser, setUser} from "../reducers/userReducer";
 import {API_URL} from "../config";
 
 export const registration = async (login, email, password) => {
@@ -56,6 +56,23 @@ export const getSelectedUser = (userId) => {
         } catch (e) {
             console.log(e);
             return [e.response.status, e.response.data.message];
+        }
+    }
+}
+
+export const getFeedbacks = (skip) => {
+    return async dispatch => {
+        try {
+            let url = `${API_URL}api/user/feedbacks`;
+            if(skip){
+                url = `${API_URL}api/user/feedbacks?startfrom=${skip}`
+            }
+            const response = await axios.get(url, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            dispatch(addFeedbacks(response.data));
+        } catch (e) {
+            console.log(e);
         }
     }
 }

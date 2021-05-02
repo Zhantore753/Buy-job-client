@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSelectedUser } from '../../../actions/user';
-import { setSelectedUser } from '../../../reducers/userReducer';
+import { getFeedbacks, getSelectedUser } from '../../../actions/user';
+import { setFeedbacks, setSelectedUser } from '../../../reducers/userReducer';
+import { API_URL } from '../../../config';
+import avatarLogo from '../../../img/avatarlogo.svg';
 import ProfileRating from './ProfileRating';
+import ProfileFeedbacks from './ProfileFeedbacks';
 
 const UserProfile = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -11,6 +14,25 @@ const UserProfile = () => {
     const [stars, setStars] = useState(-1);
     const dispatch = useDispatch();
 
+    const avatar = selectedUser.avatar ? `${API_URL +  selectedUser.avatar}` : avatarLogo;
+
+    const hasFetchedData = useRef(false);
+    const feedbacks = useSelector(state => state.user.feedbacks);
+
+    const loadFeedbacks = useCallback(() => {
+        if (!hasFetchedData.current){
+            if(feedbacks.length > 0){
+                dispatch(setFeedbacks([]));
+            }
+            dispatch(getFeedbacks());
+            hasFetchedData.current = true;
+        }
+    }, [dispatch, feedbacks.length]);
+
+    useEffect(()=>{
+        loadFeedbacks();
+    }, [loadFeedbacks]);
+    
     useEffect(() => {
         setSelectedUser({});
         if(selectedUserId){
@@ -29,9 +51,20 @@ const UserProfile = () => {
         <section className="executor main">
             <div className="container">
                 <div className="executor__inner">
-                    {selectedUser && selectedUser.rating && stars >= 0 &&
-                        <ProfileRating stars={stars}/>
-                    }
+                    <div className="executor__rating">
+                        <div className="executor__rating-name">
+                            <img className="order__detail-avatar" src={avatar} alt="executor__avatar" />
+                            <p>{selectedUser.fullName ? selectedUser.fullName : selectedUser.email}</p>
+                        </div>
+                        {selectedUser && selectedUser.rating && stars >= 0 &&
+                            <ProfileRating stars={stars}/>
+                        }
+                        {feedbacks && feedbacks.length > 0 ?
+                            <ProfileFeedbacks />
+                        :
+                            <p>У данного пользователя еще нет отзывов</p>
+                        }
+                    </div>
                     <div className="executor__history">
                         <h1 className="executor__history-title">История заказов</h1>
                         <ul className="executor__history-list orders__list support__list">
