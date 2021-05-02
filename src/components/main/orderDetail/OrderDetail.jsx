@@ -32,12 +32,10 @@ const OrderDetail = () => {
 
     useEffect(() => {
         dispatch(setRate({}));
-        if(currentOrder.execFeedback || currentOrder.userFeedback){
-            if(currentUser.role === 'freelancer'){
-                dispatch(getFeedback(currentOrder.execFeedback));
-            }if(currentUser.role === 'customer'){
-                dispatch(getFeedback(currentOrder.userFeedback));
-            }
+        if(currentUser.role === 'freelancer' && currentOrder.execFeedback){
+            dispatch(getFeedback(currentOrder.execFeedback));
+        }else if(currentUser.role === 'customer' && currentOrder.userFeedback){
+            dispatch(getFeedback(currentOrder.userFeedback));
         }else{
             dispatch(setRate({rating: 0}));
         }

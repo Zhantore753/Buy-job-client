@@ -21,7 +21,6 @@ const OrderDetailFeedback = () => {
 
     const rateHandler = (newValue) => {
         let id = window.setTimeout(() => {}, 0);
-            console.log(id);
         while (id) {
             window.clearTimeout(id);
             id--;
@@ -31,13 +30,13 @@ const OrderDetailFeedback = () => {
         setStars(newValue);
 
         if(currentUser.role === 'freelancer'){
-            dispatch(feedback(currentOrder._id, currentOrder.user, currentUser._id,  newValue))
+            dispatch(feedback(currentOrder._id, currentOrder.user, currentUser.id,  newValue))
             .then(res => {
                 setValid(res);
                 offValidByTime();
             });
         }else{
-            dispatch(feedback(currentOrder._id, currentOrder.executor, currentUser._id,  newValue))
+            dispatch(feedback(currentOrder._id, currentOrder.executor, currentUser.id,  newValue))
             .then(res => {
                 setValid(res);
                 offValidByTime();

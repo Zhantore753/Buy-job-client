@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedUser } from '../../../reducers/userReducer';
+import { getSelectedUser } from '../../../actions/user';
 import ProfileRating from './ProfileRating';
 
 const UserProfile = () => {
@@ -10,8 +10,8 @@ const UserProfile = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(!selectedUser._id || !selectedUser.id){
-            dispatch(setSelectedUser(currentUser));
+        if(!selectedUser && !selectedUser.id){
+            dispatch(getSelectedUser(currentUser.id));
         }
     }, [])
 
