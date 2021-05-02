@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {setUser} from "../reducers/userReducer";
+import {setSelectedUser, setUser} from "../reducers/userReducer";
 import {API_URL} from "../config";
 
 export const registration = async (login, email, password) => {
@@ -41,6 +41,21 @@ export const auth = () => {
             localStorage.setItem('token', response.data.token);
         } catch (e) {
             localStorage.removeItem('token');
+        }
+    }
+}
+
+export const getSelectedUser = (userId) => {
+    return async dispatch => {
+        try{
+            const response = await axios.get(`${API_URL}api/user/get-user?userId=${userId}`,
+                {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+            );
+            console.log(response);
+            dispatch(setSelectedUser(response.data.user));
+        } catch (e) {
+            console.log(e);
+            return [e.response.status, e.response.data.message];
         }
     }
 }

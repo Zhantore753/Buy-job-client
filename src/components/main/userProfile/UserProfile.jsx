@@ -9,14 +9,16 @@ const UserProfile = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setSelectedUser(currentUser));
+        if(!selectedUser && (!selectedUser._id || !selectedUser.id)){
+            dispatch(setSelectedUser(currentUser));
+        }
     }, []);
 
     return (
         <section className="executor main">
             <div className="container">
                 <div className="executor__inner">
-                    {selectedUser.id &&
+                    {selectedUser && (selectedUser.id || selectedUser._id) &&
                         <ProfileRating />
                     }
                     <div className="executor__history">

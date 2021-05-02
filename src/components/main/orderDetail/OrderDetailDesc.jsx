@@ -4,8 +4,9 @@ import { defineCurrentCustomer, defineCurrentFiles, downloadFile } from '../../.
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
 import { formatBytes } from '../../formatBytes';
-import { Redirect } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import OrderDetailOffer from './OrderDetailOffer';
+import { getSelectedUser } from '../../../actions/user';
 
 const OrderDetailDesc = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -35,7 +36,9 @@ const OrderDetailDesc = () => {
     return (
         <form className="order__exec__details-bid">
             <div className="order__detail-head">
-                <img className='order__detail-avatar' src={avatar} alt="avatar"/>
+                <NavLink onClick={() => dispatch(getSelectedUser(currentOrder.user))} to="/user">
+                    <img className='order__detail-avatar' src={avatar} alt="avatar"/>
+                </NavLink>
                 <h3>{currentCustomer.fullName}</h3>
             </div>
             <p className="order__detail-desc">
