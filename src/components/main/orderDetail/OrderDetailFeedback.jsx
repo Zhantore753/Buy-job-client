@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactStars from "react-rating-stars-component";
 import { useDispatch, useSelector } from 'react-redux';
-import { rateOrder } from '../../../actions/order';
+import { feedback } from '../../../actions/order';
 
 const OrderDetailFeedback = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -31,7 +31,11 @@ const OrderDetailFeedback = () => {
         }
 
         setStars(newValue);
-        dispatch(rateOrder(currentOrder._id, newValue))
+        if(currentUser.role === 'freelancer'){
+            dispatch(feedback(currentOrder._id, currentOrder.user, currentUser._id,  newValue));
+        }else{
+            dispatch(feedback(currentOrder._id, currentOrder.executor, currentUser._id,  newValue))
+        }
     }
 
     return (

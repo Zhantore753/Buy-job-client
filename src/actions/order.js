@@ -250,10 +250,10 @@ export const setCurrentRespondByOrder = (respondId) => {
     }
 }
 
-export const rateOrder = (orderId, stars) => {
+export const feedback = (orderId, toUser, fromUser, rating) => {
     return async dispatch => {
         try{
-            const response = await axios.post(`${API_URL}api/rate-order`, {orderId, stars}, {
+            const response = await axios.post(`${API_URL}api/order/feedback`, {orderId, toUser, fromUser, rating}, {
                 headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
             });
             console.log(response);
