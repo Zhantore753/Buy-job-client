@@ -49,7 +49,7 @@ const ProfileRating = ({stars}) => {
                             />
                         </div>
                     }
-                    <p>({selectedUser.ratingCount} отзыва(-вов))</p>
+                    <p>({selectedUser.ratingCount} отзыва(-ов))</p>
                 </div>
             </div>
             <ul className="executor__rating-orders">
