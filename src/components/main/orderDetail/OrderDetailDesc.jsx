@@ -6,7 +6,7 @@ import avatarLogo from '../../../img/avatarlogo.svg';
 import { formatBytes } from '../../formatBytes';
 import { NavLink, Redirect } from "react-router-dom";
 import OrderDetailOffer from './OrderDetailOffer';
-import { getSelectedUser } from '../../../actions/user';
+import { setSelectedUserId } from '../../../reducers/userReducer';
 
 const OrderDetailDesc = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -36,7 +36,7 @@ const OrderDetailDesc = () => {
     return (
         <form className="order__exec__details-bid">
             <div className="order__detail-head">
-                <NavLink onClick={() => dispatch(getSelectedUser(currentOrder.user))} to="/user">
+                <NavLink onClick={() => dispatch(setSelectedUserId(currentOrder.user))} to="/user">
                     <img className='order__detail-avatar' src={avatar} alt="avatar"/>
                 </NavLink>
                 <h3>{currentCustomer.fullName}</h3>

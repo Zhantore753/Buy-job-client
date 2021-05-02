@@ -1,33 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSelectedUser } from '../../../actions/user';
+import { setSelectedUser } from '../../../reducers/userReducer';
 import ProfileRating from './ProfileRating';
 
 const UserProfile = () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const selectedUser = useSelector(state => state.user.selectedUser);
-    const [selected, setSelected] = useState(false);
+    const selectedUserId = useSelector(state => state.user.selectedUserId);
+    const [stars, setStars] = useState(-1);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(!selectedUser && !selectedUser.id){
+        setSelectedUser({});
+        if(selectedUserId){
+            dispatch(getSelectedUser(selectedUserId));
+        }else{
             dispatch(getSelectedUser(currentUser.id));
         }
-    }, [])
+    }, [selectedUserId]);
 
     useEffect(() => {
-        setSelected(false);
-        setTimeout(() => {
-            setSelected(true);
-        }, 200)
+        setStars(-1);
+        setStars(selectedUser.rating);
     }, [selectedUser]);
 
     return (
         <section className="executor main">
             <div className="container">
                 <div className="executor__inner">
-                    {selectedUser.rating && selected &&
-                        <ProfileRating />
+                    {selectedUser && selectedUser.rating && stars >= 0 &&
+                        <ProfileRating stars={stars}/>
                     }
                     <div className="executor__history">
                         <h1 className="executor__history-title">История заказов</h1>

@@ -6,6 +6,7 @@ import { getSelectedUser } from '../../../actions/user';
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
 import { setCurrentRespond, setMessage } from '../../../reducers/orderReducer';
+import { setSelectedUserId } from '../../../reducers/userReducer';
 import socket from '../../../socket';
 
 const OrderDetailResponds = () => {
@@ -59,7 +60,7 @@ const OrderDetailResponds = () => {
                     return(
                         <button disabled={disabledChooseRespond} className="feedback-executors__item-btn-respond" onClick={() => respondChooseHandler(index, respond)} key={index}>
                             <li className={classes}>
-                                <NavLink className="feedback-executors__avatar-link" onClick={() => dispatch(getSelectedUser(respond.executor))} to='/user'>
+                                <NavLink className="feedback-executors__avatar-link" onClick={() => dispatch(setSelectedUserId(respond.executor))} to='/user'>
                                     <img className="feedback-executors__item-avatar" src={avatar} alt="feedback__avatar" />
                                 </NavLink>
                                 <p className="feedback-executors__item-name">{name}</p>

@@ -10,9 +10,8 @@ import Loader from 'react-loader';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { addInputMessage, setCurrentOrder, setDisabledChooseRespond } from '../../../reducers/orderReducer';
 import SocketIOFileUpload from 'socketio-file-upload';
-import { setCurrentBalance } from '../../../reducers/userReducer';
+import { setCurrentBalance, setSelectedUserId } from '../../../reducers/userReducer';
 import { NavLink } from 'react-router-dom';
-import { getSelectedUser } from '../../../actions/user';
 
 const OrderDetailChat = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -179,7 +178,7 @@ const OrderDetailChat = () => {
                             }
                             <li className={classes}>
                                 {currentMessage.user !== currentUser.id &&
-                                    <NavLink to="/user" onClick={() => dispatch(getSelectedUser(currentMessage.user))}>
+                                    <NavLink to="/user" onClick={() => dispatch(setSelectedUserId(currentMessage.user))}>
                                         <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
                                     </NavLink>
                                 }
@@ -198,7 +197,7 @@ const OrderDetailChat = () => {
                                     </div>
                                 </div>
                                 {currentMessage.user === currentUser.id &&
-                                    <NavLink to="/user" onClick={() => dispatch(getSelectedUser(currentMessage.user))}>
+                                    <NavLink to="/user" onClick={() => dispatch(setSelectedUserId(currentMessage.user))}>
                                         <img className="dialog__item-avatar" src={avatar} alt="dialog__avatar" />
                                     </NavLink>
                                 }

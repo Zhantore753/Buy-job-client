@@ -52,7 +52,7 @@ export const getSelectedUser = (userId) => {
                 {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
             );
             console.log(response);
-            dispatch(setSelectedUser(response.data.resUser));
+            await dispatch(setSelectedUser(response.data.resUser));
         } catch (e) {
             console.log(e);
             return [e.response.status, e.response.data.message];

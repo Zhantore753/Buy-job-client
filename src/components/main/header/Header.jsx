@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
-import {logout} from '../../../reducers/userReducer';
+import {logout, setSelectedUserId} from '../../../reducers/userReducer';
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
 import { getSelectedUser } from '../../../actions/user';
@@ -103,7 +103,7 @@ const Header = ({burgerHandler}) => {
                                 </NavLink>
                             }
                             <div className="header__avatar">
-                                <NavLink onClick={() => dispatch(getSelectedUser(currentUser.id))} to="/user">
+                                <NavLink onClick={() => dispatch(setSelectedUserId(currentUser.id))} to="/user">
                                     <img src={avatar} alt="avatar"/>
                                 </NavLink>
                             </div>
@@ -182,7 +182,7 @@ const Header = ({burgerHandler}) => {
                                 </NavLink>
                             }
                             <div className="header__avatar">
-                                <NavLink onClick={() => {burgerHandler(); dispatch(getSelectedUser(currentUser.id))}} to="/user">
+                                <NavLink onClick={() => {burgerHandler(); dispatch(setSelectedUserId(currentUser.id))}} to="/user">
                                     <img src={avatar} alt="avatar"/>
                                 </NavLink>
                             </div>

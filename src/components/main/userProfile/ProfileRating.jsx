@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { API_URL } from '../../../config';
 import avatarLogo from '../../../img/avatarlogo.svg';
 import ReactStars from "react-rating-stars-component";
 
-const ProfileRating = () => {
+const ProfileRating = ({stars}) => {
     const selectedUser = useSelector(state => state.user.selectedUser);
+
+    const [starKeyForce, setStarKeyForce] = useState(0)
+
+    useEffect(() => {
+        setStarKeyForce(prev => prev + 1)
+    }, [ stars ]);
 
     const avatar = selectedUser.avatar ? `${API_URL +  selectedUser.avatar}` : avatarLogo;
 
@@ -18,16 +24,16 @@ const ProfileRating = () => {
             <div className="executor__rating-average">
                 <p>Рейтинг <span> {selectedUser.rating}</span></p>
                 <div className="executor__rating-average-general">
-                    {selectedUser.rating &&
+                    {stars >= 0 &&
                         <div className="executor__rating-average-stars">
                             <ReactStars
+                                key={starKeyForce}
                                 size={16}
                                 count={5}
                                 color="#D5E5E7"
                                 activeColor="#66B87A"
-                                value={selectedUser.rating}
+                                value={stars}
                                 edit={false}
-                                a11y={true}
                                 isHalf={true}
                                 emptyIcon={<svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.10328 0.8172C7.4701 0.0739537 8.52994 0.0739546 8.89676 0.817201L10.4124 3.88819C10.558 4.18334 10.8396 4.3879 11.1653 4.43523L14.5543 4.92769C15.3746 5.04689 15.7021 6.05485 15.1086 6.63338L12.6562 9.02382C12.4205 9.25356 12.313 9.58456 12.3686 9.90895L12.9475 13.2843C13.0877 14.1012 12.2302 14.7242 11.4966 14.3385L8.46536 12.7448C8.17404 12.5917 7.826 12.5917 7.53468 12.7448L4.50342 14.3385C3.7698 14.7242 2.91237 14.1012 3.05248 13.2843L3.63139 9.90895C3.68703 9.58456 3.57948 9.25356 3.3438 9.02382L0.89146 6.63338C0.297943 6.05485 0.625454 5.04689 1.44567 4.92769L4.83472 4.43523C5.16043 4.3879 5.44199 4.18334 5.58766 3.88819L7.10328 0.8172Z" fill="#D5E5E7"/>
