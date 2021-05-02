@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
-import {logout} from '../../../reducers/userReducer';
+import {logout, setSelectedUser} from '../../../reducers/userReducer';
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
 
@@ -102,7 +102,9 @@ const Header = ({burgerHandler}) => {
                                 </NavLink>
                             }
                             <div className="header__avatar">
-                                <img src={avatar} alt="avatar"/>
+                                <NavLink onClick={() => dispatch(setSelectedUser(currentUser))} to="/user">
+                                    <img src={avatar} alt="avatar"/>
+                                </NavLink>
                             </div>
                             <button onClick={()=>dispatch(logout())} className="header__logout-btn">Выйти</button>
                         </li>
@@ -179,7 +181,9 @@ const Header = ({burgerHandler}) => {
                                 </NavLink>
                             }
                             <div className="header__avatar">
-                                <img src={avatar} alt="avatar"/>
+                                <NavLink onClick={() => {burgerHandler(); dispatch(setSelectedUser(currentUser))}} to="/user">
+                                    <img src={avatar} alt="avatar"/>
+                                </NavLink>
                             </div>
                             <button onClick={()=>{burgerHandler();dispatch(logout())}} className="header__logout-btn">Выйти</button>
                         </li>

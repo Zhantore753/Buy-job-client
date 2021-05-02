@@ -131,6 +131,7 @@ const OrderDetailChat = () => {
                     next={() => loadMoreHandler()}
                     style={{ display: 'flex', flexDirection: 'column-reverse', overflow: 'unset' }}
                     inverse={true}
+                    a11y={true}
                     hasMore={hasMore}
                     scrollThreshold='300px'
                     loader={<>{currentRespond ?

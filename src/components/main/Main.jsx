@@ -9,6 +9,7 @@ import PlacingOrder from './placingOrder/PlacingOrder';
 import Orders from './orders/Orders';
 import FindOrder from './findOrder/FindOrder';
 import OrderDetail from './orderDetail/OrderDetail';
+import UserProfile from './userProfile/UserProfile';
 
 const Main = () => {
     const burgerHandler = () =>{
@@ -33,6 +34,7 @@ const Main = () => {
                     <Route path="/orders" component={Orders}/>
                     <Route path="/find-order" component={FindOrder}/>
                     <Route path="/order-detail" component={OrderDetail}/>
+                    <Route path="/user" component={UserProfile} />
                     <Redirect to="/" />
                 </Switch>
                 <Footer />

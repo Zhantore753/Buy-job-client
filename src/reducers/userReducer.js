@@ -1,11 +1,13 @@
 const SET_USER = "SET_USER";
 const SET_EMAIL = "SET_EMAIL";
 const LOGOUT =  "LOGOUT";
-const SET_BALANCE = "SET_BALANCE"
+const SET_BALANCE = "SET_BALANCE";
+const SET_SELECTED_USER = "SET_SELECTED_USER";
 
 const defaultState = {
     currentUser: {},
-    isAuth: false
+    isAuth: false,
+    selectedUser: {}
 };
 
 export default function userReducer(state = defaultState, action){
@@ -29,6 +31,11 @@ export default function userReducer(state = defaultState, action){
         case SET_BALANCE: 
             state.currentUser.balance = action.payload
             return state;
+        case SET_SELECTED_USER:
+            return{
+                ...state,
+                selectedUser: action.payload
+            }
         default:
             return state;
     }
@@ -37,4 +44,5 @@ export default function userReducer(state = defaultState, action){
 export const setUser = user => ({type: SET_USER, payload: user});
 export const logout = () => ({type: LOGOUT});
 export const setEmail = email => ({type: SET_EMAIL, payload: email});
-export const setCurrentBalance = balance => ({type: SET_BALANCE, payload: balance})
+export const setCurrentBalance = balance => ({type: SET_BALANCE, payload: balance});
+export const setSelectedUser = user => ({type: SET_SELECTED_USER, payload: user});
