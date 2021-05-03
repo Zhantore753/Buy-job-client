@@ -20,22 +20,17 @@ const UserProfile = () => {
     const feedbacks = useSelector(state => state.user.feedbacks);
     
     useEffect(() => {
+        dispatch(setFeedbacks([]));
         setSelectedUser({});
         if(selectedUserId){
             dispatch(getSelectedUser(selectedUserId));
-            if (!hasFetchedData.current){
-                if(feedbacks.length > 0){
-                    dispatch(setFeedbacks([]));
-                }
+            if (!hasFetchedData.current && feedbacks.length !== selectedUser.ratingCount){
                 dispatch(getFeedbacks(selectedUserId));
                 hasFetchedData.current = true;
             }
         }else{
             dispatch(getSelectedUser(currentUser.id));
-            if (!hasFetchedData.current){
-                if(feedbacks.length > 0){
-                    dispatch(setFeedbacks([]));
-                }
+            if (!hasFetchedData.current && feedbacks.length !== selectedUser.ratingCount){
                 dispatch(getFeedbacks(currentUser.id));
                 hasFetchedData.current = true;
             }
@@ -45,8 +40,9 @@ const UserProfile = () => {
     useEffect(() => {
         setStars(-1);
         setStars(selectedUser.rating);
-        dispatch(setFeedbacks([]));
-        dispatch(getFeedbacks(selectedUserId));
+        if(selectedUserId && feedbacks.length < 1 && feedbacks.length !== selectedUser.ratingCount){
+            dispatch(getFeedbacks(selectedUserId));
+        }
         hasFetchedData.current = true;
     }, [selectedUser]);
 
