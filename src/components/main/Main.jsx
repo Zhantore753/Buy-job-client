@@ -10,6 +10,7 @@ import Orders from './orders/Orders';
 import FindOrder from './findOrder/FindOrder';
 import OrderDetail from './orderDetail/OrderDetail';
 import UserProfile from './userProfile/UserProfile';
+import Balance from './balance/Balance';
 
 const Main = () => {
     const burgerHandler = () =>{
@@ -35,6 +36,7 @@ const Main = () => {
                     <Route path="/find-order" component={FindOrder}/>
                     <Route path="/order-detail" component={OrderDetail}/>
                     <Route path="/user" component={UserProfile} />
+                    <Route path="/balance" component={Balance} />
                     <Redirect to="/" />
                 </Switch>
                 <Footer />

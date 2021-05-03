@@ -9,7 +9,17 @@ const OrderDetailAccept = ({isAccept, acceptedText, acceptText, isSureText, btnT
     const currentOrder = useSelector(state => state.order.currentOrder);
     const currentUser = useSelector(state => state.user.currentUser);
     const dispatch = useDispatch();
+    const [valid, setValid] = useState([false, '']);
+    const [disabledBtn, setDisabledBtn] = useState(false);
     const [sure, setSure] = useState();
+
+    const offValidByTime = () =>{
+        setDisabledBtn(true);
+        setTimeout(() => {
+            setValid(false);
+            setDisabledBtn(false);
+        }, 5000);
+    }
 
     const acceptHandler = () => {
         if(accept === 'respond'){
@@ -23,6 +33,11 @@ const OrderDetailAccept = ({isAccept, acceptedText, acceptText, isSureText, btnT
                 dispatch(setCurrentOrder(newOrder));
             }
         }else{
+            if(+currentUser.balance - +currentRespond.offer < 0){
+                setValid([true, 'Не достаточно средств чтобы принять работу, пополните баланс']);
+                offValidByTime();
+                return;
+            }
             if(socket){
                 socket.emit('ACCEPT_WORK');
                 const newOrder = currentOrder;
@@ -51,12 +66,17 @@ const OrderDetailAccept = ({isAccept, acceptedText, acceptText, isSureText, btnT
                             <>
                                 {isSureText}
                                 <div className='order-change__item-btns'>
-                                    <button onClick={() => acceptHandler()} className="order-change__item-btn-change">Принять</button>
-                                    <button onClick={() => setSure(false)} className="order-change__item-btn-close">Отмена</button>
+                                    <button disabled={disabledBtn} onClick={() => acceptHandler()} className="order-change__item-btn-change">Принять</button>
+                                    <button disabled={disabledBtn} onClick={() => setSure(false)} className="order-change__item-btn-close">Отмена</button>
                                 </div>
                             </>
                         }
                         </>
+                    }
+                    {valid[0] === 200 ?
+                        <p className="reg-landing__success">{valid[1]}</p>
+                    :
+                        <p className="reg-landing__error">{valid[1]}</p>
                     }
                 </div>
             :

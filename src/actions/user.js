@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {addFeedbacks, addUserOrders, setRole, setSelectedUser, setUser} from "../reducers/userReducer";
+import {addFeedbacks, addUserOrders, setCurrentBalance, setRole, setSelectedUser, setUser} from "../reducers/userReducer";
 import {API_URL} from "../config";
 
 export const registration = async (login, email, password) => {
@@ -102,6 +102,38 @@ export const changeRole = (role) => {
             });
             console.log(response);
             dispatch(setRole(response.data.role));
+            return [response.status, response.data.message];
+        }catch(e){
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}
+
+export const inputBalance = (sum) => {
+    return async dispatch => {
+        try{
+            const response = await axios.post(`${API_URL}api/user/input-balance`, {sum}, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            console.log(response);
+            dispatch(setCurrentBalance(response.data.balance));
+            return [response.status, response.data.message];
+        }catch(e){
+            console.log(e);
+            return [e.response.status, e.response.data.message];
+        }
+    }
+}
+
+export const outputBalance = (sum) => {
+    return async dispatch => {
+        try{
+            const response = await axios.post(`${API_URL}api/user/output-balance`, {sum}, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            console.log(response);
+            dispatch(setCurrentBalance(response.data.balance));
             return [response.status, response.data.message];
         }catch(e){
             console.log(e);

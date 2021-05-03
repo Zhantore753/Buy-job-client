@@ -13,7 +13,7 @@ const ProfileRating = ({stars}) => {
 
     return (
         <div className="executor__rating-average">
-            <p>Рейтинг <span> {selectedUser.rating}</span></p>
+            <p>Рейтинг <span> {selectedUser.rating.toFixed(2)}</span></p>
             <div className="executor__rating-average-general">
                 {stars >= 0 &&
                     <div className="executor__rating-average-stars">
