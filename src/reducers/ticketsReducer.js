@@ -1,6 +1,7 @@
 const SET_TICKETS = "SET_TICKETS";
 const ADD_TICKET =  "SORT_TICKET";
 const RESET_TICKETS = "RESET_TICKETS";
+const RESET_ALL_TICKETS = "RESET_ALL_TICKETS";
 
 const defaultState = {
     tickets: []
@@ -23,6 +24,10 @@ export default function tiketsReducer(state = defaultState, action){
                 ...state,
                 tickets: [...action.payload]
             }
+        case RESET_ALL_TICKETS: 
+            return{
+                tickets: []
+            }
         default:
             return state;
     }
@@ -31,3 +36,4 @@ export default function tiketsReducer(state = defaultState, action){
 export const setTickets = tickets => ({type: SET_TICKETS, payload: tickets});
 export const addTicket = ticket => ({type: ADD_TICKET, payload: ticket});
 export const resetTickets = tickets => ({type: RESET_TICKETS, payload: tickets});
+export const resetAllTickets = () => ({type: RESET_ALL_TICKETS});

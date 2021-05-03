@@ -15,6 +15,7 @@ const SET_MESSAGE = "SET_MESSAGE";
 const NO_HAS_MORE_MESSAGES = "NO_HAS_MORE_MESSAGES";
 const SET_DISABLED_CHOOSE_RESPOND = "SET_DISABLED_CHOOSE_RESPOND";
 const SET_RATE = "SET_RATE";
+const RESET_ALL = "RESET_ALL";
 
 const defaultState = {
     orders: [],
@@ -118,6 +119,22 @@ export default function orderReducer(state = defaultState, action){
                 ...state,
                 rate: action.payload
             }
+        case RESET_ALL:
+            return{
+                ...state,
+                orders: [],
+                findOrders: [],
+                currentOrder: {},
+                currentCustomer: {},
+                currentFiles: [],
+                currentOffer: {},
+                responds: [],
+                currentRespond: {},
+                messages: [],
+                hasMoreMessages: true,
+                disabledChooseRespond: false,
+                rate: {}
+            }
         default: 
             return state;
     }
@@ -140,3 +157,4 @@ export const setMessage = message => ({type:SET_MESSAGE, payload: message});
 export const changeHasMoreMessages = hasMore => ({type: NO_HAS_MORE_MESSAGES, payload: hasMore});
 export const setDisabledChooseRespond = change => ({type: SET_DISABLED_CHOOSE_RESPOND, payload: change});
 export const setRate = rate => ({type: SET_RATE, payload: rate});
+export const resetAll = () => ({type: RESET_ALL});

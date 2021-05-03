@@ -52,7 +52,7 @@ const OrderDetailHead = () => {
                         {currentOrder.status === 'Участвует в конкурсе' ?
                             <p className="order__exec__card-cost">Предложение заказчика:  <span>{currentOrder.price}  ₽</span></p>
                         :
-                        <p className="order__exec__card-cost">Итоговая цена:  <span>{currentOrder.price}  ₽</span></p>
+                            <p className="order__exec__card-cost">Итоговая цена:  <span>{currentOrder.price}  ₽</span></p>
                         }
                     </div>
                 </div>

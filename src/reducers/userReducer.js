@@ -8,6 +8,7 @@ const SET_FEEDBACKS = "SET_FEEDBACKS";
 const ADD_FEEDBACKS = "ADD_FEEDBACKS";
 const SET_ORDERS = "SET_ORDERS";
 const ADD_ORDERS = "ADD_ORDERS";
+const SET_ROLE = "SET_ROLE";
 
 const defaultState = {
     currentUser: {},
@@ -31,13 +32,20 @@ export default function userReducer(state = defaultState, action){
             return{
                 ...state,
                 currentUser: {},
-                isAuth: false
+                isAuth: false,
+                selectedUser: {},
+                selectedUserId: '',
+                feedbacks: [],
+                orders: []
             }
         case SET_EMAIL:
             state.currentUser.email = action.payload
             return state;
         case SET_BALANCE: 
             state.currentUser.balance = action.payload
+            return state;
+        case SET_ROLE:
+            state.currentUser.role = action.payload
             return state;
         case SET_SELECTED_USER:
             return{
@@ -77,6 +85,7 @@ export default function userReducer(state = defaultState, action){
 export const setUser = user => ({type: SET_USER, payload: user});
 export const logout = () => ({type: LOGOUT});
 export const setEmail = email => ({type: SET_EMAIL, payload: email});
+export const setRole = role => ({type: SET_ROLE, payload: role});
 export const setCurrentBalance = balance => ({type: SET_BALANCE, payload: balance});
 export const setSelectedUser = user => ({type: SET_SELECTED_USER, payload: user});
 export const setSelectedUserId = userId => ({type: SET_SELECTED_USER_ID, payload: userId});

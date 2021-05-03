@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEdu } from '../../../actions/updateUser';
+import { changeRole } from '../../../actions/user';
 
 const ChangeEdu = () => {
     const currentUser = useSelector(state => state.user.currentUser);
@@ -12,6 +13,7 @@ const ChangeEdu = () => {
     const [status, setStatus] = useState(currentUser.eduStatus ? currentUser.eduStatus : '');
     const [valid, setValid] = useState([false, '']);
     const [disabledBtn, setDisabledBtn] = useState(false);
+    const [btnSure, setBtnSure] = useState(false);
 
     const offValidByTime = () =>{
         setDisabledBtn(true);
@@ -19,6 +21,18 @@ const ChangeEdu = () => {
             setValid(false);
             setDisabledBtn(false);
         }, 3000);
+    }
+
+    const becomeFreelancer = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setValid([]);
+
+        dispatch(changeRole('freelancer'))
+        .then(async res =>{
+            await setValid(res);
+        });
+        offValidByTime();
     }
 
     const updateEduHandler = (e) => {
@@ -75,6 +89,23 @@ const ChangeEdu = () => {
                     </div>
 
                     <button onClick={e => updateEduHandler(e)} disabled={disabledBtn} className="settings__form-btn">Сохранить</button>
+                    <div>
+                        {currentUser.role === 'customer' &&
+                            <div className="order-change__item-btns-settings">
+                                {!btnSure ? 
+                                    <button onClick={e => {e.preventDefault();e.stopPropagation();setBtnSure(true)}} disabled={disabledBtn} className="settings__form-btn">Стать исполнителем</button>
+                                    :
+                                    <>
+                                        <p>Вы уверенны что хотите стать исполнителем? Это действие не обратимо.</p>
+                                        <div className='order-change__item-btns'>
+                                            <button onClick={e => becomeFreelancer(e)} className="order-change__item-btn-change">Стать исполнителем</button>
+                                            <button onClick={e => {e.preventDefault();e.stopPropagation();setBtnSure(false)}} className="order-change__item-btn-close">Отмена</button>
+                                        </div>
+                                    </>
+                                }
+                            </div>
+                        }
+                    </div>
                 </form>
             </div>
             {valid[0] === 200 ?

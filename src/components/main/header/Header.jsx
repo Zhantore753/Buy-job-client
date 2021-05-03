@@ -4,12 +4,20 @@ import {useDispatch, useSelector} from 'react-redux';
 import {logout, setSelectedUserId} from '../../../reducers/userReducer';
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
+import { resetAllTickets } from '../../../reducers/ticketsReducer';
+import { resetAll } from '../../../reducers/orderReducer';
 
 const Header = ({burgerHandler}) => {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.user.currentUser);
     const selectedUser = useSelector(state => state.user.selectedUser);
     const avatar = currentUser.avatar ? `${API_URL +  currentUser.avatar}` : avatarLogo;
+
+    const fullLogout = () => {
+        dispatch(logout());
+        dispatch(resetAllTickets());
+        dispatch(resetAll());
+    }
 
     return (
         <header className="header">
@@ -106,7 +114,7 @@ const Header = ({burgerHandler}) => {
                                     <img src={avatar} alt="avatar"/>
                                 </NavLink>
                             </div>
-                            <button onClick={()=>dispatch(logout())} className="header__logout-btn">Выйти</button>
+                            <button onClick={()=>fullLogout()} className="header__logout-btn">Выйти</button>
                         </li>
                         <li className="header__burger">
                             <div onClick={() => {burgerHandler()}} className="nav__burger">
@@ -185,7 +193,7 @@ const Header = ({burgerHandler}) => {
                                     <img src={avatar} alt="avatar"/>
                                 </NavLink>
                             </div>
-                            <button onClick={()=>{burgerHandler();dispatch(logout())}} className="header__logout-btn">Выйти</button>
+                            <button onClick={()=>{burgerHandler();fullLogout()}} className="header__logout-btn">Выйти</button>
                         </li>
                     </ul>
                 </nav>

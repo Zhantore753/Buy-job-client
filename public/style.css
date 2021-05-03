@@ -2606,6 +2606,14 @@ body {
   margin-right: 10px;
 }
 
+.order-change__item-btns-settings{
+  margin-top: 20px;
+}
+
+.order-change__item-btns-settings button{
+  margin-top: 0px;
+}
+
 .feedback-executors__item {
   cursor: pointer;
   display: flex;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {addFeedbacks, addUserOrders, setSelectedUser, setUser} from "../reducers/userReducer";
+import {addFeedbacks, addUserOrders, setRole, setSelectedUser, setUser} from "../reducers/userReducer";
 import {API_URL} from "../config";
 
 export const registration = async (login, email, password) => {
@@ -90,6 +90,22 @@ export const getUserOrders = (userId, skip) => {
             dispatch(addUserOrders(response.data));
         } catch (e) {
             console.log(e);
+        }
+    }
+}
+
+export const changeRole = (role) => {
+    return async dispatch => {
+        try{
+            const response = await axios.post(`${API_URL}api/user/change-role`, {role}, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            console.log(response);
+            dispatch(setRole(response.data.role));
+            return [response.status, response.data.message];
+        }catch(e){
+            console.log(e);
+            return [e.response.status, e.response.data.message];
         }
     }
 }
