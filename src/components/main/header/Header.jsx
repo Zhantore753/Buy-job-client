@@ -1,14 +1,14 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
-import {logout} from '../../../reducers/userReducer';
+import {logout, setSelectedUserId} from '../../../reducers/userReducer';
 import {API_URL} from "../../../config";
 import avatarLogo from '../../../img/avatarlogo.svg';
 
 const Header = ({burgerHandler}) => {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.user.currentUser);
-    
+    const selectedUser = useSelector(state => state.user.selectedUser);
     const avatar = currentUser.avatar ? `${API_URL +  currentUser.avatar}` : avatarLogo;
 
     return (
@@ -102,7 +102,7 @@ const Header = ({burgerHandler}) => {
                                 </NavLink>
                             }
                             <div className="header__avatar">
-                                <NavLink to="/user">
+                                <NavLink onClick={() => {if(selectedUser.id !== currentUser.id) dispatch(setSelectedUserId(currentUser.id))}} to="/user">
                                     <img src={avatar} alt="avatar"/>
                                 </NavLink>
                             </div>
@@ -181,7 +181,7 @@ const Header = ({burgerHandler}) => {
                                 </NavLink>
                             }
                             <div className="header__avatar">
-                                <NavLink onClick={() => {burgerHandler();}} to="/user">
+                                <NavLink onClick={() => {burgerHandler();if(selectedUser.id !== currentUser.id) dispatch(setSelectedUserId(currentUser.id))}} to="/user">
                                     <img src={avatar} alt="avatar"/>
                                 </NavLink>
                             </div>

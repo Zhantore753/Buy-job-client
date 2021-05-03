@@ -6,6 +6,8 @@ const SET_SELECTED_USER = "SET_SELECTED_USER";
 const SET_SELECTED_USER_ID = "SET_SELECTED_USER_ID";
 const SET_FEEDBACKS = "SET_FEEDBACKS";
 const ADD_FEEDBACKS = "ADD_FEEDBACKS";
+const SET_ORDERS = "SET_ORDERS";
+const ADD_ORDERS = "ADD_ORDERS";
 
 const defaultState = {
     currentUser: {},
@@ -13,6 +15,7 @@ const defaultState = {
     selectedUser: {},
     selectedUserId: '',
     feedbacks: [],
+    orders: []
 };
 
 export default function userReducer(state = defaultState, action){
@@ -56,6 +59,16 @@ export default function userReducer(state = defaultState, action){
                 ...state,
                 feedbacks: [...state.feedbacks, ...action.payload]
             }
+        case SET_ORDERS:
+            return{
+                ...state,
+                orders: [...action.payload]
+            }
+        case ADD_ORDERS:
+            return{
+                ...state,
+                orders: [...state.orders, ...action.payload]
+            }
         default:
             return state;
     }
@@ -69,3 +82,5 @@ export const setSelectedUser = user => ({type: SET_SELECTED_USER, payload: user}
 export const setSelectedUserId = userId => ({type: SET_SELECTED_USER_ID, payload: userId});
 export const setFeedbacks = feedbacks => ({type: SET_FEEDBACKS, payload: feedbacks});
 export const addFeedbacks = feedbacks => ({type: ADD_FEEDBACKS, payload: feedbacks});
+export const setUserOrders = orders => ({type: SET_ORDERS, payload: orders});
+export const addUserOrders = orders => ({type: ADD_ORDERS, payload: orders});

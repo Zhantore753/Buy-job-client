@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {addFeedbacks, setSelectedUser, setUser} from "../reducers/userReducer";
+import {addFeedbacks, addUserOrders, setSelectedUser, setUser} from "../reducers/userReducer";
 import {API_URL} from "../config";
 
 export const registration = async (login, email, password) => {
@@ -51,7 +51,6 @@ export const getSelectedUser = (userId) => {
             const response = await axios.get(`${API_URL}api/user/get-user?userId=${userId}`,
                 {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
             );
-            console.log(response);
             await dispatch(setSelectedUser(response.data.resUser));
         } catch (e) {
             console.log(e);
@@ -71,6 +70,24 @@ export const getFeedbacks = (userId, skip) => {
                 headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
             });
             dispatch(addFeedbacks(response.data));
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+export const getUserOrders = (userId, skip) => {
+    return async dispatch => {
+        try {
+            let url = `${API_URL}api/user/orders?userId=${userId}`;
+            if(skip){
+                url = `${API_URL}api/user/orders?userId=${userId}&startfrom=${skip}`
+            }
+            const response = await axios.get(url, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            });
+            console.log(response);
+            dispatch(addUserOrders(response.data));
         } catch (e) {
             console.log(e);
         }

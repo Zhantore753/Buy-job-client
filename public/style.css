@@ -1768,6 +1768,7 @@ body {
 }
 
 .support__load-more{
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 }
