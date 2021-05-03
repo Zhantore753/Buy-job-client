@@ -179,6 +179,8 @@ export const updateOrder = (orderId, price, status) => {
             });
 
             dispatch(resetOrders(orders.data));
+            dispatch(setCurrentOrder(response.data.order));
+            
             return [response.status, response.data.message]; 
         }catch(e){
             console.log(e);

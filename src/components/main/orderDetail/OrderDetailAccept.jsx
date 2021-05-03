@@ -36,7 +36,7 @@ const OrderDetailAccept = ({isAccept, acceptedText, acceptText, isSureText, btnT
 
     return (
         <>
-            {currentRespond.offer ? 
+            {currentRespond && currentRespond.offer ? 
                 <div className="change__feedback-details__pay">
                     {isAccept ? 
                         acceptedText
