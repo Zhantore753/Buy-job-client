@@ -48,7 +48,7 @@ const OrderDetail = () => {
                     
                     <OrderDetailHead />
                     <div className="order__exec__details">
-                        {currentUser.role === 'customer' && !currentOrder.executorRespond ?
+                        {currentUser.role === 'customer' && !currentOrder.executorRespond && currentOrder.status !== 'Заказ отменён' ?
                             <Tabs className='order__tabs'>
                                 <TabList className='order__tabs-btns'>
                                     <Tab className="order__tabs-btn" selectedClassName="order__tabs-btn-active">Описание</Tab>
@@ -65,44 +65,46 @@ const OrderDetail = () => {
                         :
                             <OrderDetailDesc />
                         }
-                        <div className="order-change__feedback-details">
-                            {currentUser.role === 'customer' &&
-                                <OrderDetailAccept 
-                                isAccept={currentOrder.executorRespond}
-                                acceptedText={<p>{currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} был выбран за: <span> {currentRespond.offer}  ₽</span></p>}
-                                acceptText={<p>{currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} готов взяться за работу за: <span> {currentRespond.offer}  ₽</span></p>}
-                                isSureText={<p>Вы уверенны что принимаете предложение от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}</p>}
-                                btnText='Начать сотрудничать'
-                                accept='respond'
-                                />
-                            }
-                            {currentUser.role === 'customer' && currentOrder.executorRespond &&
-                                <OrderDetailAccept 
-                                isAccept={currentOrder.status === 'Исполнено'}
-                                acceptedText={<p>Работа {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} была принята</p>}
-                                acceptText={<p>Принять работу от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}</p>}
-                                isSureText={<p>Вы уверенны что принимаете работу от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}, учтите {currentRespond.offer}  ₽ будут переведены</p>}
-                                btnText='Принять работу'
-                                accept='work'
-                                />
-                            }
-                            {currentUser.role === 'freelancer' && currentOrder.executorRespond &&
-                                <OrderDetailAccept 
-                                isAccept={true}
-                                acceptedText={<p className="reg-landing__success">Ваше предложение было принято</p>}
-                                />
-                            }
-                            {currentUser.role === 'freelancer' && currentOrder.executorRespond && currentOrder.status === 'Исполнено' &&
-                                <OrderDetailAccept 
-                                isAccept={true}
-                                acceptedText={<p className="reg-landing__success">Ваша работа была принята</p>}
-                                />
-                            }
-                            {currentOrder.executorRespond && currentOrder.status === 'Исполнено' && rate && rate.rating >= 0 &&
-                                <OrderDetailFeedback />
-                            }
-                            <OrderDetailChat />
-                        </div>
+                        {currentOrder.status !== 'Заказ отменён' &&
+                            <div className="order-change__feedback-details">
+                                {currentUser.role === 'customer' &&
+                                    <OrderDetailAccept 
+                                    isAccept={currentOrder.executorRespond}
+                                    acceptedText={<p>{currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} был выбран за: <span> {currentRespond.offer}  ₽</span></p>}
+                                    acceptText={<p>{currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} готов взяться за работу за: <span> {currentRespond.offer}  ₽</span></p>}
+                                    isSureText={<p>Вы уверенны что принимаете предложение от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}</p>}
+                                    btnText='Начать сотрудничать'
+                                    accept='respond'
+                                    />
+                                }
+                                {currentUser.role === 'customer' && currentOrder.executorRespond &&
+                                    <OrderDetailAccept 
+                                    isAccept={currentOrder.status === 'Исполнено'}
+                                    acceptedText={<p>Работа {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail} была принята</p>}
+                                    acceptText={<p>Принять работу от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}</p>}
+                                    isSureText={<p>Вы уверенны что принимаете работу от {currentRespond.userFullName ? currentRespond.userFullName : currentRespond.userEmail}, учтите {currentRespond.offer}  ₽ будут переведены</p>}
+                                    btnText='Принять работу'
+                                    accept='work'
+                                    />
+                                }
+                                {currentUser.role === 'freelancer' && currentOrder.executorRespond &&
+                                    <OrderDetailAccept 
+                                    isAccept={true}
+                                    acceptedText={<p className="reg-landing__success">Ваше предложение было принято</p>}
+                                    />
+                                }
+                                {currentUser.role === 'freelancer' && currentOrder.executorRespond && currentOrder.status === 'Исполнено' &&
+                                    <OrderDetailAccept 
+                                    isAccept={true}
+                                    acceptedText={<p className="reg-landing__success">Ваша работа была принята</p>}
+                                    />
+                                }
+                                {currentOrder.executorRespond && currentOrder.status === 'Исполнено' && rate && rate.rating >= 0 &&
+                                    <OrderDetailFeedback />
+                                }
+                                <OrderDetailChat />
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

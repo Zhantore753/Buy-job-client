@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getUserOrders } from '../../../actions/user';
 
 const UserOrdersList = () => {
+    const selectedUser = useSelector(state => state.user.selectedUser);
     const orders = useSelector(state => state.user.orders);
     const dispatch = useDispatch();
     const [ordersCheck, setOrdersCheck] = useState(true);
@@ -54,8 +56,7 @@ const UserOrdersList = () => {
             </ul>
             {ordersCheck &&
                 <div className="support__load-more">
-                    <button className="support__head-btn">Загрузить еще</button>
-
+                    <button onClick={() => dispatch(getUserOrders(selectedUser.id, orders.length))} className="support__head-btn">Загрузить еще</button>
                 </div>
             }
         </>

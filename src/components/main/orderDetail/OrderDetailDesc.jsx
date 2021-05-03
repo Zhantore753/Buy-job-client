@@ -15,6 +15,9 @@ const OrderDetailDesc = () => {
     const currentFiles = useSelector(state => state.order.currentFiles);
     const dispatch = useDispatch();
 
+    const classes = currentOrder.status === 'Заказ отменён' ? 'order__exec__details-bid order__exec__details-full'
+    : 'order__exec__details-bid';
+
     const avatar = currentCustomer.avatar ? `${API_URL +  currentCustomer.avatar}` : avatarLogo;
 
     useEffect(() => {
@@ -34,7 +37,7 @@ const OrderDetailDesc = () => {
     }
 
     return (
-        <form className="order__exec__details-bid">
+        <form className={classes}>
             <div className="order__detail-head">
                 <NavLink onClick={() => dispatch(setSelectedUserId(currentOrder.user))} to="/user">
                     <img className='order__detail-avatar' src={avatar} alt="avatar"/>

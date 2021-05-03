@@ -3343,6 +3343,10 @@ body {
   line-height: 22px;
 }
 
+.order__exec__details-full{
+  max-width: 100%;
+}
+
 .order__exec__details-desc label,
 .order__exec__details-originality label {
   display: block;
