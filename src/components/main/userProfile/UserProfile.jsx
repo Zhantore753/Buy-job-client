@@ -24,26 +24,18 @@ const UserProfile = () => {
         setSelectedUser({});
         if(selectedUserId){
             dispatch(getSelectedUser(selectedUserId));
-            if (!hasFetchedData.current && feedbacks.length !== selectedUser.ratingCount){
-                dispatch(getFeedbacks(selectedUserId));
-                hasFetchedData.current = true;
-            }
         }else{
             dispatch(getSelectedUser(currentUser.id));
-            if (!hasFetchedData.current && feedbacks.length !== selectedUser.ratingCount){
-                dispatch(getFeedbacks(currentUser.id));
-                hasFetchedData.current = true;
-            }
         }
     }, [selectedUserId]);
 
     useEffect(() => {
         setStars(-1);
         setStars(selectedUser.rating);
-        if(selectedUserId && feedbacks.length < 1 && feedbacks.length !== selectedUser.ratingCount){
-            dispatch(getFeedbacks(selectedUserId));
+        if (!hasFetchedData.current && feedbacks.length < selectedUser.ratingCount){
+            dispatch(getFeedbacks(selectedUser.id));
+            hasFetchedData.current = true;
         }
-        hasFetchedData.current = true;
     }, [selectedUser]);
 
     return (
