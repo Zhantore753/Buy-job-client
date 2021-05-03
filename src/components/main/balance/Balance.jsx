@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { inputBalance, outputBalance } from '../../../actions/user';
+import { setCurrentBalance } from '../../../reducers/userReducer';
 
 const Balance = () => {
     const currentUser = useSelector(state => state.user.currentUser);
